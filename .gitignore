@@ -45,3 +45,11 @@ out
 .env
 .env.local
 .DS_Store
+
+node_modules
+.next
+out
+.env
+.env.local
+.DS_Store
+.vercel
