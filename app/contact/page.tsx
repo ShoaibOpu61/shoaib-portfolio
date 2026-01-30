@@ -23,20 +23,19 @@ export default function ContactPage() {
                     </h1>
 
                     <a
-                        href="mailto:hello@shoaib.design"
+                        href="mailto:shoaibopu@gmail.com"
                         className="text-2xl md:text-4xl font-sans text-secondary hover:text-white transition-colors border-b border-secondary/50 pb-2 inline-block mb-12"
                     >
-                        hello@shoaib.design
+                        shoaibopu@gmail.com
                     </a>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12 border-t border-white/10 pt-12">
                         <div>
                             <h3 className="text-sm font-sans uppercase tracking-widest text-secondary mb-4">Socials</h3>
                             <ul className="space-y-2">
-                                <li><a href="#" className="text-primary hover:text-white">LinkedIn</a></li>
-                                <li><a href="#" className="text-primary hover:text-white">Twitter / X</a></li>
-                                <li><a href="#" className="text-primary hover:text-white">Instagram</a></li>
-                                <li><a href="#" className="text-primary hover:text-white">Behance</a></li>
+                                <li><a href="https://www.linkedin.com/in/shoaib-opu-a8aaa0184/" className="text-primary hover:text-white">LinkedIn</a></li>
+                                <li><a href="https://www.instagram.com/shoaib_opu/" className="text-primary hover:text-white">Instagram</a></li>
+                                <li><a href="https://dribbble.com/ShoaibOpu" className="text-primary hover:text-white">Dribbble</a></li>
                             </ul>
                         </div>
                         <div>

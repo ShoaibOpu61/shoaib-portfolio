@@ -12,26 +12,25 @@ const skills = [
 export default function Skills() {
     return (
         <section className="py-12 border-y border-white/10 overflow-hidden bg-white/5">
-            <div className="relative flex overflow-x-hidden">
+            <div className="relative flex overflow-x-hidden group">
+                {/* First marquee set */}
                 <div className="animate-marquee whitespace-nowrap flex gap-16 py-4">
                     {skills.map((skill, i) => (
                         <span
                             key={i}
                             className={clsx(
                                 "text-4xl md:text-6xl font-display uppercase tracking-tight text-secondary/50",
-                                i % 2 === 0 ? "text-transparent stroke-text" : "text-secondary/50" // Alternating style optional
+                                i % 2 === 0 ? "text-transparent stroke-text" : "text-secondary/50"
                             )}
                             style={i % 2 === 0 ? { WebkitTextStroke: "1px rgba(255,255,255,0.2)" } : {}}
                         >
                             {skill}
                         </span>
                     ))}
-                    {/* Duplicate set for seamless loop handled by CSS animation keyframes if needed, 
-              but usually better to just repeat the list in the map or having two divs.
-              Let's use the two-div approach for perfect seamless loop. */}
                 </div>
 
-                <div className="absolute top-0 animate-marquee2 whitespace-nowrap flex gap-16 py-4 ml-16" aria-hidden="true">
+                {/* Second marquee set (duplicate for seamless loop) */}
+                <div className="animate-marquee whitespace-nowrap flex gap-16 py-4 ml-16" aria-hidden="true">
                     {skills.map((skill, i) => (
                         <span
                             key={`dup-${i}`}
