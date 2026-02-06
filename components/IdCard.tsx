@@ -51,13 +51,10 @@ export default function IdCard() {
                     rotateY,
                     transformStyle: "preserve-3d"
                 }}
-                className="w-[300px] h-[450px] bg-[#EBEBEB] rounded-xl relative shadow-2xl flex flex-col items-center pt-12 overflow-hidden border border-white/50"
+                className="w-[300px] h-[450px] bg-[#EBEBEB] rounded-xl relative shadow-2xl flex flex-col items-center overflow-hidden border border-white/50"
             >
-                {/* Lanyard Hole */}
-                <div className="absolute top-[-15px] left-1/2 -translate-x-1/2 w-4 h-4 bg-[#0A0A0A] rounded-full ring-4 ring-[#333]" />
-
-                {/* Photo Area */}
-                <div className="w-32 h-32 bg-gray-300 rounded-lg mb-6 overflow-hidden border-2 border-white shadow-inner relative">
+                {/* Photo Area - Expanded */}
+                <div className="w-full h-[60%] bg-gray-300 relative">
                     <Image
                         src="/images/profile-photo.jpg"
                         alt="Shoaib Hossain - Professional Photo"
@@ -68,8 +65,10 @@ export default function IdCard() {
                 </div>
 
                 {/* Details */}
-                <h2 className="font-serif text-2xl text-black uppercase tracking-tight mb-1">SHOAIB OPU</h2>
-                <p className="font-sans text-xs text-gray-500 tracking-widest uppercase mb-8">UI/UX Designer</p>
+                <div className="pt-6 pb-4 text-center">
+                    <h2 className="font-serif text-2xl text-black uppercase tracking-tight mb-1">SHOAIB OPU</h2>
+                    <p className="font-sans text-xs text-gray-500 tracking-widest uppercase">UI/UX Designer</p>
+                </div>
 
                 {/* Stats / Info */}
                 <div className="w-full px-8 space-y-3">

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
@@ -15,6 +16,7 @@ const navLinks = [
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Navbar() {
+    const pathname = usePathname();
     const [isScrolled, setIsScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -62,16 +64,29 @@ export default function Navbar() {
                 <div className="flex items-center gap-8">
                     {/* Desktop nav */}
                     <ul className="hidden md:flex gap-8 items-center">
-                        {navLinks.map((link) => (
-                            <li key={link.name}>
-                                <Link
-                                    href={link.href}
-                                    className="font-sans text-sm tracking-widest uppercase hover:text-white text-secondary transition-colors"
-                                >
-                                    {link.name}
-                                </Link>
-                            </li>
-                        ))}
+                        {navLinks.map((link) => {
+                            const isActive = pathname === link.href;
+                            return (
+                                <li key={link.name} className="relative">
+                                    <Link
+                                        href={link.href}
+                                        className={clsx(
+                                            "font-sans text-sm tracking-widest uppercase transition-colors relative z-10",
+                                            isActive ? "text-white" : "text-secondary hover:text-white"
+                                        )}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="navbar-active"
+                                            className="absolute -bottom-1 left-0 right-0 h-[2px] bg-primary"
+                                            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                                        />
+                                    )}
+                                </li>
+                            );
+                        })}
                     </ul>
 
                     {/* Desktop Resume */}
