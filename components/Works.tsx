@@ -95,7 +95,7 @@ export default function Works() {
             className="py-24 md:py-32 border-t border-white/10 relative"
         >
             <div className="px-6 md:px-12 mb-12 flex items-end justify-between gap-6">
-                <h2 className="text-4xl md:text-6xl font-display uppercase leading-tight text-white">
+                <h2 className="text-4xl md:text-6xl font-serif uppercase leading-tight text-white">
                     Some Live <br /> Projects
                 </h2>
 

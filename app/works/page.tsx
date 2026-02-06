@@ -18,7 +18,7 @@ export default function WorksPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="text-6xl md:text-9xl font-display uppercase leading-[0.85] mb-12 text-primary"
+                    className="text-6xl md:text-9xl font-serif uppercase leading-[0.85] mb-12 text-primary"
                 >
                     My <br /> Projects
                 </motion.h1>
@@ -46,7 +46,7 @@ export default function WorksPage() {
                                             </span>
                                             <ArrowUpRight className="w-5 h-5 text-secondary group-hover:text-primary transition-colors" />
                                         </div>
-                                        <h3 className="text-3xl md:text-4xl font-display uppercase text-primary mb-2">
+                                        <h3 className="text-3xl md:text-4xl font-serif uppercase text-primary mb-2">
                                             {project.title}
                                         </h3>
                                         <p className="text-secondary text-sm font-sans max-w-sm line-clamp-2">
@@ -63,7 +63,7 @@ export default function WorksPage() {
             {/* 2. CASE STUDIES */}
             <section className="py-24 px-6 md:px-12 border-t border-white/10">
                 <div className="mb-16">
-                    <h2 className="text-4xl md:text-6xl font-display uppercase text-white mb-4">My Case Studies</h2>
+                    <h2 className="text-4xl md:text-6xl font-serif uppercase text-white mb-4">My Case Studies</h2>
                     <p className="text-secondary max-w-xl">Deep dives into my design process, research, and problem-solving methodologies.</p>
                 </div>
 
@@ -81,7 +81,7 @@ export default function WorksPage() {
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                                 </div>
                                 <span className="text-xs font-sans tracking-widest text-secondary uppercase block mb-2">{study.category}</span>
-                                <h3 className="text-2xl md:text-3xl font-display uppercase text-white group-hover:text-primary transition-colors">{study.title}</h3>
+                                <h3 className="text-2xl md:text-3xl font-serif uppercase text-white group-hover:text-primary transition-colors">{study.title}</h3>
                             </motion.div>
                         </Link>
                     ))}
@@ -91,7 +91,7 @@ export default function WorksPage() {
             {/* 3. PLAYGROUND */}
             <section className="py-24 px-6 md:px-12 border-t border-white/10 bg-[#0F0F0F]">
                 <div className="mb-16">
-                    <h2 className="text-4xl md:text-6xl font-display uppercase text-white mb-4">The Playground</h2>
+                    <h2 className="text-4xl md:text-6xl font-serif uppercase text-white mb-4">The Playground</h2>
                     <p className="text-secondary max-w-xl">Breaking the rules. Experimental designs, digital art, and creative explorations.</p>
                 </div>
 
@@ -111,7 +111,7 @@ export default function WorksPage() {
                             </div>
                             <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
                                 <span className="block text-xs font-sans tracking-widest text-white/70 uppercase mb-1">{item.type}</span>
-                                <h4 className="text-lg font-display uppercase text-white">{item.title}</h4>
+                                <h4 className="text-lg font-serif uppercase text-white">{item.title}</h4>
                             </div>
                         </motion.div>
                     ))}

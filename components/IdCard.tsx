@@ -68,7 +68,7 @@ export default function IdCard() {
                 </div>
 
                 {/* Details */}
-                <h2 className="font-display text-2xl text-black uppercase tracking-tight mb-1">SHOAIB OPU</h2>
+                <h2 className="font-serif text-2xl text-black uppercase tracking-tight mb-1">SHOAIB OPU</h2>
                 <p className="font-sans text-xs text-gray-500 tracking-widest uppercase mb-8">UI/UX Designer</p>
 
                 {/* Stats / Info */}

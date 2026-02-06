@@ -18,7 +18,7 @@ export default function ContactPage() {
                     <p className="font-sans text-xs tracking-widest text-secondary mb-8 uppercase">
                         Get in Touch
                     </p>
-                    <h1 className="text-6xl md:text-9xl font-display uppercase leading-[0.85] mb-12 text-primary max-w-4xl">
+                    <h1 className="text-6xl md:text-9xl font-serif uppercase leading-[0.85] mb-12 text-primary max-w-4xl">
                         Have an Idea? <br /> Let's Talk.
                     </h1>
 

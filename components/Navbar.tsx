@@ -54,7 +54,7 @@ export default function Navbar() {
                 <Link
                     href="/"
                     onClick={closeMenu}
-                    className="font-display text-2xl font-bold tracking-tighter uppercase text-white mix-blend-difference"
+                    className="font-serif text-2xl font-bold tracking-tighter uppercase text-white mix-blend-difference"
                 >
                     SHOAIB
                 </Link>
@@ -139,7 +139,7 @@ export default function Navbar() {
                                         key={link.name}
                                         href={link.href}
                                         onClick={closeMenu}
-                                        className="py-3 border-b border-white/10 font-display uppercase text-3xl tracking-tight text-white"
+                                        className="py-3 border-b border-white/10 font-serif uppercase text-3xl tracking-tight text-white"
                                     >
                                         {link.name}
                                     </Link>

@@ -42,7 +42,7 @@ export default async function ProjectPage({
                 {/* Header */}
                 <div className="mb-16">
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
-                        <h1 className="text-5xl md:text-8xl font-display uppercase leading-[0.85] text-white">
+                        <h1 className="text-5xl md:text-8xl font-serif uppercase leading-[0.85] text-white">
                             {project.title}
                         </h1>
                         <div className="flex flex-col items-end text-right">
@@ -89,7 +89,7 @@ export default async function ProjectPage({
 
                 {/* Suggestions */}
                 <section className="border-t border-white/10 pt-24">
-                    <h2 className="text-3xl md:text-4xl font-display uppercase mb-12">You Might Also Like</h2>
+                    <h2 className="text-3xl md:text-4xl font-serif uppercase mb-12">You Might Also Like</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {otherProjects.map((p) => (
                             <Link key={p.id} href={`/works/${p.id}`} className="group block">
@@ -101,7 +101,7 @@ export default async function ProjectPage({
                                         <span className="block text-xs font-sans tracking-widest text-secondary mb-2 uppercase">
                                             {p.category}
                                         </span>
-                                        <h3 className="text-2xl md:text-3xl font-display uppercase group-hover:text-primary transition-colors">
+                                        <h3 className="text-2xl md:text-3xl font-serif uppercase group-hover:text-primary transition-colors">
                                             {p.title}
                                         </h3>
                                     </div>

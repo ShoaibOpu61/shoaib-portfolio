@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const stats = [
     { label: "Years Experience", value: "05+" },
@@ -20,20 +21,24 @@ export default function About() {
                     ABOUT ME
                 </motion.span>
 
-                <motion.h3
+
+
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="text-2xl md:text-4xl font-sans font-light leading-relaxed text-secondary mb-16"
+                    className="mb-16"
                 >
-                    I craft <span className="text-primary italic">digital experiences</span> from concept to
-                    pixel-perfect execution. My process includes <span className="text-primary">user research</span>,
-                    rapid prototyping, <span className="text-primary">micro-interactions</span>, and seamless
-                    handoffs to developers. I'm obsessed with <span className="text-primary italic">motion design</span> and
-                    leveraging AI tools to accelerate creative exploration while maintaining quality.
-                    When I'm not designing, you'll find me on the football field or exploring new places.
-                </motion.h3>
+                    <h3 className="text-xl md:text-3xl font-sans font-light leading-relaxed text-secondary mb-8">
+                        Hello! I’m Shoaib Hossain, a passionate UI/UX Designer with over <span className="text-primary italic">5 years of experience</span> creating intuitive digital experiences for both mobile apps and web platforms. I specialize in transforming complex ideas into simple, user-centered designs, using tools like <span className="text-primary">Figma</span>, <span className="text-primary">MidJourney</span>, and <span className="text-primary">ChatGPT</span> to push the boundaries of creativity and productivity. From the initial sketch to developer handoff, I ensure that every design I create is not only visually appealing but also functional and impactful. Want to dive deeper into how I craft seamless experiences and make an impact?
+                    </h3>
+
+                    <Link href="/about" className="inline-flex items-center gap-2 group text-primary font-display uppercase tracking-widest text-sm hover:text-white transition-colors duration-300">
+                        Read More
+                        <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+                    </Link>
+                </motion.div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-12">
                     {stats.map((stat, i) => (

@@ -6,40 +6,79 @@ import Footer from "@/components/Footer";
 import IdCard from "@/components/IdCard";
 import Image from "next/image";
 
+const Highlight = ({ children }: { children: React.ReactNode }) => (
+    <motion.span
+        className="inline-block font-medium text-primary cursor-pointer relative"
+        whileHover={{ scale: 1.05, color: "#fff" }}
+        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+    >
+        {children}
+        <motion.span
+            className="absolute bottom-0 left-0 w-full h-[1px] bg-primary"
+            initial={{ scaleX: 1 }}
+            whileHover={{ scaleX: 0 }}
+            transition={{ duration: 0.2 }}
+        />
+    </motion.span>
+);
+
+const BioCard = ({ title, icon, children, delay }: { title: string, icon: string, children: React.ReactNode, delay: number }) => (
+    <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay }}
+        className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-primary/30 hover:bg-white/10 transition-colors duration-300"
+    >
+        <div className="flex items-center gap-3 mb-3">
+            <span className="text-2xl">{icon}</span>
+            <h3 className="font-display text-lg uppercase text-white/90">{title}</h3>
+        </div>
+        <div className="font-sans text-sm md:text-base leading-relaxed text-secondary/80">
+            {children}
+        </div>
+    </motion.div>
+);
+
 export default function AboutPage() {
     return (
-        <main className="bg-background text-foreground selection:bg-white selection:text-black min-h-screen">
+        <main className="bg-background text-foreground selection:bg-white selection:text-black min-h-screen overflow-hidden">
             <Navbar />
 
-            {/* Hero Section - Clean & Minimal */}
-            <section className="pt-32 pb-24 px-6 md:px-12 min-h-screen flex flex-col md:flex-row gap-12 items-center">
-                <div className="w-full md:w-1/2">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="text-6xl md:text-8xl font-display uppercase leading-[0.85] mb-12 text-primary">
-                        About Shoaib
-                    </motion.h1>
+            {/* Hero Section - Redesigned */}
+            <section className="pt-32 pb-24 px-6 md:px-12 min-h-screen flex items-center relative z-10">
+                {/* Background Glow */}
+                <div className="absolute top-1/2 right-[-100px] -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="space-y-6 max-w-xl"
-                    >
-                        <p className="font-sans text-xl md:text-2xl leading-relaxed text-secondary">
-                            UI/UX Designer crafting digital experiences for mobile and web.
-                        </p>
+                <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-16 items-start">
+                    <div className="relative z-20">
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="text-6xl md:text-8xl font-serif uppercase leading-[0.85] mb-12"
+                        >
+                            <span className="text-transparent stroke-text opacity-50 block md:inline" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>About</span>
+                            <span className="text-primary block md:inline md:ml-4">Shoaib</span>
+                        </motion.h1>
 
-                        <p className="font-sans text-base leading-relaxed text-secondary/70">
-                            5+ years transforming ideas into intuitive products. Based in Dhaka, working globally.
-                        </p>
-                    </motion.div>
-                </div>
+                        <div className="space-y-4">
+                            <BioCard icon="🎨" title="Who I Am" delay={0.2}>
+                                UI/UX Designer based in Dhaka with 5+ years of experience. I specialize in taking ideas from sketch to dev handoff, ensuring every design is <Highlight>user-centered</Highlight> and functionally precise.
+                            </BioCard>
 
-                <div className="w-full md:w-1/2 flex justify-center items-center relative z-10">
-                    <IdCard />
+                            <BioCard icon="⚡" title="My Stack" delay={0.3}>
+                                I stay ahead with AI tools like <Highlight>MidJourney</Highlight>, <Highlight>ChatGPT</Highlight>, and <Highlight>Figma AI</Highlight>. Passionate about <Highlight>micro animations</Highlight> that give users that wow factor.
+                            </BioCard>
+
+                            <BioCard icon="💡" title="My Vision" delay={0.4}>
+                                I believe in blending innovation with user-centric design to deliver results that not only look great but also solve <Highlight>real-world problems</Highlight> effectively.
+                            </BioCard>
+                        </div>
+                    </div>
+
+                    <div className="w-full h-full flex justify-center items-center relative perspective-container md:pt-40">
+                        <IdCard />
+                    </div>
                 </div>
             </section>
 
@@ -48,7 +87,7 @@ export default function AboutPage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
                     {[
                         { number: "05+", label: "Years" },
-                        { number: "40+", label: "Projects" },
+                        { number: "100+", label: "Projects" },
                         { number: "04", label: "Companies" },
                         { number: "02", label: "Awards" }
                     ].map((stat, i) => (
@@ -60,7 +99,7 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             className="text-center group cursor-default"
                         >
-                            <h3 className="text-6xl md:text-8xl font-display text-primary mb-3 group-hover:text-white transition-colors duration-300">
+                            <h3 className="text-6xl md:text-8xl font-serif text-primary mb-3 group-hover:text-white transition-colors duration-300">
                                 {stat.number}
                             </h3>
                             <p className="font-sans text-sm text-secondary/60 uppercase tracking-[0.3em]">
@@ -77,7 +116,7 @@ export default function AboutPage() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-6xl font-display uppercase mb-20 text-primary"
+                    className="text-4xl md:text-6xl font-serif uppercase mb-20 text-primary"
                 >
                     Experience
                 </motion.h2>
@@ -118,12 +157,12 @@ export default function AboutPage() {
                             className="grid grid-cols-1 md:grid-cols-12 gap-4 items-baseline pb-6 border-b border-white/5 last:border-0 group hover:border-white/20 transition-all duration-300"
                         >
                             <div className="md:col-span-1">
-                                <span className="text-5xl md:text-6xl font-display text-primary/20 group-hover:text-primary/60 transition-colors">
+                                <span className="text-5xl md:text-6xl font-serif text-primary/20 group-hover:text-primary/60 transition-colors">
                                     0{i + 1}
                                 </span>
                             </div>
                             <div className="md:col-span-6">
-                                <h3 className="text-2xl md:text-4xl font-display uppercase text-white/90 group-hover:text-primary transition-colors mb-2">
+                                <h3 className="text-2xl md:text-4xl font-serif uppercase text-white/90 group-hover:text-primary transition-colors mb-2">
                                     {job.role}
                                 </h3>
                                 <p className="font-sans text-sm md:text-base text-secondary/80 uppercase tracking-[0.2em]">
@@ -146,7 +185,7 @@ export default function AboutPage() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-6xl font-display uppercase mb-20 text-primary"
+                    className="text-4xl md:text-6xl font-serif uppercase mb-20 text-primary"
                 >
                     Expertise
                 </motion.h2>
@@ -181,7 +220,7 @@ export default function AboutPage() {
                             <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">
                                 {skill.icon}
                             </div>
-                            <h3 className="text-3xl font-display uppercase text-primary mb-3 group-hover:text-white transition-colors">
+                            <h3 className="text-3xl font-serif uppercase text-primary mb-3 group-hover:text-white transition-colors">
                                 {skill.title}
                             </h3>
                             <p className="font-sans text-sm text-secondary/60 uppercase tracking-[0.2em]">
@@ -234,7 +273,7 @@ export default function AboutPage() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-6xl font-display uppercase mb-20 text-primary"
+                    className="text-4xl md:text-6xl font-serif uppercase mb-20 text-primary"
                 >
                     Selected Work
                 </motion.h2>
@@ -273,12 +312,12 @@ export default function AboutPage() {
                         >
                             <div className={`aspect-[4/3] rounded-2xl bg-gradient-to-br ${project.gradient} border border-white/10 mb-6 flex items-center justify-center group-hover:border-primary/50 transition-all duration-300`}>
                                 <div className="text-center">
-                                    <p className="text-6xl font-display uppercase text-white/30 group-hover:text-white/50 transition-colors">
+                                    <p className="text-6xl font-serif uppercase text-white/30 group-hover:text-white/50 transition-colors">
                                         {project.name.split(' ')[0].substring(0, 2)}
                                     </p>
                                 </div>
                             </div>
-                            <h3 className="text-2xl font-display uppercase text-primary mb-2 group-hover:text-white transition-colors">
+                            <h3 className="text-2xl font-serif uppercase text-primary mb-2 group-hover:text-white transition-colors">
                                 {project.name}
                             </h3>
                             <p className="font-sans text-sm text-secondary/50 uppercase tracking-[0.2em]">
@@ -295,7 +334,7 @@ export default function AboutPage() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-6xl font-display uppercase mb-20 text-primary"
+                    className="text-4xl md:text-6xl font-serif uppercase mb-20 text-primary"
                 >
                     Recognition
                 </motion.h2>
@@ -327,7 +366,7 @@ export default function AboutPage() {
                             <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
                                 {award.emoji}
                             </div>
-                            <h3 className="font-display text-2xl uppercase text-primary mb-2 group-hover:text-white transition-colors">
+                            <h3 className="font-serif text-2xl uppercase text-primary mb-2 group-hover:text-white transition-colors">
                                 {award.title}
                             </h3>
                             <p className="font-sans text-sm text-secondary/50 uppercase tracking-[0.2em]">
