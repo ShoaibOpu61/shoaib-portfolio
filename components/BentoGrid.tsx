@@ -1,25 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Figma, PenTool, Layout, Image, Cpu, Sparkles, Zap, Bot, Search, Palette, Terminal } from "lucide-react";
+import Image from "next/image";
+import { Layout, Cpu } from "lucide-react";
 
-// Tools Data
+// Tools Data with image paths
 const designTools = [
-    { name: "Figma", icon: Figma },
-    { name: "Illustrator", icon: PenTool },
-    { name: "Photoshop", icon: Image },
-    { name: "Framer", icon: Layout },
-    { name: "Adobe XD", icon: Zap },
-    { name: "Adobe InDesign", icon: Palette },
+    { name: "Figma", logo: "/logos/design/figma.png" },
+    { name: "Illustrator", logo: "/logos/design/illustrator.png" },
+    { name: "Photoshop", logo: "/logos/design/photoshop.png" },
+    { name: "Framer", logo: "/logos/design/framer.png" },
+    { name: "Adobe XD", logo: "/logos/design/xd.png" },
+    { name: "Adobe InDesign", logo: "/logos/design/indesign.png" },
 ];
 
 const aiTools = [
-    { name: "ChatGPT", icon: Bot },
-    { name: "MidJourney", icon: Sparkles },
-    { name: "Google Antigravity", icon: Zap },
-    { name: "Freepik AI", icon: Image },
-    { name: "Google Stitch", icon: Terminal },
-    { name: "Gemini", icon: Sparkles },
+    { name: "ChatGPT", logo: "/logos/ai/chatgpt.png" },
+    { name: "MidJourney", logo: "/logos/ai/midjourney.png" },
+    { name: "Google Antigravity", logo: "/logos/ai/google-antigravity.png" },
+    { name: "Freepik AI", logo: "/logos/ai/freepik.png" },
+    { name: "Google Stitch", logo: "/logos/ai/google-stitch.png" },
+    { name: "Gemini", logo: "/logos/ai/gemini.png" },
 ];
 
 const cardVariants = {
@@ -64,9 +65,21 @@ export default function BentoGrid() {
                     </h4>
                     <div className="grid grid-cols-2 gap-4 flex-1 content-start">
                         {designTools.map((tool) => (
-                            <div key={tool.name} className="flex flex-col items-center justify-center gap-2 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors aspect-square text-center">
-                                <tool.icon className="w-6 h-6 text-primary" />
-                                <span className="text-[10px] uppercase tracking-wide text-secondary">{tool.name}</span>
+                            <div
+                                key={tool.name}
+                                className="flex flex-col items-center justify-center gap-2 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all duration-300 aspect-square text-center group cursor-pointer hover:scale-105"
+                            >
+                                <div className="relative w-10 h-10 md:w-12 md:h-12">
+                                    <Image
+                                        src={tool.logo}
+                                        alt={`${tool.name} logo`}
+                                        fill
+                                        className="object-contain group-hover:scale-110 transition-transform duration-300"
+                                    />
+                                </div>
+                                <span className="text-[10px] uppercase tracking-wide text-secondary group-hover:text-white transition-colors">
+                                    {tool.name}
+                                </span>
                             </div>
                         ))}
                     </div>
@@ -82,9 +95,21 @@ export default function BentoGrid() {
                     </h4>
                     <div className="grid grid-cols-1 gap-2 flex-1">
                         {aiTools.map((tool) => (
-                            <div key={tool.name} className="flex items-center gap-3 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
-                                <tool.icon className="w-5 h-5 text-purple-400" />
-                                <span className="text-xs uppercase tracking-wide text-secondary">{tool.name}</span>
+                            <div
+                                key={tool.name}
+                                className="flex items-center gap-3 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all duration-300 group cursor-pointer hover:scale-[1.02]"
+                            >
+                                <div className="relative w-8 h-8 flex-shrink-0">
+                                    <Image
+                                        src={tool.logo}
+                                        alt={`${tool.name} logo`}
+                                        fill
+                                        className="object-contain group-hover:scale-110 transition-transform duration-300"
+                                    />
+                                </div>
+                                <span className="text-xs uppercase tracking-wide text-secondary group-hover:text-white transition-colors">
+                                    {tool.name}
+                                </span>
                             </div>
                         ))}
                     </div>
