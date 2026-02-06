@@ -4,19 +4,19 @@ import { motion } from "framer-motion";
 
 const testimonials = [
     {
-        text: "Shoaib brings a rare combination of visual flair and user-centric thinking. The dashboard redesign increased our engagement by 140%.",
-        author: "ALEX MORGAN",
-        role: "CEO, FinSaaS"
+        text: "Blending clean aesthetics with user-centered functionality. His attention to usability and responsive design made the interface intuitive and efficient for admin users. Shoaib’s ability to create interactive elements and prioritize workflow efficiency was impressive. Overall, his work elevated the project, and I highly recommend him for any future design work.",
+        author: "Jacob",
+        role: "Rental Car Business"
     },
     {
-        text: "Working with him was effortless. He understood our brand voice immediately and translated it into a digital experience that feels premium.",
-        author: "SARAH JENKINS",
-        role: "Creative Director"
+        text: "Shoaib is an exceptional designer who consistently delivers high-quality work tailored to our needs. His communication is clear and collaborative, ensuring the final product aligns perfectly with our vision. A true professional!",
+        author: "Jorge Matarrita",
+        role: "CEO at Lotty"
     },
     {
-        text: "Precise, fast, and incredibly talented. The motion work he added to our landing page made all the difference.",
-        author: "DAVID CHEN",
-        role: "Founder, TechFlow"
+        text: "Fantastic designer to work with. He took the time to truly understand the vision behind Jalo and crafted an intuitive and visually engaging design that aligned perfectly with our goals. His approach was not only creative, but also practical, making sure the user experience was seamless. Shoaib’s passion for design, coupled with his ability to adapt and collaborate, made him a key part of our journey. We’re excited to keep working with him on future projects.",
+        author: "Miguel Ambas",
+        role: "Owner, Jalo App"
     }
 ];
 

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import IdCard from "@/components/IdCard";
+import Image from "next/image";
 
 export default function AboutPage() {
     return (
@@ -190,15 +191,17 @@ export default function AboutPage() {
                     ))}
                 </div>
 
+
+
                 {/* Tools Grid */}
                 <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
                     {[
-                        "Figma",
-                        "Adobe XD",
-                        "Illustrator",
-                        "Photoshop",
-                        "MidJourney",
-                        "ChatGPT"
+                        { name: "Figma", icon: "/logos/design/figma.png" },
+                        { name: "Adobe XD", icon: "/logos/design/xd.png" },
+                        { name: "Illustrator", icon: "/logos/design/illustrator.png" },
+                        { name: "Photoshop", icon: "/logos/design/photoshop.png" },
+                        { name: "MidJourney", icon: "/logos/ai/midjourney.png" },
+                        { name: "ChatGPT", icon: "/logos/ai/chatgpt.png" }
                     ].map((tool, i) => (
                         <motion.div
                             key={i}
@@ -207,10 +210,18 @@ export default function AboutPage() {
                             transition={{ duration: 0.4, delay: i * 0.05 }}
                             viewport={{ once: true }}
                             whileHover={{ scale: 1.1 }}
-                            className="aspect-square rounded-xl border border-white/5 flex items-center justify-center hover:border-primary/30 hover:bg-white/5 transition-all duration-300 cursor-pointer"
+                            className="aspect-square rounded-xl border border-white/5 flex flex-col items-center justify-center hover:border-primary/30 hover:bg-white/5 transition-all duration-300 cursor-pointer gap-2"
                         >
+                            <div className="relative w-10 h-10 md:w-12 md:h-12">
+                                <Image
+                                    src={tool.icon}
+                                    alt={tool.name}
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
                             <p className="font-sans text-xs md:text-sm text-secondary/80 text-center px-2">
-                                {tool}
+                                {tool.name}
                             </p>
                         </motion.div>
                     ))}
