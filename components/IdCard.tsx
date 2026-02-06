@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 export default function IdCard() {
     const cardRef = useRef<HTMLDivElement>(null);
@@ -55,15 +56,15 @@ export default function IdCard() {
                 {/* Lanyard Hole */}
                 <div className="absolute top-[-15px] left-1/2 -translate-x-1/2 w-4 h-4 bg-[#0A0A0A] rounded-full ring-4 ring-[#333]" />
 
-                {/* Lanyard String (Visual only, usually outside card but drawing here for simplicity of component) */}
-                {/* Ideally the string goes UP out of the card. */}
-
                 {/* Photo Area */}
-                <div className="w-32 h-32 bg-gray-300 rounded-lg mb-6 overflow-hidden border-2 border-white shadow-inner">
-                    {/* Placeholder for user photo */}
-                    <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-400 flex items-center justify-center text-gray-500">
-                        PHOTO
-                    </div>
+                <div className="w-32 h-32 bg-gray-300 rounded-lg mb-6 overflow-hidden border-2 border-white shadow-inner relative">
+                    <Image
+                        src="/images/profile-photo.jpg"
+                        alt="Shoaib Hossain - Professional Photo"
+                        fill
+                        className="object-cover"
+                        priority
+                    />
                 </div>
 
                 {/* Details */}
