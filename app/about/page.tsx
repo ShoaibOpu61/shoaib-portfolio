@@ -56,10 +56,10 @@ export default function AboutPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="text-6xl md:text-8xl font-serif uppercase leading-[0.85] mb-12"
+                            className="text-6xl md:text-8xl font-display uppercase leading-[0.85] mb-12"
                         >
-                            <span className="text-transparent stroke-text opacity-50 block md:inline" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>About</span>
-                            <span className="text-primary block md:inline md:ml-4">Shoaib</span>
+                            <span className="text-white">About </span>
+                            <span className="text-primary">Shoaib</span>
                         </motion.h1>
 
                         <div className="space-y-4">
