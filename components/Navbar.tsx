@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import AnimatedResumeButton from "./AnimatedResumeButton";
 
 const navLinks = [
     { name: "Home", href: "/" },
@@ -90,14 +91,9 @@ export default function Navbar() {
                     </ul>
 
                     {/* Desktop Resume */}
-                    <a
-                        href="/resume.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hidden md:block px-5 py-2 border border-white/20 rounded-full font-sans text-xs tracking-widest uppercase text-white hover:bg-white hover:text-black transition-all duration-300"
-                    >
-                        Resume
-                    </a>
+                    <div className="hidden md:block">
+                        <AnimatedResumeButton />
+                    </div>
 
                     {/* Mobile Menu Button */}
                     <button

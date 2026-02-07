@@ -1,20 +1,71 @@
 import type { Metadata } from "next";
 import { Syne, Manrope } from "next/font/google";
 import "./globals.css";
+import { seoConfig } from "@/lib/seo-config";
+import StructuredData from "@/components/StructuredData";
 
 const manrope = Manrope({
   variable: "--font-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const syne = Syne({
   variable: "--font-display",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Shoaib | Product Designer",
-  description: "Premium UI/UX Design Portfolio",
+  metadataBase: new URL(seoConfig.siteUrl),
+  title: {
+    default: `${seoConfig.name} | ${seoConfig.title}`,
+    template: `%s | ${seoConfig.name}`,
+  },
+  description: seoConfig.description,
+  keywords: seoConfig.keywords,
+  authors: [{ name: seoConfig.author }],
+  creator: seoConfig.author,
+  openGraph: {
+    type: "website",
+    locale: seoConfig.locale,
+    url: seoConfig.siteUrl,
+    siteName: `${seoConfig.name} | ${seoConfig.title}`,
+    title: `${seoConfig.name} | ${seoConfig.title}`,
+    description: seoConfig.description,
+    images: [
+      {
+        url: seoConfig.ogImage.url,
+        width: seoConfig.ogImage.width,
+        height: seoConfig.ogImage.height,
+        alt: seoConfig.ogImage.alt,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${seoConfig.name} | ${seoConfig.title}`,
+    description: seoConfig.description,
+    images: [seoConfig.ogImage.url],
+    creator: seoConfig.social.twitter || undefined,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    // Add your verification codes after deploying
+    google: undefined, // Add Google Search Console verification
+    // yandex: undefined,
+    // bing: undefined,
+  },
 };
 
 export default function RootLayout({
@@ -24,6 +75,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <StructuredData type="person" />
+        <StructuredData type="website" />
+      </head>
       <body
         className={`${manrope.variable} ${syne.variable} antialiased bg-background text-foreground`}
       >
