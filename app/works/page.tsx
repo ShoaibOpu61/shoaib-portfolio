@@ -58,7 +58,7 @@ export default function WorksPage() {
                                 <div className="flex justify-between items-start border-t border-white/20 pt-4">
                                     <div className="w-full">
                                         <div className="flex justify-between items-center mb-2">
-                                            <span className="text-xs font-sans tracking-widest text-secondary uppercase">
+                                            <span className="text-sm font-sans tracking-widest text-secondary uppercase">
                                                 {project.category} — {project.year}
                                             </span>
                                             <ArrowUpRight className="w-5 h-5 text-secondary group-hover:text-primary transition-colors" />
@@ -162,7 +162,7 @@ export default function WorksPage() {
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
                                 </div>
                                 <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                                    <span className="block text-xs font-sans tracking-widest text-primary uppercase mb-2 drop-shadow-md">{item.type}</span>
+                                    <span className="block text-sm font-sans tracking-widest text-primary uppercase mb-2 drop-shadow-md">{item.type}</span>
                                     <h4 className="text-xl font-serif uppercase text-white drop-shadow-md leading-tight">{item.title}</h4>
                                 </div>
                             </motion.div>

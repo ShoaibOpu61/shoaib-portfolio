@@ -11,7 +11,7 @@ export default function Footer() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="font-sans text-xs tracking-widest text-secondary mb-8 uppercase"
+                    className="font-sans text-sm font-medium tracking-widest text-secondary mb-8 uppercase"
                 >
                     Have an idea?
                 </motion.p>
@@ -33,7 +33,7 @@ export default function Footer() {
                     Let&apos;s Connect
                 </a>
 
-                <div className="w-full flex flex-col md:flex-row justify-between items-center text-xs font-sans tracking-widest text-secondary/50 uppercase gap-4 z-10 relative">
+                <div className="w-full flex flex-col md:flex-row justify-between items-center text-sm font-sans tracking-widest text-secondary/50 uppercase gap-4 z-10 relative">
                     <span>© 2026 Shoaib. All rights reserved.</span>
                     <div className="flex gap-8 items-center">
                         <a

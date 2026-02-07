@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import IdCard from "@/components/IdCard";
 import Image from "next/image";
+import { projects } from "@/lib/data";
 
 const Highlight = ({ children }: { children: React.ReactNode }) => (
     <motion.span
@@ -279,56 +280,38 @@ export default function AboutPage() {
                 </motion.h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {[
-                        {
-                            name: "Retouch",
-                            type: "Mobile App",
-                            gradient: "from-purple-500/20 to-pink-500/20"
-                        },
-                        {
-                            name: "Beauty Editor",
-                            type: "Mobile App",
-                            gradient: "from-blue-500/20 to-cyan-500/20"
-                        },
-                        {
-                            name: "Walton E-Com",
-                            type: "Web Platform",
-                            gradient: "from-orange-500/20 to-red-500/20"
-                        },
-                        {
-                            name: "Walton Tick",
-                            type: "Mobile App",
-                            gradient: "from-green-500/20 to-emerald-500/20"
-                        }
-                    ].map((project, i) => (
+                    {/* Using real data from lib/data.ts */}
+                    {projects.slice(0, 4).map((project, i) => (
                         <motion.div
-                            key={i}
+                            key={project.id}
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: i * 0.1 }}
                             viewport={{ once: true }}
                             whileHover={{ y: -10 }}
-                            className="group cursor-pointer"
+                            className="group cursor-pointer block"
                         >
-                            <div className={`aspect-[4/3] rounded-2xl bg-gradient-to-br ${project.gradient} border border-white/10 mb-6 flex items-center justify-center group-hover:border-primary/50 transition-all duration-300`}>
-                                <div className="text-center">
-                                    <p className="text-6xl font-serif uppercase text-white/30 group-hover:text-white/50 transition-colors">
-                                        {project.name.split(' ')[0].substring(0, 2)}
-                                    </p>
-                                </div>
+                            <div className="aspect-[4/3] rounded-2xl overflow-hidden relative mb-6 border border-white/10 group-hover:border-primary/50 transition-all duration-300">
+                                <Image
+                                    src={project.image}
+                                    alt={project.title}
+                                    fill
+                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
                             </div>
                             <h3 className="text-2xl font-serif uppercase text-primary mb-2 group-hover:text-white transition-colors">
-                                {project.name}
+                                {project.title}
                             </h3>
                             <p className="font-sans text-sm text-secondary/50 uppercase tracking-[0.2em]">
-                                {project.type}
+                                {project.category}
                             </p>
                         </motion.div>
                     ))}
                 </div>
             </section>
 
-            {/* Awards - Badge Style */}
+            {/* Recognition - Split Layout */}
             <section className="py-24 px-6 md:px-12 border-t border-white/10">
                 <motion.h2
                     initial={{ opacity: 0 }}
@@ -339,41 +322,143 @@ export default function AboutPage() {
                     Recognition
                 </motion.h2>
 
-                <div className="flex flex-col md:flex-row gap-6">
-                    {[
-                        {
-                            emoji: "🏆",
-                            title: "MVP on the Field",
-                            year: "2024",
-                            org: "Kite Games"
-                        },
-                        {
-                            emoji: "⭐",
-                            title: "Employee of the Year",
-                            year: "2020",
-                            org: "IOTA Infotech"
-                        }
-                    ].map((award, i) => (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    {/* Left Side - Achievements */}
+                    <div className="space-y-6">
+                        {[
+                            {
+                                emoji: "🏆",
+                                title: "MVP on the Field",
+                                year: "2024",
+                                org: "Kite Games Studio Ltd."
+                            },
+                            {
+                                emoji: "⭐",
+                                title: "Employee of the Year",
+                                year: "2020",
+                                org: "IOTA Infotech Limited"
+                            }
+                        ].map((award, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.5, delay: i * 0.1 }}
+                                viewport={{ once: true }}
+                                whileHover={{ x: 10 }}
+                                className="border-2 border-primary/30 rounded-2xl p-8 hover:border-primary hover:bg-white/5 transition-all duration-300 cursor-pointer group"
+                            >
+                                <div className="flex items-start gap-6">
+                                    <div className="text-5xl group-hover:scale-110 transition-transform">
+                                        {award.emoji}
+                                    </div>
+                                    <div>
+                                        <h3 className="font-serif text-2xl uppercase text-primary mb-2 group-hover:text-white transition-colors">
+                                            {award.title}
+                                        </h3>
+                                        <p className="font-sans text-sm text-secondary/50 uppercase tracking-[0.2em]">
+                                            {award.org} • {award.year}
+                                        </p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    {/* Right Side - Award Images with Creative Display */}
+                    <div className="relative h-[500px] lg:h-[600px]">
+                        {/* Decorative Background Elements */}
+                        <div className="absolute inset-0 overflow-hidden">
+                            <div className="absolute top-10 right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+                            <div className="absolute bottom-20 left-10 w-48 h-48 bg-primary/10 rounded-full blur-2xl"></div>
+                        </div>
+
+                        {/* MVP Award - Top Right, Rotated */}
                         <motion.div
-                            key={i}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.5, delay: i * 0.1 }}
+                            initial={{ opacity: 0, scale: 0.8, rotate: -15 }}
+                            whileInView={{ opacity: 1, scale: 1, rotate: -8 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
                             viewport={{ once: true }}
-                            whileHover={{ scale: 1.05 }}
-                            className="flex-1 border-2 border-primary/30 rounded-2xl p-8 hover:border-primary hover:bg-white/5 transition-all duration-300 cursor-pointer group"
+                            whileHover={{ scale: 1.05, rotate: -5 }}
+                            className="absolute top-0 right-0 lg:right-10 w-[280px] md:w-[320px] group cursor-pointer"
                         >
-                            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
-                                {award.emoji}
+                            <div className="relative">
+                                {/* Glow Effect */}
+                                <div className="absolute inset-0 bg-primary/20 blur-xl rounded-2xl group-hover:bg-primary/30 transition-all duration-300"></div>
+
+                                {/* Image Container */}
+                                <div className="relative border-4 border-primary/40 rounded-2xl overflow-hidden bg-black/40 backdrop-blur-sm p-6 group-hover:border-primary/60 transition-all duration-300">
+                                    <Image
+                                        src="/images/recognition/mvp.png"
+                                        alt="MVP on the Field Award"
+                                        width={300}
+                                        height={400}
+                                        className="w-full h-auto object-contain"
+                                    />
+
+                                    {/* Decorative Corner Accent */}
+                                    <div className="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-primary/60 rounded-tr-2xl"></div>
+                                    <div className="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-primary/60 rounded-bl-2xl"></div>
+                                </div>
                             </div>
-                            <h3 className="font-serif text-2xl uppercase text-primary mb-2 group-hover:text-white transition-colors">
-                                {award.title}
-                            </h3>
-                            <p className="font-sans text-sm text-secondary/50 uppercase tracking-[0.2em]">
-                                {award.org} • {award.year}
-                            </p>
                         </motion.div>
-                    ))}
+
+                        {/* Employee of the Year Award - Bottom Left, Rotated */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8, rotate: 15 }}
+                            whileInView={{ opacity: 1, scale: 1, rotate: 6 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            viewport={{ once: true }}
+                            whileHover={{ scale: 1.05, rotate: 3 }}
+                            className="absolute bottom-0 left-0 lg:left-10 w-[280px] md:w-[320px] group cursor-pointer"
+                        >
+                            <div className="relative">
+                                {/* Glow Effect */}
+                                <div className="absolute inset-0 bg-primary/20 blur-xl rounded-2xl group-hover:bg-primary/30 transition-all duration-300"></div>
+
+                                {/* Image Container */}
+                                <div className="relative border-4 border-primary/40 rounded-2xl overflow-hidden bg-black/40 backdrop-blur-sm p-6 group-hover:border-primary/60 transition-all duration-300">
+                                    <Image
+                                        src="/images/recognition/employee-of-year.png"
+                                        alt="Employee of the Year Award"
+                                        width={300}
+                                        height={400}
+                                        className="w-full h-auto object-contain"
+                                    />
+
+                                    {/* Decorative Corner Accent */}
+                                    <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-primary/60 rounded-tl-2xl"></div>
+                                    <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-primary/60 rounded-br-2xl"></div>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Decorative Lines */}
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" xmlns="http://www.w3.org/2000/svg">
+                            <motion.path
+                                d="M 50 100 Q 200 150 350 100"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                fill="none"
+                                className="text-primary"
+                                initial={{ pathLength: 0 }}
+                                whileInView={{ pathLength: 1 }}
+                                transition={{ duration: 1.5, delay: 0.6 }}
+                                viewport={{ once: true }}
+                            />
+                            <motion.path
+                                d="M 100 400 Q 250 350 400 400"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                fill="none"
+                                className="text-primary"
+                                initial={{ pathLength: 0 }}
+                                whileInView={{ pathLength: 1 }}
+                                transition={{ duration: 1.5, delay: 0.8 }}
+                                viewport={{ once: true }}
+                            />
+                        </svg>
+                    </div>
                 </div>
             </section>
 

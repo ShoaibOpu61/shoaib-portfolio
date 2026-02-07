@@ -35,7 +35,7 @@ export default async function ProjectPage({
             <Navbar />
 
             <article className="pt-32 pb-12 px-6 md:px-12 max-w-[1400px] mx-auto">
-                <Link href="/works" className="inline-flex items-center gap-2 text-secondary hover:text-white transition-colors uppercase tracking-widest text-xs mb-12">
+                <Link href="/works" className="inline-flex items-center gap-2 text-secondary hover:text-white transition-colors uppercase tracking-widest text-sm mb-12">
                     <ArrowLeft className="w-4 h-4" /> Back to Works
                 </Link>
 
@@ -98,7 +98,7 @@ export default async function ProjectPage({
                                 </div>
                                 <div className="flex justify-between items-start border-t border-white/20 pt-4">
                                     <div>
-                                        <span className="block text-xs font-sans tracking-widest text-secondary mb-2 uppercase">
+                                        <span className="block text-sm font-sans tracking-widest text-secondary mb-2 uppercase">
                                             {p.category}
                                         </span>
                                         <h3 className="text-2xl md:text-3xl font-serif uppercase group-hover:text-primary transition-colors">

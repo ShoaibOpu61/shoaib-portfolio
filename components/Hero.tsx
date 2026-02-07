@@ -52,7 +52,7 @@ export default function Hero() {
 
                     {/* Left: Meta */}
                     <div className="flex items-center">
-                        <span className="text-white/35 text-xs tracking-widest uppercase">
+                        <span className="text-white/35 text-sm tracking-widest uppercase">
                             UI/UX • Prototype • Product
                         </span>
                     </div>
@@ -63,7 +63,7 @@ export default function Hero() {
                             href="#works"
                             className="inline-flex items-center justify-center rounded-full
                    border border-white/20 px-6 py-2
-                   text-xs tracking-widest uppercase text-white
+                   text-sm tracking-widest uppercase text-white
                    hover:bg-white hover:text-black
                    transition-all duration-300"
                         >
@@ -74,7 +74,7 @@ export default function Hero() {
                     {/* Right: Scroll */}
                     <div className="flex flex-col items-end gap-2">
                         <div className="h-[1px] w-24 bg-white/25" />
-                        <span className="font-sans text-[11px] tracking-[0.35em] uppercase text-white/55">
+                        <span className="font-sans text-xs tracking-[0.35em] uppercase text-white/55">
                             Scroll
                         </span>
                     </div>

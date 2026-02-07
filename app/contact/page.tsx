@@ -15,7 +15,7 @@ export default function ContactPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <p className="font-sans text-xs tracking-widest text-secondary mb-8 uppercase">
+                    <p className="font-sans text-sm tracking-widest text-secondary mb-8 uppercase">
                         Get in Touch
                     </p>
                     <h1 className="text-6xl md:text-9xl font-serif uppercase leading-[0.85] mb-12 text-primary max-w-4xl">
