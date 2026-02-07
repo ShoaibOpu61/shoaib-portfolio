@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, animate } from "framer-motion";
 import Link from "next/link";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { projects } from "@/lib/data";
@@ -162,8 +163,14 @@ export default function Works() {
                                 <div
                                     className={`aspect-[4/3] w-full ${project.color} mb-6 overflow-hidden relative rounded-2xl border border-white/10`}
                                 >
+                                    <ImageWithSkeleton
+                                        src={project.image}
+                                        alt={project.title}
+                                        fill
+                                        className="object-cover opacity-80 group-hover:opacity-100 sm:group-hover:scale-105 transition-all duration-500"
+                                    />
                                     {/* Placeholder overlay */}
-                                    <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 transition-colors" />
+                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                                 </div>
 
