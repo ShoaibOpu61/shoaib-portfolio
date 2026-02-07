@@ -30,9 +30,9 @@ export default function Hero() {
             </div>
 
             {/* Contrast overlays (keep text readable) */}
-            <div className="pointer-events-none absolute inset-0 z-10 bg-black/40" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-44 bg-gradient-to-t from-black/70 to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-36 bg-gradient-to-b from-black/55 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 z-10 bg-black/10" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-44 bg-gradient-to-t from-black/30 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-36 bg-gradient-to-b from-black/20 to-transparent" />
 
             {/* Top-center text */}
             <motion.div
