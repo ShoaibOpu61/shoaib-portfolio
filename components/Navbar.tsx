@@ -51,7 +51,7 @@ export default function Navbar() {
                 transition={{ duration: 0.8, ease }}
                 className={clsx(
                     "fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 transition-all duration-300 md:px-12",
-                    isScrolled ? "bg-background/80 backdrop-blur-md py-4 shadow-sm shadow-white/5" : "bg-transparent"
+                    isScrolled ? "bg-black/40 backdrop-blur-xl py-4 shadow-lg shadow-purple-500/5 border-b border-white/5" : "bg-transparent"
                 )}
             >
                 <Link
