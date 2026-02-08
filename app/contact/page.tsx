@@ -262,47 +262,135 @@ export default function ContactPage() {
             <section className="py-16 px-6 md:px-12 border-t border-white/10 relative z-10">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {[
-                            { icon: Mail, title: "Email me", info: "shoaibopu@gmail.com", href: "mailto:shoaibopu@gmail.com" },
-                            { icon: Phone, title: "Call me", info: "Available on request", href: null },
-                            { icon: MapPin, title: "My location", info: "Dhaka, Bangladesh", subInfo: "Remote Friendly", href: null }
-                        ].map((contact, i) => (
+                        {/* Email Card */}
+                        <motion.a
+                            href="mailto:shoaibopu@gmail.com"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0, duration: 0.5 }}
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            className="group relative p-8 bg-zinc-900/40 backdrop-blur-xl border border-white/10 rounded-2xl hover:border-purple-500/50 transition-all duration-500 cursor-pointer overflow-hidden"
+                        >
+                            {/* Gradient Glow on Hover */}
                             <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1, duration: 0.5 }}
-                                whileHover={{ y: -5 }}
-                                className="group p-8 bg-white/5 border border-white/10 rounded-2xl hover:border-primary hover:bg-white/10 transition-all duration-300 cursor-pointer relative overflow-hidden"
-                                {...(contact.href ? { as: "a", href: contact.href } : {})}
-                            >
-                                {/* Hover Glow */}
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                    initial={false}
-                                />
+                                className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                initial={false}
+                            />
 
-                                <div className="flex items-start gap-4 relative z-10">
-                                    <motion.div
-                                        className="w-12 h-12 rounded-full bg-primary/20 border border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary transition-all"
-                                        whileHover={{ rotate: 360, scale: 1.1 }}
-                                        transition={{ duration: 0.5 }}
-                                    >
-                                        <contact.icon className="w-6 h-6 text-primary group-hover:text-black transition-colors" />
-                                    </motion.div>
-                                    <div>
-                                        <h3 className="text-lg font-display text-white mb-2 group-hover:text-primary transition-colors">
-                                            {contact.title}
-                                        </h3>
-                                        <p className="text-secondary font-sans">{contact.info}</p>
-                                        {contact.subInfo && (
-                                            <p className="text-secondary/70 font-sans text-sm mt-1">{contact.subInfo}</p>
-                                        )}
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
+                            {/* Animated Border Glow */}
+                            <motion.div
+                                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                style={{
+                                    background: "linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.3), transparent)",
+                                    filter: "blur(20px)",
+                                }}
+                            />
+
+                            <div className="relative z-10">
+                                <motion.div
+                                    className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500"
+                                    whileHover={{ rotate: 12 }}
+                                >
+                                    <Mail className="w-7 h-7 text-purple-400" />
+                                </motion.div>
+                                <h3 className="text-xl font-display text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">
+                                    Email me
+                                </h3>
+                                <p className="text-secondary font-sans text-sm mb-1">shoaibopu@gmail.com</p>
+                                <p className="text-secondary/60 font-sans text-xs">Available 24/7</p>
+                            </div>
+                        </motion.a>
+
+                        {/* Phone Card */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1, duration: 0.5 }}
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            className="group relative p-8 bg-zinc-900/40 backdrop-blur-xl border border-white/10 rounded-2xl hover:border-blue-500/50 transition-all duration-500 cursor-pointer overflow-hidden"
+                        >
+                            {/* Gradient Glow on Hover */}
+                            <motion.div
+                                className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                initial={false}
+                            />
+
+                            {/* Animated Border Glow */}
+                            <motion.div
+                                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                style={{
+                                    background: "linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent)",
+                                    filter: "blur(20px)",
+                                }}
+                            />
+
+                            <div className="relative z-10">
+                                <motion.div
+                                    className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500"
+                                    whileHover={{ rotate: 12 }}
+                                >
+                                    <Phone className="w-7 h-7 text-blue-400" />
+                                </motion.div>
+                                <h3 className="text-xl font-display text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
+                                    Call me
+                                </h3>
+                                <p className="text-secondary font-sans text-sm mb-1">Available on request</p>
+                                <p className="text-secondary/60 font-sans text-xs">Business hours</p>
+                            </div>
+                        </motion.div>
+
+                        {/* Location Card with Map Background */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2, duration: 0.5 }}
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            className="group relative p-8 rounded-2xl hover:border-emerald-500/50 transition-all duration-500 cursor-pointer overflow-hidden border border-white/10"
+                        >
+                            {/* Dark Map Background Pattern */}
+                            <div
+                                className="absolute inset-0 opacity-30 group-hover:opacity-40 transition-opacity duration-500"
+                                style={{
+                                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                                    backgroundSize: "30px 30px",
+                                }}
+                            />
+
+                            {/* Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/60 via-zinc-900/80 to-zinc-900/90 backdrop-blur-xl" />
+
+                            {/* Gradient Glow on Hover */}
+                            <motion.div
+                                className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                initial={false}
+                            />
+
+                            {/* Animated Border Glow */}
+                            <motion.div
+                                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                style={{
+                                    background: "linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent)",
+                                    filter: "blur(20px)",
+                                }}
+                            />
+
+                            <div className="relative z-10">
+                                <motion.div
+                                    className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 border border-emerald-500/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500"
+                                    whileHover={{ rotate: 12 }}
+                                >
+                                    <MapPin className="w-7 h-7 text-emerald-400" />
+                                </motion.div>
+                                <h3 className="text-xl font-display text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
+                                    My location
+                                </h3>
+                                <p className="text-secondary font-sans text-sm mb-1">Dhaka, Bangladesh</p>
+                                <p className="text-secondary/60 font-sans text-xs">GMT+6 • Remote Friendly</p>
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
