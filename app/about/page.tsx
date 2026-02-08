@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import IdCard from "@/components/IdCard";
 import Image from "next/image";
 import { projects } from "@/lib/data";
+import Link from "next/link";
 
 const Highlight = ({ children }: { children: React.ReactNode }) => (
     <motion.span
@@ -125,19 +126,19 @@ export default function AboutPage() {
                 <div className="space-y-8 max-w-5xl mx-auto">
                     {[
                         {
-                            role: "Senior UI/UX Designer",
+                            role: "Product Designer (UI/UX)",
                             company: "Kite Games Studio Ltd.",
                             year: "Feb,2024 — Now",
                             color: "primary"
                         },
                         {
-                            role: "UI/UX Designer",
+                            role: "UI/UX & Creative Designer",
                             company: "Walton Digi-Tech Industries Ltd. (Corporate)",
                             year: "Dec,2022 — Jan,2024",
                             color: "primary/80"
                         },
                         {
-                            role: "UI Engineer (Remote)",
+                            role: "UI Designer (Remote)",
                             company: "Exeqcuet, (Dubai)",
                             year: "Feb,2022 - Nov,2022",
                             color: "primary/60"
@@ -282,31 +283,32 @@ export default function AboutPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Using real data from lib/data.ts */}
                     {projects.slice(0, 4).map((project, i) => (
-                        <motion.div
-                            key={project.id}
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: i * 0.1 }}
-                            viewport={{ once: true }}
-                            whileHover={{ y: -10 }}
-                            className="group cursor-pointer block"
-                        >
-                            <div className="aspect-[4/3] rounded-2xl overflow-hidden relative mb-6 border border-white/10 group-hover:border-primary/50 transition-all duration-300">
-                                <Image
-                                    src={project.image}
-                                    alt={project.title}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
-                            </div>
-                            <h3 className="text-2xl font-serif uppercase text-primary mb-2 group-hover:text-white transition-colors">
-                                {project.title}
-                            </h3>
-                            <p className="font-sans text-sm text-secondary/50 uppercase tracking-[0.2em]">
-                                {project.category}
-                            </p>
-                        </motion.div>
+                        <Link href={`/works/${project.id}`} key={project.id} className="block group">
+                            <motion.div
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: i * 0.1 }}
+                                viewport={{ once: true }}
+                                whileHover={{ y: -10 }}
+                                className="block"
+                            >
+                                <div className="aspect-[4/3] rounded-2xl overflow-hidden relative mb-6 border border-white/10 group-hover:border-primary/50 transition-all duration-300">
+                                    <Image
+                                        src={project.image}
+                                        alt={project.title}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
+                                </div>
+                                <h3 className="text-2xl font-serif uppercase text-primary mb-2 group-hover:text-white transition-colors">
+                                    {project.title}
+                                </h3>
+                                <p className="font-sans text-sm text-secondary/50 uppercase tracking-[0.2em]">
+                                    {project.category}
+                                </p>
+                            </motion.div>
+                        </Link>
                     ))}
                 </div>
             </section>

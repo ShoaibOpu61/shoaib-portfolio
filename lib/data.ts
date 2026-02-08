@@ -84,7 +84,7 @@ export const caseStudies = [
         color: "bg-blue-900",
         image: "/images/case-studies/beautyeditor-research-cover.jpg",
         content: "Full case study details finding pain points in traditional beauty editing apps...",
-        images: ["/images/case-studies/beautyeditor-research-cover.jpg"]
+        images: ["/images/case-studies/beauty-editor-full.png"]
     },
     {
         id: "case-study-2",
