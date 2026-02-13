@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowRight, Check, Mail, Phone, MapPin, Linkedin, Instagram, Dribbble } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ContactPage() {
     const [formData, setFormData] = useState({
@@ -14,6 +14,11 @@ export default function ContactPage() {
     });
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [errorMessage, setErrorMessage] = useState("");
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -86,7 +91,7 @@ export default function ContactPage() {
                 />
 
                 {/* Floating Particles */}
-                {[...Array(20)].map((_, i) => (
+                {mounted && [...Array(20)].map((_, i) => (
                     <motion.div
                         key={i}
                         className="absolute w-1 h-1 bg-primary/40 rounded-full"
