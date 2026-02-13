@@ -9,20 +9,30 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@payloadcms/db-mongodb": "^3.76.1",
+    "@payloadcms/next": "^3.76.1",
+    "@payloadcms/richtext-slate": "^3.76.1",
     "@splinetool/react-spline": "^4.1.0",
+    "@splinetool/runtime": "^1.12.55",
     "clsx": "^2.1.1",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.3.1",
     "framer-motion": "^12.29.2",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
+    "payload": "^3.76.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/html-minifier-terser": "^7.0.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/whatwg-url": "^13.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",

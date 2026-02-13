@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
+import { withPayload } from "@payloadcms/next/withPayload";
+import path from "path";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  transpilePackages: ["@splinetool/react-spline"],
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);
