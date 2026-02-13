@@ -37,7 +37,8 @@ export default function Footer() {
                     <span>© 2026 Shoaib. All rights reserved.</span>
                     <div className="flex gap-8 items-center">
                         <a
-                            href="/resume.pdf"
+                            href="/designer_shoaib_resume.pdf"
+                            download="designer_shoaib_resume.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:text-primary transition-colors"

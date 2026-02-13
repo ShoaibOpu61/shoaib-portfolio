@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowRight, Check, Mail, Phone, MapPin, Linkedin, Instagram, Dribbble } from "lucide-react";
@@ -12,10 +12,44 @@ export default function ContactPage() {
         email: "",
         message: ""
     });
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [errorMessage, setErrorMessage] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Form submitted:", formData);
+        setStatus("loading");
+
+        try {
+            const formDataToSubmit = new FormData();
+            formDataToSubmit.append("access_key", "5d1bc5ce-4db6-4fb9-83ae-3da3e228133d");
+            formDataToSubmit.append("name", formData.name);
+            formDataToSubmit.append("email", formData.email);
+            formDataToSubmit.append("message", formData.message);
+            formDataToSubmit.append("from_name", "Portfolio Contact Form");
+            formDataToSubmit.append("subject", `New Message from ${formData.name}`);
+
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formDataToSubmit
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setStatus("success");
+                setFormData({ name: "", email: "", message: "" });
+                // Reset success message after 5 seconds
+                setTimeout(() => setStatus("idle"), 5000);
+            } else {
+                setStatus("error");
+                setErrorMessage(data.message || "Something went wrong. Please try again.");
+                setTimeout(() => setStatus("idle"), 5000);
+            }
+        } catch (error) {
+            setStatus("error");
+            setErrorMessage("Failed to send message. Please check your connection.");
+            setTimeout(() => setStatus("idle"), 5000);
+        }
     };
 
     return (
@@ -237,9 +271,10 @@ export default function ContactPage() {
 
                                 <motion.button
                                     type="submit"
-                                    className="w-full py-4 bg-white text-black rounded-full font-sans font-medium tracking-wide hover:bg-primary transition-all duration-300 text-lg relative overflow-hidden group"
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
+                                    disabled={status === "loading"}
+                                    className="w-full py-4 bg-white text-black rounded-full font-sans font-medium tracking-wide hover:bg-primary transition-all duration-300 text-lg relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
+                                    whileHover={status !== "loading" ? { scale: 1.02 } : {}}
+                                    whileTap={status !== "loading" ? { scale: 0.98 } : {}}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.8 }}
@@ -247,11 +282,48 @@ export default function ContactPage() {
                                     <motion.div
                                         className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80"
                                         initial={{ x: "-100%" }}
-                                        whileHover={{ x: 0 }}
+                                        whileHover={status !== "loading" ? { x: 0 } : {}}
                                         transition={{ duration: 0.3 }}
                                     />
-                                    <span className="relative z-10">Submit</span>
+                                    <span className="relative z-10 flex items-center justify-center gap-2">
+                                        {status === "loading" ? (
+                                            <>
+                                                <motion.div
+                                                    animate={{ rotate: 360 }}
+                                                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                                    className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full"
+                                                />
+                                                Sending...
+                                            </>
+                                        ) : (
+                                            "Submit"
+                                        )}
+                                    </span>
                                 </motion.button>
+
+                                {/* Feedback Messages */}
+                                <AnimatePresence mode="wait">
+                                    {status === "success" && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -10 }}
+                                            className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-center font-sans"
+                                        >
+                                            Message sent successfully! I'll get back to you soon.
+                                        </motion.div>
+                                    )}
+                                    {status === "error" && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -10 }}
+                                            className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-center font-sans"
+                                        >
+                                            {errorMessage}
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </form>
                         </motion.div>
                     </div>

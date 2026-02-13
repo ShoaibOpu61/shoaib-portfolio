@@ -159,7 +159,8 @@ export default function Navbar() {
 
                             <div className="mt-8">
                                 <a
-                                    href="/resume.pdf"
+                                    href="/designer_shoaib_resume.pdf"
+                                    download="designer_shoaib_resume.pdf"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={closeMenu}
