@@ -38,7 +38,12 @@ export default function ContactPage() {
                 body: formDataToSubmit
             });
 
-            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const text = await response.text();
+            const data = text ? JSON.parse(text) : {};
 
             if (data.success) {
                 setStatus("success");
@@ -50,7 +55,7 @@ export default function ContactPage() {
                 setErrorMessage(data.message || "Something went wrong. Please try again.");
                 setTimeout(() => setStatus("idle"), 5000);
             }
-        } catch (error) {
+        } catch {
             setStatus("error");
             setErrorMessage("Failed to send message. Please check your connection.");
             setTimeout(() => setStatus("idle"), 5000);
@@ -142,8 +147,8 @@ export default function ContactPage() {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
                     >
-                        Whether it's a role, a project, or an idea worth exploring,
-                        I'm always open to a conversation.
+                        Whether it&apos;s a role, a project, or an idea worth exploring,
+                        I&apos;m always open to a conversation.
                     </motion.p>
                 </motion.div>
             </section>
@@ -201,7 +206,6 @@ export default function ContactPage() {
                                 <div className="flex gap-4">
                                     {[
                                         { icon: Linkedin, href: "https://www.linkedin.com/in/shoaib-opu-a8aaa0184/" },
-                                        { icon: Instagram, href: "https://www.instagram.com/shoaib_opu/" },
                                         { icon: Dribbble, href: "https://dribbble.com/ShoaibOpu" }
                                     ].map((social, i) => (
                                         <motion.a
@@ -315,7 +319,7 @@ export default function ContactPage() {
                                             exit={{ opacity: 0, y: -10 }}
                                             className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-center font-sans"
                                         >
-                                            Message sent successfully! I'll get back to you soon.
+                                            Message sent successfully! I&rsquo;ll get back to you soon.
                                         </motion.div>
                                     )}
                                     {status === "error" && (

@@ -1,4 +1,4 @@
-import { ImportMap } from 'payload'
+import type { ImportMap } from 'payload'
 
 export const importMap: ImportMap = {
     // Add custom components here

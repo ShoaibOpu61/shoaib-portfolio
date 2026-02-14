@@ -5,21 +5,22 @@ import { ArrowUpRight, ArrowLeft, ArrowRight, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/Footer";
-import { playground } from "@/lib/data";
+// import { playground } from "@/lib/data";
 import Link from "next/link";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 interface WorksClientProps {
     initialProjects: any[];
     initialCaseStudies: any[];
+    initialPlayground: any[];
 }
 
-export default function WorksClient({ initialProjects, initialCaseStudies }: WorksClientProps) {
+export default function WorksClient({ initialProjects, initialCaseStudies, initialPlayground }: WorksClientProps) {
     const sliderRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const [constraint, setConstraint] = useState(0);
     const x = useMotionValue(0);
-    const [selectedId, setSelectedId] = useState<number | null>(null);
+    const [selectedId, setSelectedId] = useState<string | number | null>(null);
 
     // 3D Tilt Logic
     const mouseX = useMotionValue(0);
@@ -185,7 +186,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                         whileTap={{ cursor: "grabbing" }}
                         className="grid grid-rows-1 md:grid-rows-2 grid-flow-col gap-4 md:gap-6 auto-cols-[85vw] md:auto-cols-[380px] px-6 md:px-12 cursor-grab active:cursor-grabbing w-max"
                     >
-                        {playground.map((item, i) => (
+                        {initialPlayground.map((item: any, i: number) => (
                             <motion.div
                                 layoutId={`card-${item.id}`}
                                 key={item.id}
@@ -197,7 +198,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                 className="snap-center relative group rounded-xl overflow-hidden border border-white/10 bg-zinc-900 draggable-item cursor-pointer"
                             >
                                 <div className="aspect-[4/3] w-full relative pointer-events-none">
-                                    <ImageWithSkeleton src={item.image} alt={item.title} fill className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" />
+                                    <ImageWithSkeleton src={typeof item.image === 'object' ? item.image.url : item.image} alt={item.title} fill className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
                                 </div>
                                 <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-none">
@@ -214,7 +215,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-12 pointer-events-none">
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedId(null)} className="absolute inset-0 bg-black/80 backdrop-blur-md pointer-events-auto cursor-pointer" />
                             <div className="relative z-10 perspective-1000 w-full max-w-5xl pointer-events-auto">
-                                {playground.filter(item => item.id === selectedId).map(item => (
+                                {initialPlayground.filter((item: any) => item.id === selectedId).map((item: any) => (
                                     <motion.div
                                         layoutId={`card-${item.id}`}
                                         key={item.id}
@@ -227,7 +228,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                         dragElastic={0.2}
                                     >
                                         <div className="w-full h-auto relative pointer-events-none">
-                                            <img src={item.image} alt={item.title} className="w-full h-auto block object-contain max-h-[80vh]" />
+                                            <img src={typeof item.image === 'object' ? item.image.url : item.image} alt={item.title} className="w-full h-auto block object-contain max-h-[80vh]" />
                                         </div>
                                         <div className="absolute top-4 right-4 z-20">
                                             <button onClick={(e) => { e.stopPropagation(); setSelectedId(null); }} className="bg-black/50 hover:bg-white/20 text-white rounded-full p-2 transition-colors backdrop-blur-sm">

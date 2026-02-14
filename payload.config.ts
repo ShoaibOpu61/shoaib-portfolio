@@ -11,8 +11,10 @@ import Users from './collections/Users'
 import Media from './collections/Media'
 import Projects from './collections/Projects'
 import CaseStudies from './collections/CaseStudies'
+import Playground from './collections/Playground'
 
-export default buildConfig({
+const config = buildConfig({
+    serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
     admin: {
         user: Users.slug,
     },
@@ -21,6 +23,7 @@ export default buildConfig({
     collections: [
         Projects,
         CaseStudies,
+        Playground,
         Media,
         Users,
     ],
@@ -31,6 +34,8 @@ export default buildConfig({
         schemaOutputFile: path.resolve(dirname, 'generated-schema.graphql'),
     },
     db: mongooseAdapter({
-        url: process.env.MONGODB_URI || '',
+        url: process.env.MONGODB_URI!,
     }),
 })
+
+export default config

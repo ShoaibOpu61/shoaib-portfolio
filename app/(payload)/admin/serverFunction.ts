@@ -10,5 +10,15 @@ export const serverFunction: ServerFunctionClient = async (args) => {
         body: JSON.stringify(args),
     })
 
-    return response.json()
+    if (!response.ok) {
+        throw new Error(`Server function failed: ${response.status} ${response.statusText}`)
+    }
+
+    // Check if response has content before parsing
+    const text = await response.text()
+    if (!text || text.trim() === '') {
+        throw new Error('Server function returned empty response')
+    }
+
+    return JSON.parse(text)
 }

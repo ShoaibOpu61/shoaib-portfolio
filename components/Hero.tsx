@@ -4,10 +4,10 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 
 // Use standard dynamic import for the base package to avoid potential submodule issues
-const Spline = dynamic(() => import("@splinetool/react-spline"), {
+const Spline = dynamic(() => import("@/lib/spline-patched/react-spline").then(mod => (mod.default || mod) as any), {
     ssr: false,
     loading: () => <div className="w-full h-full bg-black/10 flex items-center justify-center"><span className="text-white/20 text-xs tracking-widest uppercase">Loading 3D Scene...</span></div>,
-});
+}) as any;
 
 const ease = [0.16, 1, 0.3, 1] as const;
 

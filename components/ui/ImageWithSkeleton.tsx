@@ -37,7 +37,7 @@ export default function ImageWithSkeleton({
                     "transition-opacity duration-500",
                     isLoading ? "opacity-0" : "opacity-100" // Fade in when loaded
                 )}
-                onLoadingComplete={() => setIsLoading(false)}
+                onLoad={() => setIsLoading(false)}
                 {...props}
             />
         </div>

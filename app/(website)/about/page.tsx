@@ -232,8 +232,6 @@ export default function AboutPage() {
                     ))}
                 </div>
 
-
-
                 {/* Tools Grid */}
                 <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
                     {[

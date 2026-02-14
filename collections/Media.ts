@@ -20,7 +20,6 @@ const Media: CollectionConfig = {
             {
                 name: 'tablet',
                 width: 1024,
-                height: undefined,
                 position: 'centre',
             },
         ],

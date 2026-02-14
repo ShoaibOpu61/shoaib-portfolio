@@ -61,14 +61,6 @@ export default function Footer() {
                         >
                             Dribbble
                         </Link>
-                        <Link
-                            href="https://www.instagram.com/shoaib_opu/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-primary transition-colors"
-                        >
-                            Instagram
-                        </Link>
                     </div>
                 </div>
             </div>
