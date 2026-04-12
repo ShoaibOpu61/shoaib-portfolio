@@ -41,6 +41,7 @@ import { UnorderedListElement as UnorderedListElement_0b388c087d9de8c4f011dd323a
 import { UploadElementButton as UploadElementButton_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
 import { UploadElement as UploadElement_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
 import { WithUpload as WithUpload_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
+import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
@@ -87,5 +88,6 @@ export const importMap = {
   "@payloadcms/richtext-slate/client#UploadElementButton": UploadElementButton_0b388c087d9de8c4f011dd323a130cfb,
   "@payloadcms/richtext-slate/client#UploadElement": UploadElement_0b388c087d9de8c4f011dd323a130cfb,
   "@payloadcms/richtext-slate/client#WithUpload": WithUpload_0b388c087d9de8c4f011dd323a130cfb,
+  "@payloadcms/storage-vercel-blob#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

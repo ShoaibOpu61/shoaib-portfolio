@@ -8,10 +8,10 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-import Users from './collections/Users'
-import Media from './collections/Media'
-import Projects from './collections/Projects'
-import CaseStudies from './collections/CaseStudies'
+import Users from './collections/Users.ts'
+import Media from './collections/Media.ts'
+import Projects from './collections/Projects.ts'
+import CaseStudies from './collections/CaseStudies.ts'
 
 export default buildConfig({
     admin: {
