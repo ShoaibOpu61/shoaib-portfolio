@@ -12,12 +12,13 @@ export const getProjects = async () => {
 
 export const getProjectById = async (id: string) => {
     const payload = await getPayload({ config })
+    const numericId = parseInt(id, 10);
     const { docs } = await payload.find({
         collection: 'projects',
-        where: {
-            id: {
-                equals: id,
-            },
+        where: !isNaN(numericId) ? {
+            numericId: { equals: numericId }
+        } : {
+            id: { equals: id }
         },
         depth: 1,
     })
@@ -35,12 +36,13 @@ export const getCaseStudies = async () => {
 
 export const getCaseStudyById = async (id: string) => {
     const payload = await getPayload({ config })
+    const numericId = parseInt(id, 10);
     const { docs } = await payload.find({
         collection: 'case-studies',
-        where: {
-            id: {
-                equals: id,
-            },
+        where: !isNaN(numericId) ? {
+            numericId: { equals: numericId }
+        } : {
+            id: { equals: id }
         },
         depth: 1,
     })

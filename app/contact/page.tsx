@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ArrowRight, Check, Mail, Phone, MapPin, Linkedin, Instagram, Dribbble } from "lucide-react";
+import { ArrowRight, Check, Mail, Phone, MapPin, Linkedin, Dribbble } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function ContactPage() {
@@ -201,7 +201,6 @@ export default function ContactPage() {
                                 <div className="flex gap-4">
                                     {[
                                         { icon: Linkedin, href: "https://www.linkedin.com/in/shoaib-opu-a8aaa0184/" },
-                                        { icon: Instagram, href: "https://www.instagram.com/shoaib_opu/" },
                                         { icon: Dribbble, href: "https://dribbble.com/ShoaibOpu" }
                                     ].map((social, i) => (
                                         <motion.a

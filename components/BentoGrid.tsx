@@ -20,7 +20,7 @@ const aiTools = [
     { name: "Google Antigravity", logo: "/logos/ai/google-antigravity.png" },
     { name: "Freepik AI", logo: "/logos/ai/freepik.png" },
     { name: "Google Stitch", logo: "/logos/ai/google-stitch.png" },
-    { name: "Gemini", logo: "/logos/ai/gemini.png" },
+    { name: "Claude", logo: "/logos/ai/claude-icon.png" },
 ];
 
 const cardVariants = {
