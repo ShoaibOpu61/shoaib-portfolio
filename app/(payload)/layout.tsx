@@ -4,7 +4,7 @@ import config from '@/payload.config'
 import { importMap } from './admin/importMap'
 import { serverFunction } from './admin/serverFunction'
 
-import './custom.scss'
+import '@payloadcms/next/css'
 
 type Args = {
     children: React.ReactNode
