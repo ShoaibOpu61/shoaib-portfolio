@@ -101,6 +101,7 @@ export default async function ProjectPage({
                                     src={imageUrl}
                                     alt={project.title}
                                     fill
+                                    unoptimized={true}
                                     className="object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -127,6 +128,7 @@ export default async function ProjectPage({
                                         src={typeof imgObj.image === 'object' ? imgObj.image.url : imgObj.image}
                                         alt={`${project.title} shot ${i + 1}`}
                                         fill
+                                        unoptimized={true}
                                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
                                 </div>
@@ -145,6 +147,7 @@ export default async function ProjectPage({
                                         src={typeof p.image === 'object' ? p.image.url : p.image}
                                         alt={p.title}
                                         fill
+                                        unoptimized={true}
                                         className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-500"
                                     />
                                     <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500" />

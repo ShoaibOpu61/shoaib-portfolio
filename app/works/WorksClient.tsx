@@ -96,6 +96,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                         src={typeof project.image === 'object' ? project.image.url : project.image}
                                         alt={project.title}
                                         fill
+                                        unoptimized={true}
                                         className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                                     />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
@@ -145,6 +146,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                         src={typeof study.image === 'object' ? study.image.url : study.image}
                                         alt={study.title}
                                         fill
+                                        unoptimized={true}
                                         className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                                     />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />

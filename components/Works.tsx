@@ -167,6 +167,7 @@ export default function Works() {
                                         src={project.image}
                                         alt={project.title}
                                         fill
+                                        unoptimized={true}
                                         className="object-cover opacity-80 group-hover:opacity-100 sm:group-hover:scale-105 transition-all duration-500"
                                     />
                                     {/* Placeholder overlay */}

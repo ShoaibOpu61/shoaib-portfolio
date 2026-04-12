@@ -12,6 +12,7 @@
     "@payloadcms/db-mongodb": "^3.76.1",
     "@payloadcms/next": "^3.76.1",
     "@payloadcms/richtext-slate": "^3.76.1",
+    "@payloadcms/storage-vercel-blob": "^3.76.1",
     "@splinetool/react-spline": "^4.1.0",
     "@splinetool/runtime": "^1.12.55",
     "clsx": "^2.1.1",
