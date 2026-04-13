@@ -76,8 +76,8 @@ export const HandoffMockup = ({ className }: { className?: string }) => (
         </div>
         <div className="flex-1 p-2 font-mono text-[6px] md:text-[8px] text-zinc-600 leading-tight bg-white">
             <span className="text-purple-600">const</span> UI = <span className="text-zinc-800">{"{"}</span><br />
-            &nbsp;&nbsp;look: <span className="text-green-600">"crisp"</span>,<br />
-            &nbsp;&nbsp;mode: <span className="text-green-600">"light"</span><br />
+            &nbsp;&nbsp;look: <span className="text-green-600">&quot;crisp&quot;</span>,<br />
+            &nbsp;&nbsp;mode: <span className="text-green-600">&quot;light&quot;</span><br />
             <span className="text-zinc-800">{"}"}</span>;
         </div>
     </motion.div>

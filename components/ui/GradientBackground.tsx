@@ -1,18 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 
 export default function GradientBackground() {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted) {
-        return null;
-    }
-
     return (
         <div className="fixed inset-0 -z-10 overflow-hidden bg-black">
             {/* Base gradient overlay */}

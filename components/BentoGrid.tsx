@@ -124,7 +124,7 @@ export default function BentoGrid() {
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
                     <h3 className="font-serif text-2xl md:text-3xl uppercase text-white/80 leading-tight relative z-10">
-                        "Bridging the gap between <span className="text-white border-b border-white/30">Human Creativity</span> and <span className="text-purple-300 border-b border-purple-500/30">Artificial Intelligence</span>."
+                        &ldquo;Bridging the gap between <span className="text-white border-b border-white/30">Human Creativity</span> and <span className="text-purple-300 border-b border-purple-500/30">Artificial Intelligence</span>.&rdquo;
                     </h3>
                 </motion.div>
 

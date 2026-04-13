@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Syne, Manrope } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { seoConfig } from "@/lib/seo-config";
 import StructuredData from "@/components/StructuredData";
 import GradientBackground from "@/components/ui/GradientBackground";

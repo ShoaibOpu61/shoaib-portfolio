@@ -8,10 +8,33 @@ import Footer from "@/components/Footer";
 import { playground } from "@/lib/data";
 import Link from "next/link";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
+import { normalizeMediaUrl } from "@/lib/media";
+
+type WorkCard = {
+    id: string;
+    numericId: number;
+    title: string;
+    category: string;
+    year: string;
+    description: string;
+    color?: string | null;
+    image?: string | { url?: string | null } | null;
+};
 
 interface WorksClientProps {
-    initialProjects: any[];
-    initialCaseStudies: any[];
+    initialProjects: WorkCard[];
+    initialCaseStudies: WorkCard[];
+}
+
+const FALLBACK_IMAGE = "/images/profile-photo.jpg";
+
+function getMediaUrl(media: WorkCard["image"]) {
+    if (typeof media === "string" && media.length > 0) return normalizeMediaUrl(media);
+    if (media && typeof media === "object" && typeof media.url === "string" && media.url.length > 0) {
+        return normalizeMediaUrl(media.url);
+    }
+
+    return FALLBACK_IMAGE;
 }
 
 export default function WorksClient({ initialProjects, initialCaseStudies }: WorksClientProps) {
@@ -39,9 +62,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
         mouseY.set(0);
     }
 
-    const [mounted, setMounted] = useState(false);
     useEffect(() => {
-        setMounted(true);
         const calculateConstraint = () => {
             if (sliderRef.current && containerRef.current) {
                 const sliderWidth = sliderRef.current.scrollWidth;
@@ -93,7 +114,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                             >
                                 <div className={`aspect-[4/3] w-full ${project.color} mb-6 overflow-hidden relative rounded-sm group-hover:scale-[1.02] transition-transform duration-500`}>
                                     <ImageWithSkeleton
-                                        src={typeof project.image === 'object' ? project.image.url : project.image}
+                                        src={getMediaUrl(project.image)}
                                         alt={project.title}
                                         fill
                                         unoptimized={true}
@@ -143,7 +164,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                             >
                                 <div className={`aspect-video w-full ${study.color} mb-6 rounded-lg overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500`}>
                                     <ImageWithSkeleton
-                                        src={typeof study.image === 'object' ? study.image.url : study.image}
+                                        src={getMediaUrl(study.image)}
                                         alt={study.title}
                                         fill
                                         unoptimized={true}

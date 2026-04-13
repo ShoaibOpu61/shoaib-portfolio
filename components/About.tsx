@@ -30,7 +30,7 @@ export default function About() {
                     className="mb-16 max-w-6xl mx-auto px-4"
                 >
                     <h3 className="text-2xl md:text-4xl font-sans font-normal leading-[1.8] text-white/90 mb-12 text-center">
-                        Hello! I'm Shoaib Hossain, a passionate UI/UX Designer with over 5 years of experience creating intuitive digital experiences for both
+                        Hello! I&apos;m Shoaib Hossain, a passionate UI/UX Designer with over 5 years of experience creating intuitive digital experiences for both
                         <span className="inline-block mx-1 align-middle"><MobileMockup /></span>
                         mobile apps and
                         <span className="inline-block mx-1 align-middle"><WebMockup /></span>

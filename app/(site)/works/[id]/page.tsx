@@ -5,7 +5,44 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import { getProjectById, getCaseStudyById, getProjects, getCaseStudies } from "@/lib/api";
-import RichText from "@/components/RichText";
+import RichText, { type RichTextContent } from "@/components/RichText";
+import { normalizeMediaUrl } from "@/lib/media";
+
+type UploadedImage = {
+    image?: string | { url?: string | null } | null;
+};
+
+type WorkDoc = {
+    id: string;
+    numericId?: number;
+    title: string;
+    category?: string | null;
+    year?: string | null;
+    description?: string | null;
+    color?: string | null;
+    image?: string | { url?: string | null } | null;
+    images?: UploadedImage[] | null;
+    content?: unknown;
+};
+
+const FALLBACK_IMAGE = "/images/profile-photo.jpg";
+
+function getMediaUrl(media: WorkDoc["image"]) {
+    if (typeof media === "string" && media.length > 0) return normalizeMediaUrl(media);
+    if (media && typeof media === "object" && typeof media.url === "string" && media.url.length > 0) {
+        return normalizeMediaUrl(media.url);
+    }
+
+    return FALLBACK_IMAGE;
+}
+
+function getRichTextContent(content: WorkDoc["content"]): RichTextContent {
+    if (!content || typeof content !== "object") {
+        return {};
+    }
+
+    return content as RichTextContent;
+}
 
 export default async function ProjectPage({
     params,
@@ -19,11 +56,11 @@ export default async function ProjectPage({
     // In a real scenario, we'd query by the specific field.
     // For now, let's assume 'id' in the URL is the numericId or the Payload ID.
 
-    let project = await getProjectById(id);
+    let project = await getProjectById(id) as WorkDoc | undefined;
     let isCaseStudy = false;
 
     if (!project) {
-        project = await getCaseStudyById(id);
+        project = await getCaseStudyById(id) as WorkDoc | undefined;
         isCaseStudy = !!project;
     }
 
@@ -33,12 +70,12 @@ export default async function ProjectPage({
         notFound();
     }
 
-    const sourceArray = isCaseStudy ? await getCaseStudies() : await getProjects();
+    const sourceArray = (isCaseStudy ? await getCaseStudies() : await getProjects()) as WorkDoc[];
     const otherProjects = sourceArray
-        .filter((p: any) => p.id !== project.id)
+        .filter((p) => p.id !== project.id)
         .slice(0, 2);
 
-    const imageUrl = typeof project.image === 'object' ? project.image.url : project.image;
+    const imageUrl = getMediaUrl(project.image);
 
     return (
         <main className="bg-background text-foreground selection:bg-white selection:text-black min-h-screen">
@@ -54,10 +91,10 @@ export default async function ProjectPage({
                         </div>
 
                         <div className="w-full flex flex-col items-center">
-                            {project.images?.map((imgObj: any, i: number) => (
+                            {project.images?.map((imgObj, i: number) => (
                                 <div key={i} className="w-full max-w-[1920px] relative">
                                     <img
-                                        src={typeof imgObj.image === 'object' ? imgObj.image.url : imgObj.image}
+                                        src={getMediaUrl(imgObj.image)}
                                         alt={`${project.title} style ${i + 1}`}
                                         className="w-full h-auto block"
                                         loading="lazy"
@@ -117,15 +154,15 @@ export default async function ProjectPage({
                             </div>
                             <div className="md:col-span-8">
                                 <h3 className="text-sm font-sans uppercase tracking-widest text-white mb-4">Overview</h3>
-                                <RichText content={project.content} />
+                                <RichText content={getRichTextContent(project.content)} />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
-                            {project.images?.map((imgObj: any, i: number) => (
+                            {project.images?.map((imgObj, i: number) => (
                                 <div key={i} className="aspect-video bg-zinc-800 rounded-lg overflow-hidden relative group">
                                     <ImageWithSkeleton
-                                        src={typeof imgObj.image === 'object' ? imgObj.image.url : imgObj.image}
+                                        src={getMediaUrl(imgObj.image)}
                                         alt={`${project.title} shot ${i + 1}`}
                                         fill
                                         unoptimized={true}
@@ -140,11 +177,11 @@ export default async function ProjectPage({
                 <section className="border-t border-white/10 pt-24 px-6 md:px-12 max-w-[1400px] mx-auto pb-24">
                     <h2 className="text-3xl md:text-4xl font-serif uppercase mb-12">You Might Also Like</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {otherProjects.map((p: any) => (
+                        {otherProjects.map((p) => (
                             <Link key={p.id} href={`/works/${p.numericId}`} className="group block">
                                 <div className={`aspect-[4/3] w-full ${p.color} mb-6 overflow-hidden relative rounded-sm px-0`}>
                                     <ImageWithSkeleton
-                                        src={typeof p.image === 'object' ? p.image.url : p.image}
+                                        src={getMediaUrl(p.image)}
                                         alt={p.title}
                                         fill
                                         unoptimized={true}

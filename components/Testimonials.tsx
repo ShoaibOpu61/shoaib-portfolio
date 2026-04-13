@@ -53,9 +53,9 @@ export default function Testimonials() {
                         {/* Quote */}
                         <blockquote className="mb-12">
                             <p className="font-sans text-xl md:text-2xl lg:text-3xl leading-relaxed text-white/90 font-light">
-                                "{currentTestimonial.text.split(currentTestimonial.highlight)[0]}
+                                &ldquo;{currentTestimonial.text.split(currentTestimonial.highlight)[0]}
                                 <span className="italic text-primary">{currentTestimonial.highlight}</span>
-                                {currentTestimonial.text.split(currentTestimonial.highlight)[1]}"
+                                {currentTestimonial.text.split(currentTestimonial.highlight)[1]}&rdquo;
                             </p>
                         </blockquote>
 

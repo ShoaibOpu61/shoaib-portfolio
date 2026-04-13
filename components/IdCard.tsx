@@ -4,6 +4,11 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
+const BARCODE_BARS = Array.from({ length: 40 }, () => ({
+    width: Math.random() > 0.5 ? "2px" : "4px",
+    opacity: Math.random() > 0.3 ? 1 : 0.5,
+}));
+
 export default function IdCard() {
     const cardRef = useRef<HTMLDivElement>(null);
 
@@ -89,13 +94,13 @@ export default function IdCard() {
                 {/* Decorative Barcode */}
                 <div className="mt-auto mb-8 w-3/4 h-12 bg-black flex items-center justify-center gap-1 overflow-hidden opacity-80">
                     {/* Generative vertical lines */}
-                    {Array.from({ length: 40 }).map((_, i) => (
+                    {BARCODE_BARS.map((bar, i) => (
                         <div
                             key={i}
                             className="h-full bg-white"
                             style={{
-                                width: Math.random() > 0.5 ? '2px' : '4px',
-                                opacity: Math.random() > 0.3 ? 1 : 0.5
+                                width: bar.width,
+                                opacity: bar.opacity
                             }}
                         />
                     ))}

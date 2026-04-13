@@ -23,7 +23,7 @@ export default function Footer() {
                     transition={{ duration: 0.8 }}
                     className="font-serif text-[10vw] leading-[0.8] mb-12 uppercase text-center w-full"
                 >
-                    Let's Make <br /> Things Click
+                    Let&apos;s Make <br /> Things Click
                 </motion.h2>
 
                 <a

@@ -4,6 +4,7 @@ import { slateEditor } from '@payloadcms/richtext-slate'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import sharp from 'sharp'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -42,4 +43,5 @@ export default buildConfig({
     db: mongooseAdapter({
         url: process.env.MONGODB_URI || '',
     }),
+    sharp,
 })

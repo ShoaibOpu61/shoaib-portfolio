@@ -4,7 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowRight, Check, Mail, Phone, MapPin, Linkedin, Dribbble } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+
+const PARTICLES = Array.from({ length: 20 }, () => ({
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 100}%`,
+    duration: 3 + Math.random() * 2,
+    delay: Math.random() * 2,
+}));
 
 export default function ContactPage() {
     const [formData, setFormData] = useState({
@@ -14,11 +21,6 @@ export default function ContactPage() {
     });
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [errorMessage, setErrorMessage] = useState("");
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,7 +52,7 @@ export default function ContactPage() {
                 setErrorMessage(data.message || "Something went wrong. Please try again.");
                 setTimeout(() => setStatus("idle"), 5000);
             }
-        } catch (error) {
+        } catch {
             setStatus("error");
             setErrorMessage("Failed to send message. Please check your connection.");
             setTimeout(() => setStatus("idle"), 5000);
@@ -91,22 +93,22 @@ export default function ContactPage() {
                 />
 
                 {/* Floating Particles */}
-                {mounted && [...Array(20)].map((_, i) => (
+                {PARTICLES.map((particle, i) => (
                     <motion.div
                         key={i}
                         className="absolute w-1 h-1 bg-primary/40 rounded-full"
                         style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
+                            left: particle.left,
+                            top: particle.top,
                         }}
                         animate={{
                             y: [0, -30, 0],
                             opacity: [0, 1, 0],
                         }}
                         transition={{
-                            duration: 3 + Math.random() * 2,
+                            duration: particle.duration,
                             repeat: Infinity,
-                            delay: Math.random() * 2,
+                            delay: particle.delay,
                         }}
                     />
                 ))}
@@ -142,8 +144,8 @@ export default function ContactPage() {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
                     >
-                        Whether it's a role, a project, or an idea worth exploring,
-                        I'm always open to a conversation.
+                        Whether it&apos;s a role, a project, or an idea worth exploring,
+                        I&apos;m always open to a conversation.
                     </motion.p>
                 </motion.div>
             </section>
@@ -314,7 +316,7 @@ export default function ContactPage() {
                                             exit={{ opacity: 0, y: -10 }}
                                             className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-center font-sans"
                                         >
-                                            Message sent successfully! I'll get back to you soon.
+                                            Message sent successfully! I&apos;ll get back to you soon.
                                         </motion.div>
                                     )}
                                     {status === "error" && (

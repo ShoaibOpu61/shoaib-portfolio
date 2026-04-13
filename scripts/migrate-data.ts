@@ -45,7 +45,7 @@ const migrate = async () => {
                     },
                 },
                 // image and images will need to be linked to Media documents
-            } as any,
+            },
         })
     }
 
@@ -86,7 +86,7 @@ const migrate = async () => {
                         ],
                     },
                 },
-            } as any,
+            },
         })
     }
 

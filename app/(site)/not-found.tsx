@@ -49,7 +49,7 @@ export default function NotFound() {
             >
                 <h2 className="text-2xl md:text-3xl font-serif mb-2">Whoops!</h2>
                 <p className="text-white/60 mb-12 max-w-md mx-auto font-sans">
-                    We couldn't find the site you were looking for.
+                    We couldn&apos;t find the site you were looking for.
                 </p>
 
                 <Link
