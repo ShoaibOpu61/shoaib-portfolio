@@ -1,7 +1,7 @@
 import { seoConfig } from '@/lib/seo-config';
 
 interface StructuredDataProps {
-    type: 'person' | 'website' | 'profile';
+    type: 'person' | 'website';
 }
 
 export default function StructuredData({ type }: StructuredDataProps) {
@@ -43,23 +43,6 @@ export default function StructuredData({ type }: StructuredDataProps) {
                     name: seoConfig.name,
                 },
                 inLanguage: 'en-US',
-            };
-        }
-
-        if (type === 'profile') {
-            return {
-                '@context': 'https://schema.org',
-                '@type': 'ProfilePage',
-                dateCreated: new Date().toISOString(),
-                dateModified: new Date().toISOString(),
-                mainEntity: {
-                    '@type': 'Person',
-                    name: seoConfig.name,
-                    jobTitle: seoConfig.title,
-                    description: seoConfig.description,
-                    url: baseUrl,
-                    image: `${baseUrl}${seoConfig.ogImage.url}`,
-                },
             };
         }
 

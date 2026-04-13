@@ -2,6 +2,14 @@ import type { CollectionConfig } from 'payload'
 
 const Media: CollectionConfig = {
     slug: 'media',
+    admin: {
+        useAsTitle: 'alt',
+        defaultColumns: ['alt', 'updatedAt'],
+    },
+    labels: {
+        singular: 'Media Item',
+        plural: 'Media Library',
+    },
     access: {
         read: () => true,
     },
@@ -32,9 +40,21 @@ const Media: CollectionConfig = {
     },
     fields: [
         {
+            name: 'title',
+            label: 'Media Label',
+            type: 'text',
+            admin: {
+                description: 'Optional internal label to help you recognize this asset in the media library.',
+            },
+        },
+        {
             name: 'alt',
+            label: 'Alt Text',
             type: 'text',
             required: true,
+            admin: {
+                description: 'Short accessible description for the image.',
+            },
         },
     ],
 }

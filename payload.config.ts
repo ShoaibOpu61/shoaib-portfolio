@@ -1,6 +1,6 @@
 import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { slateEditor } from '@payloadcms/richtext-slate'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
@@ -19,7 +19,10 @@ export default buildConfig({
         user: Users.slug,
     },
     secret: process.env.PAYLOAD_SECRET || 'fallback-secret-for-dev-only',
-    editor: slateEditor({}),
+    serverURL:
+        process.env.NEXT_PUBLIC_SITE_URL ||
+        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined),
+    editor: lexicalEditor({}),
     collections: [
         Projects,
         CaseStudies,
@@ -31,7 +34,8 @@ export default buildConfig({
             collections: {
                 [Media.slug]: true,
             },
-            token: process.env.BLOB_READ_WRITE_TOKEN || '',
+            clientUploads: true,
+            token: process.env.BLOB_READ_WRITE_TOKEN,
         }),
     ],
     typescript: {

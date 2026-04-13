@@ -114,7 +114,3 @@ export const playground = [
     { id: 11, title: "HR Innobarcamp Logo Design", type: "Logo", image: "/images/playground/barcamp-logo.jpg" },
     { id: 12, title: "Walton Takyon Tri-Fold Flyer Design", type: "Tri-Fold Flyer", image: "/images/playground/walton-takyon-flayer.jpg" },
 ];
-
-export function getAllContent() {
-    return [...projects, ...caseStudies];
-}

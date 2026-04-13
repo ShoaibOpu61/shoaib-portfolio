@@ -1,5 +1,6 @@
-import { ImportMap } from 'payload'
+import type { ImportMap } from 'payload'
+import { importMap as generatedImportMap } from './importMap.js'
 
-export const importMap: ImportMap = {
-    // Add custom components here
-}
+// Re-export Payload's generated admin import map so built-in client components
+// like the Vercel Blob upload handler are available inside drawers/modals.
+export const importMap: ImportMap = generatedImportMap

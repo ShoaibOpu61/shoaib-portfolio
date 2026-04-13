@@ -47,27 +47,3 @@ export const seoConfig = {
     locale: "en_US",
     type: "website",
 };
-
-// Page-specific metadata
-export const pageMetadata = {
-    home: {
-        title: `${seoConfig.name} | ${seoConfig.title}`,
-        description: seoConfig.description,
-        keywords: seoConfig.keywords,
-    },
-    works: {
-        title: "My Work & Projects",
-        description: "Explore my portfolio of UI/UX design projects, case studies, and creative explorations. See how I solve complex design challenges.",
-        keywords: [...seoConfig.keywords, "Projects", "Case Studies", "Design Portfolio"],
-    },
-    about: {
-        title: "About Me",
-        description: "Learn about my design journey, skills, and approach to creating exceptional user experiences. Available for freelance projects.",
-        keywords: [...seoConfig.keywords, "About", "Designer Bio", "Skills"],
-    },
-    contact: {
-        title: "Get In Touch",
-        description: "Let's collaborate on your next project. Reach out to discuss UI/UX design, product design, or freelance opportunities.",
-        keywords: [...seoConfig.keywords, "Contact", "Hire Designer", "Freelance"],
-    },
-} as const;
