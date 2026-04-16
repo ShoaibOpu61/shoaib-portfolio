@@ -6,10 +6,18 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import { getProjectById, getCaseStudyById, getProjects, getCaseStudies } from "@/lib/api";
 import RichText, { type RichTextContent } from "@/components/RichText";
-import { normalizeMediaUrl } from "@/lib/media";
+import { getPreferredMediaUrl } from "@/lib/media";
 
 type UploadedImage = {
-    image?: string | { url?: string | null } | null;
+    image?: string | {
+        url?: string | null;
+        thumbnailURL?: string | null;
+        sizes?: {
+            thumbnail?: { url?: string | null } | null;
+            card?: { url?: string | null } | null;
+            tablet?: { url?: string | null } | null;
+        } | null;
+    } | null;
 };
 
 type WorkDoc = {
@@ -20,7 +28,7 @@ type WorkDoc = {
     year?: string | null;
     description?: string | null;
     color?: string | null;
-    image?: string | { url?: string | null } | null;
+    image?: UploadedImage["image"];
     images?: UploadedImage[] | null;
     content?: unknown;
 };
@@ -28,12 +36,7 @@ type WorkDoc = {
 const FALLBACK_IMAGE = "/images/profile-photo.jpg";
 
 function getMediaUrl(media: WorkDoc["image"]) {
-    if (typeof media === "string" && media.length > 0) return normalizeMediaUrl(media);
-    if (media && typeof media === "object" && typeof media.url === "string" && media.url.length > 0) {
-        return normalizeMediaUrl(media.url);
-    }
-
-    return FALLBACK_IMAGE;
+    return getPreferredMediaUrl(media) || FALLBACK_IMAGE;
 }
 
 function getRichTextContent(content: WorkDoc["content"]): RichTextContent {

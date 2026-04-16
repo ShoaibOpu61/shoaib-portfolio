@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { playground } from "@/lib/data";
 import Link from "next/link";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
-import { normalizeMediaUrl } from "@/lib/media";
+import { getPreferredMediaUrl } from "@/lib/media";
 
 type WorkCard = {
     id: string;
@@ -18,7 +18,15 @@ type WorkCard = {
     year: string;
     description: string;
     color?: string | null;
-    image?: string | { url?: string | null } | null;
+    image?: string | {
+        url?: string | null;
+        thumbnailURL?: string | null;
+        sizes?: {
+            thumbnail?: { url?: string | null } | null;
+            card?: { url?: string | null } | null;
+            tablet?: { url?: string | null } | null;
+        } | null;
+    } | null;
 };
 
 interface WorksClientProps {
@@ -29,12 +37,7 @@ interface WorksClientProps {
 const FALLBACK_IMAGE = "/images/profile-photo.jpg";
 
 function getMediaUrl(media: WorkCard["image"]) {
-    if (typeof media === "string" && media.length > 0) return normalizeMediaUrl(media);
-    if (media && typeof media === "object" && typeof media.url === "string" && media.url.length > 0) {
-        return normalizeMediaUrl(media.url);
-    }
-
-    return FALLBACK_IMAGE;
+    return getPreferredMediaUrl(media) || FALLBACK_IMAGE;
 }
 
 export default function WorksClient({ initialProjects, initialCaseStudies }: WorksClientProps) {
