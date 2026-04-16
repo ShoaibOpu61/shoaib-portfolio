@@ -12,7 +12,24 @@ type MediaLike = {
     } | null;
 };
 
+const MEDIA_API_PREFIX = "/api/media/file/";
+const MEDIA_PUBLIC_PREFIX = "/media/";
+
 export function normalizeMediaUrl(url: string) {
+    if (url.startsWith(MEDIA_API_PREFIX)) {
+        return url.replace(MEDIA_API_PREFIX, MEDIA_PUBLIC_PREFIX);
+    }
+
+    try {
+        const parsed = new URL(url);
+
+        if (parsed.pathname.startsWith(MEDIA_API_PREFIX)) {
+            return parsed.pathname.replace(MEDIA_API_PREFIX, MEDIA_PUBLIC_PREFIX);
+        }
+    } catch {
+        // Ignore invalid absolute URLs and fall back to the original value.
+    }
+
     return url;
 }
 
