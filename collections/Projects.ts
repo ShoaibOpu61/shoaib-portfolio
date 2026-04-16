@@ -1,14 +1,19 @@
 import type { CollectionConfig } from 'payload'
 
+import { featuredField, legacyNumericIdField, slugField, sortOrderField } from './shared.ts'
+
 const Projects: CollectionConfig = {
     slug: 'projects',
     admin: {
         useAsTitle: 'title',
-        defaultColumns: ['title', 'category', 'year', 'numericId'],
+        defaultColumns: ['title', 'category', 'featured', 'sortOrder', 'updatedAt'],
     },
     labels: {
         singular: 'Project',
         plural: 'Projects',
+    },
+    versions: {
+        drafts: true,
     },
     fields: [
         {
@@ -23,13 +28,26 @@ const Projects: CollectionConfig = {
                             type: 'text',
                             required: true,
                         },
+                        slugField(),
+                        {
+                            name: 'category',
+                            label: 'Category',
+                            type: 'text',
+                            required: true,
+                        },
+                        {
+                            name: 'year',
+                            label: 'Year',
+                            type: 'text',
+                            required: true,
+                        },
                         {
                             name: 'description',
-                            label: 'Short Summary',
+                            label: 'Short Description',
                             type: 'textarea',
                             required: true,
                             admin: {
-                                description: 'Used for project cards and short previews on the site.',
+                                description: 'Short plain-text summary used in project cards and quick previews.',
                             },
                         },
                     ],
@@ -44,7 +62,17 @@ const Projects: CollectionConfig = {
                             relationTo: 'media',
                             required: true,
                             admin: {
-                                description: 'Main thumbnail / hero image used in listings and on the detail page.',
+                                description: 'Main thumbnail used in project listings.',
+                            },
+                        },
+                        {
+                            name: 'heroImage',
+                            label: 'Hero Image',
+                            type: 'upload',
+                            relationTo: 'media',
+                            required: true,
+                            admin: {
+                                description: 'Main project visual for the top of the detail page.',
                             },
                         },
                         {
@@ -52,7 +80,8 @@ const Projects: CollectionConfig = {
                             label: 'Gallery Images',
                             type: 'array',
                             admin: {
-                                description: 'Optional supporting images shown in the project detail view.',
+                                description: 'Optional supporting images for mockups and showcase screens.',
+                                initCollapsed: true,
                             },
                             fields: [
                                 {
@@ -70,56 +99,29 @@ const Projects: CollectionConfig = {
                     label: 'Project Details',
                     fields: [
                         {
-                            name: 'category',
-                            label: 'Category',
+                            name: 'client',
+                            label: 'Client',
                             type: 'text',
-                            required: true,
-                        },
-                        {
-                            name: 'year',
-                            label: 'Year',
-                            type: 'text',
-                            required: true,
-                        },
-                        {
-                            name: 'color',
-                            label: 'Card Background Style',
-                            type: 'text',
-                            required: true,
-                            defaultValue: 'bg-zinc-800',
                             admin: {
-                                description: 'Existing frontend style token used for the project card background.',
+                                description: 'Optional client or brand name.',
                             },
                         },
+                        {
+                            name: 'liveLink',
+                            label: 'Live Link',
+                            type: 'text',
+                            admin: {
+                                description: 'Optional project URL.',
+                            },
+                        },
+                        featuredField,
+                        sortOrderField,
                     ],
                 },
                 {
-                    label: 'Content',
+                    label: 'Compatibility',
                     fields: [
-                        {
-                            name: 'content',
-                            label: 'Main Content',
-                            type: 'richText',
-                            required: true,
-                            admin: {
-                                description: 'Main body content shown on the project detail page.',
-                            },
-                        },
-                    ],
-                },
-                {
-                    label: 'Publish Settings',
-                    fields: [
-                        {
-                            name: 'numericId',
-                            label: 'Internal ID',
-                            type: 'number',
-                            required: true,
-                            unique: true,
-                            admin: {
-                                description: 'Current frontend route identifier. Keep this unique.',
-                            },
-                        },
+                        legacyNumericIdField,
                     ],
                 },
             ],

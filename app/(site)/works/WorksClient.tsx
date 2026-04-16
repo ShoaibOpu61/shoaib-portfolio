@@ -5,49 +5,72 @@ import { ArrowUpRight, ArrowLeft, ArrowRight, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/Footer";
-import { playground } from "@/lib/data";
 import Link from "next/link";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import { getPreferredMediaUrl } from "@/lib/media";
 
+type MediaField = string | {
+    url?: string | null;
+    thumbnailURL?: string | null;
+    sizes?: {
+        thumbnail?: { url?: string | null } | null;
+        card?: { url?: string | null } | null;
+        tablet?: { url?: string | null } | null;
+    } | null;
+} | null;
+
 type WorkCard = {
     id: string;
-    numericId: number;
+    slug?: string | null;
+    numericId?: number | null;
     title: string;
-    category: string;
-    year: string;
-    description: string;
-    color?: string | null;
-    image?: string | {
-        url?: string | null;
-        thumbnailURL?: string | null;
-        sizes?: {
-            thumbnail?: { url?: string | null } | null;
-            card?: { url?: string | null } | null;
-            tablet?: { url?: string | null } | null;
-        } | null;
-    } | null;
+    category?: string | null;
+    year?: string | null;
+    description?: string | null;
+    image?: MediaField;
+    coverImage?: MediaField;
+};
+
+type PlaygroundCard = {
+    id: string;
+    title: string;
+    slug?: string | null;
+    category?: string | null;
+    caption?: string | null;
+    image?: MediaField;
 };
 
 interface WorksClientProps {
     initialProjects: WorkCard[];
     initialCaseStudies: WorkCard[];
+    initialPlayground: PlaygroundCard[];
 }
 
 const FALLBACK_IMAGE = "/images/profile-photo.jpg";
 
-function getMediaUrl(media: WorkCard["image"]) {
+function getMediaUrl(media?: MediaField) {
     return getPreferredMediaUrl(media) || FALLBACK_IMAGE;
 }
 
-export default function WorksClient({ initialProjects, initialCaseStudies }: WorksClientProps) {
+function getCardImage(item: WorkCard | PlaygroundCard) {
+    if ("coverImage" in item && item.coverImage) {
+        return getMediaUrl(item.coverImage);
+    }
+
+    return getMediaUrl(item.image);
+}
+
+function getWorkHref(item: WorkCard) {
+    return `/works/${item.slug || item.numericId || item.id}`;
+}
+
+export default function WorksClient({ initialProjects, initialCaseStudies, initialPlayground }: WorksClientProps) {
     const sliderRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const [constraint, setConstraint] = useState(0);
     const x = useMotionValue(0);
-    const [selectedId, setSelectedId] = useState<number | null>(null);
+    const [selectedId, setSelectedId] = useState<string | null>(null);
 
-    // 3D Tilt Logic
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -94,7 +117,6 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
         <main className="bg-background text-foreground selection:bg-white selection:text-black min-h-screen">
             <Navbar />
 
-            {/* 1. MY PROJECTS */}
             <section className="pt-32 pb-12 px-6 md:px-12">
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
@@ -107,7 +129,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24 mb-32">
                     {initialProjects.map((project, i) => (
-                        <Link href={`/works/${project.numericId}`} key={project.id}>
+                        <Link href={getWorkHref(project)} key={project.id}>
                             <motion.div
                                 initial={{ opacity: 0, y: 40 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -115,9 +137,9 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                 transition={{ delay: i * 0.1, duration: 0.6 }}
                                 className="group cursor-pointer"
                             >
-                                <div className={`aspect-[4/3] w-full ${project.color} mb-6 overflow-hidden relative rounded-sm group-hover:scale-[1.02] transition-transform duration-500`}>
+                                <div className="aspect-[4/3] w-full bg-zinc-900 mb-6 overflow-hidden relative rounded-sm group-hover:scale-[1.02] transition-transform duration-500">
                                     <ImageWithSkeleton
-                                        src={getMediaUrl(project.image)}
+                                        src={getCardImage(project)}
                                         alt={project.title}
                                         fill
                                         unoptimized={true}
@@ -130,7 +152,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                     <div className="w-full">
                                         <div className="flex justify-between items-center mb-2">
                                             <span className="text-sm font-sans tracking-widest text-secondary uppercase">
-                                                {project.category} — {project.year}
+                                                {[project.category, project.year].filter(Boolean).join(" - ")}
                                             </span>
                                             <ArrowUpRight className="w-5 h-5 text-secondary group-hover:text-primary transition-colors" />
                                         </div>
@@ -148,7 +170,6 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                 </div>
             </section>
 
-            {/* 2. CASE STUDIES */}
             <section className="py-24 px-6 md:px-12 border-t border-white/10">
                 <div className="mb-16">
                     <h2 className="text-4xl md:text-6xl font-serif uppercase text-white mb-4">My Case Studies</h2>
@@ -157,7 +178,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 mb-24">
                     {initialCaseStudies.map((study, i) => (
-                        <Link href={`/works/${study.numericId}`} key={study.id}>
+                        <Link href={getWorkHref(study)} key={study.id}>
                             <motion.div
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -165,9 +186,9 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                 transition={{ delay: i * 0.1 }}
                                 className="group"
                             >
-                                <div className={`aspect-video w-full ${study.color} mb-6 rounded-lg overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500`}>
+                                <div className="aspect-video w-full bg-zinc-950 mb-6 rounded-lg overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500">
                                     <ImageWithSkeleton
-                                        src={getMediaUrl(study.image)}
+                                        src={getCardImage(study)}
                                         alt={study.title}
                                         fill
                                         unoptimized={true}
@@ -175,7 +196,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                     />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                                 </div>
-                                <span className="text-xs font-sans tracking-widest text-secondary uppercase block mb-2">{study.category}</span>
+                                <span className="text-xs font-sans tracking-widest text-secondary uppercase block mb-2">{study.category || "Case Study"}</span>
                                 <h3 className="text-2xl md:text-3xl font-serif uppercase text-white group-hover:text-primary transition-colors">{study.title}</h3>
                             </motion.div>
                         </Link>
@@ -183,8 +204,6 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                 </div>
             </section>
 
-            {/* 3. PLAYGROUND */}
-            {/* Keeping playground static for now as requested or until schema defined */}
             <section className="py-24 px-0 md:px-0 border-t border-white/10 bg-[#0F0F0F] overflow-hidden">
                 <div className="mb-16 px-6 md:px-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div>
@@ -211,7 +230,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                         whileTap={{ cursor: "grabbing" }}
                         className="grid grid-rows-1 md:grid-rows-2 grid-flow-col gap-4 md:gap-6 auto-cols-[85vw] md:auto-cols-[380px] px-6 md:px-12 cursor-grab active:cursor-grabbing w-max"
                     >
-                        {playground.map((item, i) => (
+                        {initialPlayground.map((item, i) => (
                             <motion.div
                                 layoutId={`card-${item.id}`}
                                 key={item.id}
@@ -223,11 +242,11 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                 className="snap-center relative group rounded-xl overflow-hidden border border-white/10 bg-zinc-900 draggable-item cursor-pointer"
                             >
                                 <div className="aspect-[4/3] w-full relative pointer-events-none">
-                                    <ImageWithSkeleton src={item.image} alt={item.title} fill className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" />
+                                    <ImageWithSkeleton src={getCardImage(item)} alt={item.title} fill unoptimized={true} className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
                                 </div>
                                 <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-none">
-                                    <span className="block text-sm font-sans tracking-widest text-primary uppercase mb-2 drop-shadow-md">{item.type}</span>
+                                    <span className="block text-sm font-sans tracking-widest text-primary uppercase mb-2 drop-shadow-md">{item.category || "Playground"}</span>
                                     <h4 className="text-xl font-serif uppercase text-white drop-shadow-md leading-tight">{item.title}</h4>
                                 </div>
                             </motion.div>
@@ -240,7 +259,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-12 pointer-events-none">
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedId(null)} className="absolute inset-0 bg-black/80 backdrop-blur-md pointer-events-auto cursor-pointer" />
                             <div className="relative z-10 perspective-1000 w-full max-w-5xl pointer-events-auto">
-                                {playground.filter(item => item.id === selectedId).map(item => (
+                                {initialPlayground.filter((item) => item.id === selectedId).map((item) => (
                                     <motion.div
                                         layoutId={`card-${item.id}`}
                                         key={item.id}
@@ -253,7 +272,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                         dragElastic={0.2}
                                     >
                                         <div className="w-full h-auto relative pointer-events-none">
-                                            <img src={item.image} alt={item.title} className="w-full h-auto block object-contain max-h-[80vh]" />
+                                            <img src={getCardImage(item)} alt={item.title} className="w-full h-auto block object-contain max-h-[80vh]" />
                                         </div>
                                         <div className="absolute top-4 right-4 z-20">
                                             <button onClick={(e) => { e.stopPropagation(); setSelectedId(null); }} className="bg-black/50 hover:bg-white/20 text-white rounded-full p-2 transition-colors backdrop-blur-sm">
@@ -261,8 +280,9 @@ export default function WorksClient({ initialProjects, initialCaseStudies }: Wor
                                             </button>
                                         </div>
                                         <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 via-black/50 to-transparent transform translate-z-20" style={{ transform: "translateZ(40px)" }}>
-                                            <span className="block text-sm font-sans tracking-widest text-primary uppercase mb-2 drop-shadow-md">{item.type}</span>
+                                            <span className="block text-sm font-sans tracking-widest text-primary uppercase mb-2 drop-shadow-md">{item.category || "Playground"}</span>
                                             <h4 className="text-3xl md:text-5xl font-serif uppercase text-white drop-shadow-md leading-tight">{item.title}</h4>
+                                            {item.caption && <p className="mt-3 max-w-2xl text-sm text-white/70">{item.caption}</p>}
                                         </div>
                                     </motion.div>
                                 ))}

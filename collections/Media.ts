@@ -4,7 +4,7 @@ const Media: CollectionConfig = {
     slug: 'media',
     admin: {
         useAsTitle: 'alt',
-        defaultColumns: ['alt', 'updatedAt'],
+        defaultColumns: ['alt', 'filename', 'updatedAt'],
     },
     labels: {
         singular: 'Media Item',
@@ -40,20 +40,20 @@ const Media: CollectionConfig = {
     },
     fields: [
         {
-            name: 'title',
-            label: 'Media Label',
-            type: 'text',
-            admin: {
-                description: 'Optional internal label to help you recognize this asset in the media library.',
-            },
-        },
-        {
             name: 'alt',
             label: 'Alt Text',
             type: 'text',
             required: true,
             admin: {
                 description: 'Short accessible description for the image.',
+            },
+        },
+        {
+            name: 'caption',
+            label: 'Caption',
+            type: 'textarea',
+            admin: {
+                description: 'Optional caption or short note for this image.',
             },
         },
     ],

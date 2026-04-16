@@ -1,14 +1,19 @@
 import type { CollectionConfig } from 'payload'
 
+import { featuredField, legacyNumericIdField, slugField, sortOrderField } from './shared.ts'
+
 const CaseStudies: CollectionConfig = {
     slug: 'case-studies',
     admin: {
         useAsTitle: 'title',
-        defaultColumns: ['title', 'category', 'year', 'numericId'],
+        defaultColumns: ['title', 'featured', 'sortOrder', 'updatedAt'],
     },
     labels: {
         singular: 'Case Study',
         plural: 'Case Studies',
+    },
+    versions: {
+        drafts: true,
     },
     fields: [
         {
@@ -23,13 +28,14 @@ const CaseStudies: CollectionConfig = {
                             type: 'text',
                             required: true,
                         },
+                        slugField(),
                         {
                             name: 'description',
-                            label: 'Short Summary',
+                            label: 'Intro Text',
                             type: 'textarea',
                             required: true,
                             admin: {
-                                description: 'Used for case study cards and short previews on the site.',
+                                description: 'Short intro shown before the story sections begin.',
                             },
                         },
                     ],
@@ -44,82 +50,60 @@ const CaseStudies: CollectionConfig = {
                             relationTo: 'media',
                             required: true,
                             admin: {
-                                description: 'Main thumbnail / hero image used in listings and on the detail page.',
+                                description: 'Main thumbnail used on the works listing.',
                             },
                         },
                         {
-                            name: 'images',
-                            label: 'Gallery Images',
+                            name: 'sections',
+                            label: 'Story Sections',
                             type: 'array',
+                            required: true,
                             admin: {
-                                description: 'Optional supporting images shown in the case study detail view.',
+                                description: 'Reorder sections to shape the story. Keep each section image-first.',
                             },
                             fields: [
                                 {
-                                    name: 'image',
-                                    label: 'Gallery Image',
-                                    type: 'upload',
-                                    relationTo: 'media',
+                                    name: 'title',
+                                    label: 'Section Title',
+                                    type: 'text',
+                                },
+                                {
+                                    name: 'text',
+                                    label: 'Section Text',
+                                    type: 'textarea',
+                                    admin: {
+                                        description: 'Optional short text between images.',
+                                    },
+                                },
+                                {
+                                    name: 'images',
+                                    label: 'Section Images',
+                                    type: 'array',
                                     required: true,
+                                    minRows: 1,
+                                    admin: {
+                                        initCollapsed: true,
+                                    },
+                                    fields: [
+                                        {
+                                            name: 'image',
+                                            label: 'Image',
+                                            type: 'upload',
+                                            relationTo: 'media',
+                                            required: true,
+                                        },
+                                    ],
                                 },
                             ],
                         },
                     ],
                 },
                 {
-                    label: 'Case Study Details',
-                    fields: [
-                        {
-                            name: 'category',
-                            label: 'Category',
-                            type: 'text',
-                            required: true,
-                        },
-                        {
-                            name: 'year',
-                            label: 'Year',
-                            type: 'text',
-                            required: true,
-                        },
-                        {
-                            name: 'color',
-                            label: 'Card Background Style',
-                            type: 'text',
-                            required: true,
-                            defaultValue: 'bg-blue-900',
-                            admin: {
-                                description: 'Existing frontend style token used for the case study card background.',
-                            },
-                        },
-                    ],
-                },
-                {
-                    label: 'Content',
-                    fields: [
-                        {
-                            name: 'content',
-                            label: 'Main Content',
-                            type: 'richText',
-                            required: true,
-                            admin: {
-                                description: 'Main body content shown on the case study detail page.',
-                            },
-                        },
-                    ],
-                },
-                {
                     label: 'Publish Settings',
                     fields: [
-                        {
-                            name: 'numericId',
-                            label: 'Internal ID',
-                            type: 'number',
-                            required: true,
-                            unique: true,
-                            admin: {
-                                description: 'Current frontend route identifier. Keep this unique.',
-                            },
-                        },
+                        featuredField,
+                        sortOrderField,
+                        legacyNumericIdField,
                     ],
                 },
             ],

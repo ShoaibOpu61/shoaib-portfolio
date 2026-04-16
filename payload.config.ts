@@ -13,6 +13,11 @@ import Users from './collections/Users.ts'
 import Media from './collections/Media.ts'
 import Projects from './collections/Projects.ts'
 import CaseStudies from './collections/CaseStudies.ts'
+import Playground from './collections/Playground.ts'
+
+const isProduction = process.env.NODE_ENV === 'production'
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+const localServerURL = 'http://localhost:3000'
 
 export default buildConfig({
     admin: {
@@ -21,11 +26,12 @@ export default buildConfig({
     secret: process.env.PAYLOAD_SECRET || 'fallback-secret-for-dev-only',
     serverURL:
         process.env.NEXT_PUBLIC_SITE_URL ||
-        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined),
+        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : localServerURL),
     editor: lexicalEditor({}),
     collections: [
         Projects,
         CaseStudies,
+        Playground,
         Media,
         Users,
     ],
@@ -34,8 +40,9 @@ export default buildConfig({
             collections: {
                 [Media.slug]: true,
             },
-            clientUploads: true,
-            token: process.env.BLOB_READ_WRITE_TOKEN,
+            enabled: Boolean(blobToken),
+            clientUploads: isProduction,
+            token: blobToken,
         }),
     ],
     typescript: {
