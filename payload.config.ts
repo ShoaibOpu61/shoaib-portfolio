@@ -40,7 +40,7 @@ export default buildConfig({
             collections: {
                 [Media.slug]: true,
             },
-            enabled: Boolean(blobToken),
+            enabled: isProduction && Boolean(blobToken),
             clientUploads: isProduction,
             token: blobToken,
         }),
