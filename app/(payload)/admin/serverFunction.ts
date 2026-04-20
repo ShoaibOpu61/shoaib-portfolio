@@ -1,15 +1,18 @@
 'use server'
 
 import type { ServerFunctionClient, ServerFunctionClientArgs } from 'payload'
-import { handleServerFunctions } from '@payloadcms/next/layouts'
-
-import config from '@/payload.config'
-import { importMap } from './importMap'
 
 export const serverFunction: ServerFunctionClient = async (
   args: ServerFunctionClientArgs,
 ) => {
   try {
+    const [{ handleServerFunctions }, { default: config }, { importMap }] =
+      await Promise.all([
+        import('@payloadcms/next/layouts'),
+        import('@/payload.config'),
+        import('./importMap'),
+      ])
+
     return await handleServerFunctions({
       config,
       importMap,
