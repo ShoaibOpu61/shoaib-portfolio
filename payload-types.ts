@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     projects: Project;
     'case-studies': CaseStudy;
+    playground: Playground;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -80,6 +81,7 @@ export interface Config {
   collectionsSelect: {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
+    playground: PlaygroundSelect<false> | PlaygroundSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -128,23 +130,56 @@ export interface UserAuthOperations {
 export interface Project {
   id: string;
   title: string;
-  numericId: number;
+  /**
+   * Auto-generated from the title. You can edit it if needed.
+   */
+  slug: string;
   category: string;
   year: string;
+  /**
+   * Short plain-text summary used in project cards and quick previews.
+   */
   description: string;
-  color: string;
+  /**
+   * Main thumbnail used in project listings.
+   */
   image: string | Media;
-  content: {
-    [k: string]: unknown;
-  }[];
+  /**
+   * Main project visual for the top of the detail page.
+   */
+  heroImage: string | Media;
+  /**
+   * Optional supporting images for mockups and showcase screens.
+   */
   images?:
     | {
         image: string | Media;
         id?: string | null;
       }[]
     | null;
+  /**
+   * Optional client or brand name.
+   */
+  client?: string | null;
+  /**
+   * Optional project URL.
+   */
+  liveLink?: string | null;
+  /**
+   * Use this to highlight selected work across the site.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  sortOrder?: number | null;
+  /**
+   * Optional legacy ID to preserve older /works links.
+   */
+  numericId?: number | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -152,7 +187,14 @@ export interface Project {
  */
 export interface Media {
   id: string;
+  /**
+   * Short accessible description for the image.
+   */
   alt: string;
+  /**
+   * Optional caption or short note for this image.
+   */
+  caption?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -198,23 +240,83 @@ export interface Media {
 export interface CaseStudy {
   id: string;
   title: string;
-  numericId: number;
-  category: string;
-  year: string;
+  /**
+   * Auto-generated from the title. You can edit it if needed.
+   */
+  slug: string;
+  /**
+   * Short intro shown before the story sections begin.
+   */
   description: string;
-  color: string;
+  /**
+   * Main thumbnail used on the works listing.
+   */
   image: string | Media;
-  content: {
-    [k: string]: unknown;
+  /**
+   * Reorder sections to shape the story. Keep each section image-first.
+   */
+  sections: {
+    title?: string | null;
+    /**
+     * Optional short text between images.
+     */
+    text?: string | null;
+    images: {
+      image: string | Media;
+      id?: string | null;
+    }[];
+    id?: string | null;
   }[];
-  images?:
-    | {
-        image: string | Media;
-        id?: string | null;
-      }[]
-    | null;
+  /**
+   * Use this to highlight selected work across the site.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  sortOrder?: number | null;
+  /**
+   * Optional legacy ID to preserve older /works links.
+   */
+  numericId?: number | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "playground".
+ */
+export interface Playground {
+  id: string;
+  title: string;
+  /**
+   * Auto-generated from the title. You can edit it if needed.
+   */
+  slug: string;
+  /**
+   * Optional lightweight tag like Logo, Poster, UI, or Flyer.
+   */
+  category?: string | null;
+  /**
+   * Optional short note for the modal or card.
+   */
+  caption?: string | null;
+  /**
+   * Single visual used for both the card and enlarged preview.
+   */
+  image: string | Media;
+  /**
+   * Use this to highlight selected work across the site.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -274,6 +376,10 @@ export interface PayloadLockedDocument {
         value: string | CaseStudy;
       } | null)
     | ({
+        relationTo: 'playground';
+        value: string | Playground;
+      } | null)
+    | ({
         relationTo: 'media';
         value: string | Media;
       } | null)
@@ -329,21 +435,26 @@ export interface PayloadMigration {
  */
 export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
-  numericId?: T;
+  slug?: T;
   category?: T;
   year?: T;
   description?: T;
-  color?: T;
   image?: T;
-  content?: T;
+  heroImage?: T;
   images?:
     | T
     | {
         image?: T;
         id?: T;
       };
+  client?: T;
+  liveLink?: T;
+  featured?: T;
+  sortOrder?: T;
+  numericId?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -351,21 +462,44 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface CaseStudiesSelect<T extends boolean = true> {
   title?: T;
-  numericId?: T;
-  category?: T;
-  year?: T;
+  slug?: T;
   description?: T;
-  color?: T;
   image?: T;
-  content?: T;
-  images?:
+  sections?:
     | T
     | {
-        image?: T;
+        title?: T;
+        text?: T;
+        images?:
+          | T
+          | {
+              image?: T;
+              id?: T;
+            };
         id?: T;
       };
+  featured?: T;
+  sortOrder?: T;
+  numericId?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "playground_select".
+ */
+export interface PlaygroundSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  caption?: T;
+  image?: T;
+  featured?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -373,6 +507,7 @@ export interface CaseStudiesSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  caption?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
