@@ -9,10 +9,20 @@ import { importMap } from './importMap'
 export const serverFunction: ServerFunctionClient = async (
   args: ServerFunctionClientArgs,
 ) => {
-  return handleServerFunctions({
-    config,
-    importMap,
-    name: args.name,
-    args: args.args,
-  })
+  try {
+    return await handleServerFunctions({
+      config,
+      importMap,
+      name: args.name,
+      args: args.args,
+    })
+  } catch (error) {
+    console.error('Payload server function failed', {
+      name: args.name,
+      args: args.args,
+      error,
+    })
+
+    throw error
+  }
 }
