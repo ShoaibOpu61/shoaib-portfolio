@@ -41,7 +41,10 @@ export default buildConfig({
                 [Media.slug]: true,
             },
             enabled: isProduction && Boolean(blobToken),
-            clientUploads: isProduction,
+            // Use the normal Payload upload flow in admin. This avoids the
+            // production-only direct-to-blob client upload path during the
+            // media drawer render while keeping Vercel Blob storage enabled.
+            clientUploads: false,
             token: blobToken,
         }),
     ],
