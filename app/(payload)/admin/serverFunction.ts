@@ -1,18 +1,18 @@
-'use client'
-import type { ServerFunctionClient } from 'payload'
+'use server'
 
-export const serverFunction: ServerFunctionClient = async (args) => {
-    const response = await fetch("/api/payload/server-functions", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(args),
-    })
+import type { ServerFunctionClient, ServerFunctionClientArgs } from 'payload'
+import { handleServerFunctions } from '@payloadcms/next/layouts'
 
-    if (!response.ok) {
-        throw new Error(`Payload server function request failed: ${response.status}`)
-    }
+import config from '@/payload.config'
+import { importMap } from './importMap'
 
-    return response.json()
+export const serverFunction: ServerFunctionClient = async (
+  args: ServerFunctionClientArgs,
+) => {
+  return handleServerFunctions({
+    config,
+    importMap,
+    name: args.name,
+    args: args.args,
+  })
 }
