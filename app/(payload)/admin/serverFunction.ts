@@ -1,29 +1,7 @@
 'use server'
 
 import type { ServerFunctionClient, ServerFunctionClientArgs } from 'payload'
-
-const normalizeServerFunctionArgs = (args: ServerFunctionClientArgs) => {
-  if (args.name !== 'render-document' || !args.args) {
-    return args.args
-  }
-
-  const renderDocumentArgs = args.args as Record<string, unknown>
-
-  if (
-    renderDocumentArgs.docID == null &&
-    !renderDocumentArgs.paramsOverride &&
-    typeof renderDocumentArgs.collectionSlug === 'string'
-  ) {
-    return {
-      ...renderDocumentArgs,
-      paramsOverride: {
-        segments: ['collections', renderDocumentArgs.collectionSlug, 'create'],
-      },
-    }
-  }
-
-  return renderDocumentArgs
-}
+import { renderDocumentHandlerOverride } from './renderDocumentHandler'
 
 export const serverFunction: ServerFunctionClient = async (
   args: ServerFunctionClientArgs,
@@ -36,16 +14,19 @@ export const serverFunction: ServerFunctionClient = async (
         import('./importMap'),
       ])
 
-    return await handleServerFunctions({
+      return await handleServerFunctions({
       config,
       importMap,
       name: args.name,
-      args: normalizeServerFunctionArgs(args),
+      args: args.args,
+      serverFunctions: {
+        'render-document': renderDocumentHandlerOverride,
+      },
     })
   } catch (error) {
     console.error('Payload server function failed', {
       name: args.name,
-      args: normalizeServerFunctionArgs(args),
+      args: args.args,
       error,
     })
 
