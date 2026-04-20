@@ -2,6 +2,29 @@
 
 import type { ServerFunctionClient, ServerFunctionClientArgs } from 'payload'
 
+const normalizeServerFunctionArgs = (args: ServerFunctionClientArgs) => {
+  if (args.name !== 'render-document' || !args.args) {
+    return args.args
+  }
+
+  const renderDocumentArgs = args.args as Record<string, unknown>
+
+  if (
+    renderDocumentArgs.docID == null &&
+    !renderDocumentArgs.paramsOverride &&
+    typeof renderDocumentArgs.collectionSlug === 'string'
+  ) {
+    return {
+      ...renderDocumentArgs,
+      paramsOverride: {
+        segments: ['collections', renderDocumentArgs.collectionSlug, 'create'],
+      },
+    }
+  }
+
+  return renderDocumentArgs
+}
+
 export const serverFunction: ServerFunctionClient = async (
   args: ServerFunctionClientArgs,
 ) => {
@@ -17,12 +40,12 @@ export const serverFunction: ServerFunctionClient = async (
       config,
       importMap,
       name: args.name,
-      args: args.args,
+      args: normalizeServerFunctionArgs(args),
     })
   } catch (error) {
     console.error('Payload server function failed', {
       name: args.name,
-      args: args.args,
+      args: normalizeServerFunctionArgs(args),
       error,
     })
 
