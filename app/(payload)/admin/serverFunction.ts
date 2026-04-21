@@ -1,7 +1,6 @@
 'use server'
 
 import type { ServerFunctionClient, ServerFunctionClientArgs } from 'payload'
-import { renderDocumentHandlerOverride } from './renderDocumentHandler'
 
 export const serverFunction: ServerFunctionClient = async (
   args: ServerFunctionClientArgs,
@@ -14,14 +13,10 @@ export const serverFunction: ServerFunctionClient = async (
         import('./importMap'),
       ])
 
-      return await handleServerFunctions({
+    return await handleServerFunctions({
+        ...args,
       config,
       importMap,
-      name: args.name,
-      args: args.args,
-      serverFunctions: {
-        'render-document': renderDocumentHandlerOverride,
-      },
     })
   } catch (error) {
     console.error('Payload server function failed', {
