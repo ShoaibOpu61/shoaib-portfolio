@@ -29,6 +29,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
+*.err.log
 
 # env files (can opt-in for committing if needed)
 .env*
@@ -53,3 +55,8 @@ out
 .env.local
 .DS_Store
 .vercel
+
+# local runtime media/uploads
+# Payload writes local uploads to public/media during development.
+# Keep existing tracked assets as-is; ignore only newly generated local files.
+/public/media/**
