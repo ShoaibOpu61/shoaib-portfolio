@@ -35,7 +35,10 @@ const Media: CollectionConfig = {
                 position: 'center',
             },
         ],
-        adminThumbnail: 'thumbnail',
+        adminThumbnail: ({ doc }) => {
+            const sizes = doc?.sizes as Record<string, any>
+            return (sizes?.thumbnail?.url || doc?.url) as string || ''
+        },
         mimeTypes: ['image/*'],
     },
     fields: [
