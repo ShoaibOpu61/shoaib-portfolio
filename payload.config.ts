@@ -40,12 +40,10 @@ export default buildConfig({
             collections: {
                 [Media.slug]: true,
             },
-            enabled: isProduction && Boolean(blobToken),
-            // Use direct client uploads only in production on Vercel. This
-            // avoids serverless upload limits while leaving local development
-            // on the normal filesystem-backed upload flow.
-            clientUploads: isProduction && Boolean(blobToken),
-            token: blobToken,
+            // Ensure we use Blob in production if ANY Vercel-related token is found
+            enabled: isProduction || Boolean(blobToken),
+            clientUploads: true,
+            token: blobToken || process.env.VERCEL_BLOB_READ_WRITE_TOKEN,
         }),
     ],
     typescript: {
