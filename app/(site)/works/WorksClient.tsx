@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, animate, AnimatePresence, useTransform, useSpring, useScroll } from "framer-motion";
-import { ArrowUpRight, ArrowLeft, ArrowRight, X, Play } from "lucide-react";
+import { motion, useMotionValue, animate, AnimatePresence, useTransform, useSpring } from "framer-motion";
+import { ArrowUpRight, ArrowLeft, ArrowRight, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/Footer";
@@ -52,11 +52,17 @@ function getMediaUrl(media?: MediaField) {
     return getPreferredMediaUrl(media) || FALLBACK_IMAGE;
 }
 
+// Function to specifically get the highest quality URL for popups
+function getFullMediaUrl(media?: MediaField) {
+    if (!media || typeof media !== "object") return getMediaUrl(media);
+    // Explicitly prioritize the original URL over thumbnails for the popup
+    return media.url || getMediaUrl(media);
+}
+
 function getCardImage(item: WorkCard | PlaygroundCard) {
     if ("coverImage" in item && item.coverImage) {
         return getMediaUrl(item.coverImage);
     }
-
     return getMediaUrl(item.image);
 }
 
@@ -65,14 +71,13 @@ function getWorkHref(item: WorkCard) {
 }
 
 const MarqueeItem = ({ item, onClick, index }: { item: PlaygroundCard, onClick: () => void, index: number }) => {
-    // Alternate vertical translation for a more dynamic look
-    const yOffset = index % 2 === 0 ? "10%" : "-10%";
+    const yOffset = index % 2 === 0 ? "8%" : "-8%";
     
     return (
         <motion.div 
-            whileHover={{ scale: 1.05, zIndex: 10, rotate: index % 2 === 0 ? 2 : -2 }}
+            whileHover={{ scale: 1.02, zIndex: 10 }}
             onClick={onClick}
-            className="flex-shrink-0 w-[240px] md:w-[320px] aspect-[3/4] relative group rounded-2xl overflow-hidden border border-white/5 bg-zinc-900 cursor-pointer shadow-2xl mx-4 md:mx-6"
+            className="flex-shrink-0 w-[240px] md:w-[300px] aspect-[3/4] relative group rounded-2xl overflow-hidden border border-white/5 bg-zinc-900 cursor-pointer shadow-2xl mx-4 md:mx-5"
             style={{ y: yOffset }}
         >
             <ImageWithSkeleton 
@@ -82,9 +87,9 @@ const MarqueeItem = ({ item, onClick, index }: { item: PlaygroundCard, onClick: 
                 unoptimized={true} 
                 className="object-cover opacity-90 group-hover:opacity-100 transition-all duration-500" 
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                <span className="text-[10px] font-sans tracking-[0.2em] text-cyan-400 uppercase mb-1">{item.category || "Exploration"}</span>
-                <h4 className="text-lg font-serif uppercase text-white leading-tight">{item.title}</h4>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <span className="text-[9px] font-sans tracking-[0.2em] text-cyan-400 uppercase mb-1">{item.category || "Exploration"}</span>
+                <h4 className="text-base font-serif uppercase text-white leading-tight">{item.title}</h4>
             </div>
         </motion.div>
     );
@@ -96,8 +101,8 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [15, -15]), { stiffness: 150, damping: 20 });
-    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), { stiffness: 150, damping: 20 });
+    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), { stiffness: 150, damping: 20 });
+    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), { stiffness: 150, damping: 20 });
 
     function onMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
         const { left, top, width, height } = currentTarget.getBoundingClientRect();
@@ -110,8 +115,9 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
         mouseY.set(0);
     }
 
-    // Duplicate list for infinite scroll
-    const doubledPlayground = [...initialPlayground, ...initialPlayground, ...initialPlayground];
+    const doubledPlayground = initialPlayground.length > 0 
+        ? [...initialPlayground, ...initialPlayground, ...initialPlayground, ...initialPlayground] 
+        : [];
 
     return (
         <main className="bg-background text-foreground selection:bg-white selection:text-black min-h-screen">
@@ -206,7 +212,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                 </div>
             </section>
 
-            {/* The Playground Section - Redesigned as Marquee */}
+            {/* The Playground Section */}
             <section className="py-32 px-0 overflow-hidden relative bg-black/20">
                 <div className="mb-24 px-6 md:px-12 text-center max-w-3xl mx-auto">
                     <motion.div
@@ -222,82 +228,106 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                     </motion.div>
                 </div>
 
-                {/* Marquee Wrapper */}
-                <div className="flex relative overflow-visible py-12">
-                    <motion.div 
-                        className="flex whitespace-nowrap"
-                        animate={{ 
-                            x: [0, "-33.33%"],
-                        }}
-                        transition={{ 
-                            duration: 30, 
-                            repeat: Infinity, 
-                            ease: "linear",
-                            repeatType: "loop"
-                        }}
-                    >
-                        {doubledPlayground.map((item, i) => (
-                            <MarqueeItem 
-                                key={`${item.id}-${i}`} 
-                                item={item} 
-                                index={i}
-                                onClick={() => setSelectedId(item.id)} 
-                            />
-                        ))}
-                    </motion.div>
-                </div>
+                {doubledPlayground.length > 0 && (
+                    <div className="flex relative overflow-visible py-16">
+                        <motion.div 
+                            className="flex whitespace-nowrap"
+                            animate={{ x: [0, "-33.33%"] }}
+                            transition={{ 
+                                duration: 25, 
+                                repeat: Infinity, 
+                                ease: "linear",
+                                repeatType: "loop"
+                            }}
+                        >
+                            {doubledPlayground.map((item, i) => (
+                                <MarqueeItem 
+                                    key={`${item.id}-${i}`} 
+                                    item={item} 
+                                    index={i}
+                                    onClick={() => setSelectedId(item.id)} 
+                                />
+                            ))}
+                        </motion.div>
+                    </div>
+                )}
 
-                {/* Atmospheric Glow behind marquee */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[60%] bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none -z-10" />
             </section>
 
-            {/* Lightbox / Details Popup */}
+            {/* Redesigned Popup Detail */}
             <AnimatePresence>
                 {selectedId && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 pointer-events-none">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-12 pointer-events-none">
                         <motion.div 
                             initial={{ opacity: 0 }} 
                             animate={{ opacity: 1 }} 
                             exit={{ opacity: 0 }} 
                             onClick={() => setSelectedId(null)} 
-                            className="absolute inset-0 bg-black/95 backdrop-blur-xl pointer-events-auto cursor-pointer" 
+                            className="absolute inset-0 bg-black/95 backdrop-blur-2xl pointer-events-auto" 
                         />
-                        <div className="relative z-10 w-full max-w-5xl pointer-events-auto">
+                        
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            className="relative z-10 w-full max-w-4xl max-h-[90vh] bg-[#121212] rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.5)] pointer-events-auto flex flex-col"
+                            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                            onMouseMove={onMouseMove}
+                            onMouseLeave={onMouseLeave}
+                        >
                             {initialPlayground.filter((item) => item.id === selectedId).map((item) => (
-                                <motion.div
-                                    layoutId={`card-${item.id}`}
-                                    key={item.id}
-                                    className="relative bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 shadow-2xl backdrop-blur-2xl"
-                                    style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-                                    onMouseMove={onMouseMove}
-                                    onMouseLeave={onMouseLeave}
-                                    drag
-                                    dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-                                    dragElastic={0.2}
-                                >
-                                    <div className="w-full h-auto relative pointer-events-none p-4">
+                                <div key={item.id} className="flex flex-col h-full overflow-y-auto custom-scrollbar">
+                                    {/* Image Section - High Res */}
+                                    <div className="relative w-full aspect-square md:aspect-video bg-black/40 flex items-center justify-center group/img">
                                         <img 
-                                            src={getCardImage(item)} 
+                                            src={getFullMediaUrl(item.image)} 
                                             alt={item.title} 
-                                            className="w-full h-auto block object-contain max-h-[75vh] rounded-xl shadow-2xl" 
+                                            className="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-700" 
                                         />
-                                    </div>
-                                    <div className="absolute top-6 right-6 z-20">
+                                        <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
+                                        
                                         <button 
                                             onClick={(e) => { e.stopPropagation(); setSelectedId(null); }} 
-                                            className="bg-black/50 hover:bg-white/20 text-white rounded-full p-3 transition-colors backdrop-blur-sm border border-white/10"
+                                            className="absolute top-6 right-6 bg-black/60 hover:bg-white/10 text-white rounded-full p-3 transition-all backdrop-blur-md border border-white/10 z-30"
                                         >
-                                            <X className="w-6 h-6" />
+                                            <X className="w-5 h-5" />
                                         </button>
                                     </div>
-                                    <div className="p-8 md:p-12" style={{ transform: "translateZ(40px)" }}>
-                                        <span className="block text-sm font-sans tracking-widest text-cyan-400 uppercase mb-3">{item.category || "Playground"}</span>
-                                        <h4 className="text-3xl md:text-5xl font-serif uppercase text-white mb-4 leading-tight">{item.title}</h4>
-                                        {item.caption && <p className="text-lg text-white/60 font-light leading-relaxed max-w-2xl">{item.caption}</p>}
+
+                                    {/* Details Section */}
+                                    <div className="p-8 md:p-12 bg-gradient-to-b from-zinc-900/50 to-zinc-950/50" style={{ transform: "translateZ(30px)" }}>
+                                        <motion.span 
+                                            initial={{ opacity: 0, x: -10 }} 
+                                            animate={{ opacity: 1, x: 0 }}
+                                            className="block text-[10px] font-sans tracking-[0.4em] text-cyan-400 uppercase mb-4"
+                                        >
+                                            {item.category || "Playground Piece"}
+                                        </motion.span>
+                                        
+                                        <motion.h4 
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.1 }}
+                                            className="text-3xl md:text-5xl font-serif uppercase text-white mb-6 leading-tight tracking-tight"
+                                        >
+                                            {item.title}
+                                        </motion.h4>
+
+                                        {item.caption && (
+                                            <motion.p 
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                transition={{ delay: 0.2 }}
+                                                className="text-base md:text-lg text-white/50 font-light leading-relaxed max-w-2xl"
+                                            >
+                                                {item.caption}
+                                            </motion.p>
+                                        )}
                                     </div>
-                                </motion.div>
+                                </div>
                             ))}
-                        </div>
+                        </motion.div>
                     </div>
                 )}
             </AnimatePresence>
