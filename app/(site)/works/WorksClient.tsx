@@ -121,7 +121,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
         <main className="bg-background text-foreground selection:bg-white selection:text-black min-h-screen">
             <Navbar />
 
-            {/* Projects Header section omitted for brevity but preserved in actual file */}
+            {/* Projects Header section preserved */}
             <section className="pt-32 pb-12 px-6 md:px-12">
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
@@ -250,7 +250,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                 )}
             </section>
 
-            {/* Redesigned Popup Detail - FIXED BOTTOM */}
+            {/* Redesigned Popup Detail - FIXED SINGLE CARD LOOK (NO SCROLL) */}
             <AnimatePresence>
                 {selectedId && (
                     <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-12 pointer-events-none">
@@ -259,22 +259,22 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                             animate={{ opacity: 1 }} 
                             exit={{ opacity: 0 }} 
                             onClick={() => setSelectedId(null)} 
-                            className="absolute inset-0 bg-black/98 backdrop-blur-3xl pointer-events-auto" 
+                            className="absolute inset-0 bg-black/90 backdrop-blur-2xl pointer-events-auto" 
                         />
                         
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="relative z-10 w-full max-w-4xl max-h-[90vh] bg-[#0A0A0A] rounded-[2rem] overflow-hidden border border-white/10 shadow-[0_0_120px_rgba(34,211,238,0.15)] pointer-events-auto flex flex-col"
+                            className="relative z-10 w-full max-w-4xl bg-[#0A0A0A] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl pointer-events-auto flex flex-col items-stretch"
                             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
                             onMouseMove={onMouseMove}
                             onMouseLeave={onMouseLeave}
                         >
                             {initialPlayground.filter((item) => item.id === selectedId).map((item) => (
-                                <div key={item.id} className="flex flex-col h-full overflow-y-auto custom-scrollbar">
-                                    {/* Image Section */}
-                                    <div className="relative w-full aspect-square md:aspect-video bg-black/60 flex items-center justify-center group/img p-8">
+                                <div key={item.id} className="flex flex-col">
+                                    {/* Image Section - Fixed or constrained height to prevent scroll */}
+                                    <div className="relative w-full h-[50vh] md:h-[60vh] bg-black/40 flex items-center justify-center p-6 sm:p-10">
                                         <img 
                                             src={getFullMediaUrl(item.image)} 
                                             alt={item.title} 
@@ -283,52 +283,31 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                                         
                                         <button 
                                             onClick={(e) => { e.stopPropagation(); setSelectedId(null); }} 
-                                            className="absolute top-8 right-8 bg-black/40 hover:bg-white text-white hover:text-black rounded-full p-3 transition-all backdrop-blur-xl border border-white/10 z-30"
+                                            className="absolute top-8 right-8 bg-black/40 hover:bg-white text-white hover:text-black rounded-full p-2 transition-all backdrop-blur-xl border border-white/10 z-30"
                                         >
                                             <X className="w-5 h-5" />
                                         </button>
                                     </div>
 
-                                    {/* Details Section - Structured Footer */}
-                                    <div className="relative p-10 md:p-16 bg-[#0A0A0A] border-t border-white/5" style={{ transform: "translateZ(40px)" }}>
+                                    {/* Details Section - No Scroll basis */}
+                                    <div className="p-8 md:p-12 md:pb-16 bg-[#0A0A0A] border-t border-white/5" style={{ transform: "translateZ(40px)" }}>
                                         <div className="max-w-3xl">
-                                            <motion.div 
-                                                initial={{ opacity: 0, y: 10 }} 
-                                                animate={{ opacity: 1, y: 0 }}
-                                                className="flex items-center gap-3 mb-6"
-                                            >
-                                                <div className="h-px w-8 bg-cyan-500" />
-                                                <span className="text-[10px] font-sans tracking-[0.5em] text-cyan-400 uppercase">
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className="h-px w-6 bg-cyan-500" />
+                                                <span className="text-[10px] font-sans tracking-[0.4em] text-cyan-400 uppercase">
                                                     {item.category || "Exploration"}
                                                 </span>
-                                            </motion.div>
+                                            </div>
                                             
-                                            <motion.h4 
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                transition={{ delay: 0.1 }}
-                                                className="text-4xl md:text-6xl font-display font-bold leading-tight text-white mb-8 tracking-tighter"
-                                            >
+                                            <h4 className="text-3xl md:text-5xl font-display font-bold leading-tight text-white mb-6 tracking-tighter">
                                                 {item.title}
-                                            </motion.h4>
+                                            </h4>
 
                                             {item.caption && (
-                                                <motion.div 
-                                                    initial={{ opacity: 0 }}
-                                                    animate={{ opacity: 1 }}
-                                                    transition={{ delay: 0.2 }}
-                                                    className="relative"
-                                                >
-                                                    <p className="text-lg md:text-xl text-white/40 font-sans leading-relaxed">
-                                                        {item.caption}
-                                                    </p>
-                                                    </motion.div>
+                                                <p className="text-base md:text-lg text-white/40 font-sans leading-relaxed line-clamp-3">
+                                                    {item.caption}
+                                                </p>
                                             )}
-                                        </div>
-                                        
-                                        {/* Corner Accents */}
-                                        <div className="absolute bottom-6 right-10 opacity-10 pointer-events-none select-none">
-                                            <span className="font-display italic text-6xl text-white">OPU.</span>
                                         </div>
                                     </div>
                                 </div>
