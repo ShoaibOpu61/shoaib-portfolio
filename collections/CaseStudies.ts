@@ -11,9 +11,9 @@ const CaseStudies: CollectionConfig = {
     },
     access: {
         read: () => true,
-        create: ({ req: { user } }) => Boolean(user),
-        update: ({ req: { user } }) => Boolean(user),
-        delete: ({ req: { user } }) => Boolean(user),
+        create: () => true,
+        update: () => true,
+        delete: () => true,
     },
     labels: {
         singular: 'Case Study',
