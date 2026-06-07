@@ -4,6 +4,7 @@ const Media: CollectionConfig = {
     slug: 'media',
     admin: {
         useAsTitle: 'alt',
+        group: 'Assets',
         defaultColumns: ['alt', 'filename', 'updatedAt'],
     },
     labels: {

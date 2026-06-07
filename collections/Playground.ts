@@ -6,7 +6,8 @@ const Playground: CollectionConfig = {
     slug: 'playground',
     admin: {
         useAsTitle: 'title',
-        defaultColumns: ['title', 'category', 'featured', 'sortOrder', 'updatedAt'],
+        group: 'Portfolio',
+        defaultColumns: ['image', 'title', 'category', 'featured', 'sortOrder', 'updatedAt'],
     },
     labels: {
         singular: 'Playground Piece',

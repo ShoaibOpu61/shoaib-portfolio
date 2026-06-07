@@ -6,7 +6,8 @@ const CaseStudies: CollectionConfig = {
     slug: 'case-studies',
     admin: {
         useAsTitle: 'title',
-        defaultColumns: ['title', 'featured', 'sortOrder', 'updatedAt'],
+        group: 'Portfolio',
+        defaultColumns: ['image', 'title', 'featured', 'sortOrder', 'updatedAt'],
     },
     labels: {
         singular: 'Case Study',
