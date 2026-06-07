@@ -322,7 +322,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                                                     <p className="text-lg md:text-xl text-white/40 font-sans leading-relaxed">
                                                         {item.caption}
                                                     </p>
-                                                </div>
+                                                    </motion.div>
                                             )}
                                         </div>
                                         
