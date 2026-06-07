@@ -1,5 +1,5 @@
 "use client";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
 import { WebMockup, MobileMockup, AIMockup, HandoffMockup } from "@/components/ui/FloatingMockups";
@@ -10,7 +10,7 @@ const stats = [
     { label: "Companies", value: "04" },
 ];
 
-const Word = ({ children, progress, range }: { children: React.ReactNode, progress: any, range: [number, number] }) => {
+const Word = ({ children, progress, range }: { children: React.ReactNode, progress: MotionValue<number>, range: [number, number] }) => {
     const opacity = useTransform(progress, range, [0.1, 1]);
     const y = useTransform(progress, range, [20, 0]); 
     
