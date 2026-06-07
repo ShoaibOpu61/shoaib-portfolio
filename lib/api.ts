@@ -76,6 +76,7 @@ export const getPlaygroundEntries = async () => {
     const payload = await getPayload({ config })
     const { docs } = await payload.find({
         collection: 'playground',
+        draft: true, // Allow seeing drafts during development/preview
         ...defaultFindOptions,
     })
     return docs

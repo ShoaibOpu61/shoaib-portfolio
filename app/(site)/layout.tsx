@@ -62,10 +62,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Add your verification codes after deploying
-    google: undefined, // Add Google Search Console verification
-    // yandex: undefined,
-    // bing: undefined,
+    google: undefined,
   },
 };
 
@@ -82,6 +79,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${manrope.variable} ${syne.variable} antialiased bg-background text-foreground`}
+        suppressHydrationWarning
       >
         <GradientBackground />
         <div className="fixed inset-0 z-50 pointer-events-none opacity-5 mix-blend-overlay"
