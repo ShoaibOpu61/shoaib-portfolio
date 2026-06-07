@@ -230,7 +230,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                             x: [0, "-33.33%"],
                         }}
                         transition={{ 
-                            duration: 80, 
+                            duration: 30, 
                             repeat: Infinity, 
                             ease: "linear",
                             repeatType: "loop"
