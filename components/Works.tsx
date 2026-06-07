@@ -109,16 +109,16 @@ export default function Works() {
                     </span>
 
                     {/* Controls (desktop only) */}
-                    <div className="hidden md:flex items-center gap-2">
+                    <div className="hidden md:flex items-center gap-3">
                         <button
                             onClick={prev}
-                            className="h-10 px-4 rounded-full border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition"
+                            className="h-11 px-6 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-white/70 text-xs font-medium tracking-widest uppercase hover:text-white hover:border-cyan-500/40 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500"
                         >
                             Prev
                         </button>
                         <button
                             onClick={next}
-                            className="h-10 px-4 rounded-full border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition"
+                            className="h-11 px-6 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-white/70 text-xs font-medium tracking-widest uppercase hover:text-white hover:border-cyan-500/40 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500"
                         >
                             Next
                         </button>
@@ -193,14 +193,15 @@ export default function Works() {
                     {/* See All Card */}
                     <Link
                         href="/works"
-                        className="flex-shrink-0 w-[75vw] md:w-[360px] rounded-2xl flex flex-col justify-center items-center border border-white/10 hover:bg-white/5 transition-colors group"
+                        className="flex-shrink-0 w-[75vw] md:w-[360px] rounded-2xl flex flex-col justify-center items-center border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-500 hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(34,211,238,0.1)] group relative overflow-hidden"
                     >
-                        <span className="font-display text-2xl uppercase text-white/60 group-hover:text-white mb-4">
+                        <span className="font-display text-2xl uppercase text-white/60 group-hover:text-white mb-4 relative z-10 transition-colors duration-500">
                             See All Projects
                         </span>
-                        <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:scale-110 group-hover:border-white/40 transition-all duration-500 relative z-10">
                             <ArrowUpRight className="w-6 h-6 text-white" />
                         </div>
+                        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-cyan-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </Link>
                 </motion.div>
             </div>
