@@ -7,7 +7,7 @@ const CaseStudies: CollectionConfig = {
     admin: {
         useAsTitle: 'title',
         group: 'Portfolio',
-        defaultColumns: ['image', 'title', 'featured', 'sortOrder', 'updatedAt'],
+        defaultColumns: ['title', 'featured', 'sortOrder', 'updatedAt'],
     },
     labels: {
         singular: 'Case Study',

@@ -7,7 +7,7 @@ const Projects: CollectionConfig = {
     admin: {
         useAsTitle: 'title',
         group: 'Portfolio',
-        defaultColumns: ['image', 'title', 'category', 'featured', 'sortOrder', 'updatedAt'],
+        defaultColumns: ['title', 'category', 'featured', 'sortOrder', 'updatedAt'],
     },
     labels: {
         singular: 'Project',
