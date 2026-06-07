@@ -1,5 +1,14 @@
 import type { CollectionConfig } from 'payload'
 
+type MediaDoc = {
+    url?: string | null
+    sizes?: {
+        thumbnail?: {
+            url?: string | null
+        } | null
+    } | null
+}
+
 const Media: CollectionConfig = {
     slug: 'media',
     admin: {
@@ -13,9 +22,9 @@ const Media: CollectionConfig = {
     },
     access: {
         read: () => true,
-        create: () => true,
-        update: () => true,
-        delete: () => true,
+        create: ({ req: { user } }) => Boolean(user),
+        update: ({ req: { user } }) => Boolean(user),
+        delete: ({ req: { user } }) => Boolean(user),
     },
     upload: {
         staticDir: 'public/media',
@@ -40,8 +49,8 @@ const Media: CollectionConfig = {
             },
         ],
         adminThumbnail: ({ doc }) => {
-            const sizes = doc?.sizes as Record<string, any>
-            return (sizes?.thumbnail?.url || doc?.url) as string || ''
+            const mediaDoc = doc as MediaDoc | undefined
+            return mediaDoc?.sizes?.thumbnail?.url || mediaDoc?.url || ''
         },
         mimeTypes: ['image/*'],
     },

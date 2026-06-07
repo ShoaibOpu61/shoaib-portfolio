@@ -10,6 +10,8 @@ import { getPreferredMediaUrl } from "@/lib/media";
 type MediaField = string | {
     url?: string | null;
     thumbnailURL?: string | null;
+    width?: number | null;
+    height?: number | null;
     sizes?: {
         thumbnail?: { url?: string | null } | null;
         card?: { url?: string | null } | null;
@@ -60,6 +62,20 @@ function getHeroImage(project: WorkDoc) {
 
 function getListingImage(project: WorkDoc) {
     return getMediaUrl(project.coverImage || project.image);
+}
+
+function getMediaDimensions(media?: MediaField) {
+    if (media && typeof media === "object") {
+        return {
+            width: media.width || 1600,
+            height: media.height || 1000,
+        };
+    }
+
+    return {
+        width: 1600,
+        height: 1000,
+    };
 }
 
 export default async function ProjectPage({
@@ -124,11 +140,13 @@ export default async function ProjectPage({
                                         <div className="space-y-6">
                                             {section.images?.map((imgObj, imageIndex) => (
                                                 <div key={`${project.id}-section-${sectionIndex}-image-${imageIndex}`} className="w-full relative bg-zinc-950 rounded-lg overflow-hidden">
-                                                    <img
+                                                    <ImageWithSkeleton
                                                         src={getMediaUrl(imgObj.image)}
                                                         alt={`${project.title} section ${sectionIndex + 1} image ${imageIndex + 1}`}
-                                                        className="w-full h-auto block"
-                                                        loading="lazy"
+                                                        width={getMediaDimensions(imgObj.image).width}
+                                                        height={getMediaDimensions(imgObj.image).height}
+                                                        unoptimized={true}
+                                                        className="block h-auto w-full"
                                                     />
                                                 </div>
                                             ))}
@@ -140,11 +158,13 @@ export default async function ProjectPage({
                             <div className="w-full flex flex-col items-center">
                                 {project.images?.map((imgObj, i: number) => (
                                     <div key={i} className="w-full max-w-[1920px] relative">
-                                        <img
+                                        <ImageWithSkeleton
                                             src={getMediaUrl(imgObj.image)}
                                             alt={`${project.title} visual ${i + 1}`}
-                                            className="w-full h-auto block"
-                                            loading="lazy"
+                                            width={getMediaDimensions(imgObj.image).width}
+                                            height={getMediaDimensions(imgObj.image).height}
+                                            unoptimized={true}
+                                            className="block h-auto w-full"
                                         />
                                     </div>
                                 ))}

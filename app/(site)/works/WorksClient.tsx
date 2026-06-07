@@ -1,17 +1,20 @@
 "use client";
 
-import { motion, useMotionValue, animate, AnimatePresence, useTransform, useSpring } from "framer-motion";
-import { ArrowUpRight, ArrowLeft, ArrowRight, X } from "lucide-react";
+import { motion, useMotionValue, AnimatePresence, useTransform, useSpring } from "framer-motion";
+import { ArrowUpRight, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import { getPreferredMediaUrl } from "@/lib/media";
+import StackedCaseStudies from "@/components/works/StackedCaseStudies";
 
 type MediaField = string | {
     url?: string | null;
     thumbnailURL?: string | null;
+    width?: number | null;
+    height?: number | null;
     sizes?: {
         thumbnail?: { url?: string | null } | null;
         card?: { url?: string | null } | null;
@@ -175,39 +178,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                 </div>
             </section>
 
-            <section className="py-24 px-6 md:px-12 border-t border-white/10">
-                <div className="mb-16">
-                    <h2 className="text-4xl md:text-6xl font-serif uppercase text-white mb-4">My Case Studies</h2>
-                    <p className="text-secondary max-w-xl">Deep dives into my design process, research, and problem-solving methodologies.</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 mb-24">
-                    {initialCaseStudies.map((study, i) => (
-                        <Link href={getWorkHref(study)} key={study.id}>
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="group"
-                            >
-                                <div className="aspect-video w-full bg-zinc-950 mb-6 rounded-lg overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500">
-                                    <ImageWithSkeleton
-                                        src={getCardImage(study)}
-                                        alt={study.title}
-                                        fill
-                                        unoptimized={true}
-                                        className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-                                    />
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-                                </div>
-                                <span className="text-xs font-sans tracking-widest text-secondary uppercase block mb-2">{study.category || "Case Study"}</span>
-                                <h3 className="text-2xl md:text-3xl font-serif uppercase text-white group-hover:text-primary transition-colors">{study.title}</h3>
-                            </motion.div>
-                        </Link>
-                    ))}
-                </div>
-            </section>
+            <StackedCaseStudies items={initialCaseStudies} />
 
             {/* The Playground Section */}
             <section className="py-32 px-0 overflow-hidden relative bg-black/20">
@@ -275,10 +246,12 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                                 <div key={item.id} className="flex flex-col">
                                     {/* Image Section - Fixed or constrained height to prevent scroll */}
                                     <div className="relative w-full h-[50vh] md:h-[60vh] bg-black/40 flex items-center justify-center p-6 sm:p-10">
-                                        <img 
-                                            src={getFullMediaUrl(item.image)} 
-                                            alt={item.title} 
-                                            className="max-w-full max-h-full w-auto h-auto object-contain shadow-2xl rounded-lg" 
+                                        <ImageWithSkeleton
+                                            src={getFullMediaUrl(item.image)}
+                                            alt={item.title}
+                                            fill
+                                            unoptimized={true}
+                                            className="object-contain p-6 sm:p-10 shadow-2xl rounded-[1.5rem]"
                                         />
                                         
                                         <button 
