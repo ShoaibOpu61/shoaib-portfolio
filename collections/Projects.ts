@@ -9,6 +9,12 @@ const Projects: CollectionConfig = {
         group: 'Portfolio',
         defaultColumns: ['title', 'category', 'featured', 'sortOrder', 'updatedAt'],
     },
+    access: {
+        read: () => true,
+        create: ({ req: { user } }) => Boolean(user),
+        update: ({ req: { user } }) => Boolean(user),
+        delete: ({ req: { user } }) => Boolean(user),
+    },
     labels: {
         singular: 'Project',
         plural: 'Projects',

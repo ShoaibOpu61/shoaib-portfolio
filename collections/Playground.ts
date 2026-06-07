@@ -9,6 +9,12 @@ const Playground: CollectionConfig = {
         group: 'Portfolio',
         defaultColumns: ['title', 'category', 'featured', 'sortOrder', 'updatedAt'],
     },
+    access: {
+        read: () => true,
+        create: ({ req: { user } }) => Boolean(user),
+        update: ({ req: { user } }) => Boolean(user),
+        delete: ({ req: { user } }) => Boolean(user),
+    },
     labels: {
         singular: 'Playground Piece',
         plural: 'Playground',

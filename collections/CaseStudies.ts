@@ -9,6 +9,12 @@ const CaseStudies: CollectionConfig = {
         group: 'Portfolio',
         defaultColumns: ['title', 'featured', 'sortOrder', 'updatedAt'],
     },
+    access: {
+        read: () => true,
+        create: ({ req: { user } }) => Boolean(user),
+        update: ({ req: { user } }) => Boolean(user),
+        delete: ({ req: { user } }) => Boolean(user),
+    },
     labels: {
         singular: 'Case Study',
         plural: 'Case Studies',
