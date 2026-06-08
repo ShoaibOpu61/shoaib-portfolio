@@ -20,7 +20,11 @@ const Playground: CollectionConfig = {
         plural: 'Playground',
     },
     versions: {
-        drafts: true,
+        drafts: {
+            autosave: {
+                interval: 2000,
+            },
+        },
     },
     fields: [
         {

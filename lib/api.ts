@@ -1,9 +1,15 @@
 import { getPayload } from 'payload'
 import config from '../payload.config'
 
+// Only return published documents — drafts are auto-saved in CMS but hidden from the portfolio
 const defaultFindOptions = {
     depth: 1,
     sort: 'sortOrder',
+    where: {
+        _status: {
+            equals: 'published',
+        },
+    },
 }
 
 export const getProjects = async () => {
@@ -22,19 +28,29 @@ export const getProjectById = async (id: string) => {
         collection: 'projects',
         where: !isNaN(numericId)
             ? {
-                or: [
-                    { numericId: { equals: numericId } },
-                    { slug: { equals: id } },
-                    { id: { equals: id } },
+                and: [
+                    { _status: { equals: 'published' } },
+                    {
+                        or: [
+                            { numericId: { equals: numericId } },
+                            { slug: { equals: id } },
+                            { id: { equals: id } },
+                        ],
+                    },
                 ],
             }
             : {
-                or: [
-                    { slug: { equals: id } },
-                    { id: { equals: id } },
+                and: [
+                    { _status: { equals: 'published' } },
+                    {
+                        or: [
+                            { slug: { equals: id } },
+                            { id: { equals: id } },
+                        ],
+                    },
                 ],
             },
-        ...defaultFindOptions,
+        depth: 1,
     })
     return docs[0]
 }
@@ -55,19 +71,29 @@ export const getCaseStudyById = async (id: string) => {
         collection: 'case-studies',
         where: !isNaN(numericId)
             ? {
-                or: [
-                    { numericId: { equals: numericId } },
-                    { slug: { equals: id } },
-                    { id: { equals: id } },
+                and: [
+                    { _status: { equals: 'published' } },
+                    {
+                        or: [
+                            { numericId: { equals: numericId } },
+                            { slug: { equals: id } },
+                            { id: { equals: id } },
+                        ],
+                    },
                 ],
             }
             : {
-                or: [
-                    { slug: { equals: id } },
-                    { id: { equals: id } },
+                and: [
+                    { _status: { equals: 'published' } },
+                    {
+                        or: [
+                            { slug: { equals: id } },
+                            { id: { equals: id } },
+                        ],
+                    },
                 ],
             },
-        ...defaultFindOptions,
+        depth: 1,
     })
     return docs[0]
 }
@@ -76,8 +102,44 @@ export const getPlaygroundEntries = async () => {
     const payload = await getPayload({ config })
     const { docs } = await payload.find({
         collection: 'playground',
-        draft: true, // Allow seeing drafts during development/preview
         ...defaultFindOptions,
     })
     return docs
+}
+
+export const getFeaturedProjects = async (limit = 5) => {
+    const payload = await getPayload({ config })
+
+    const { docs: featuredDocs } = await payload.find({
+        collection: 'projects',
+        where: {
+            and: [
+                { _status: { equals: 'published' } },
+                { featured: { equals: true } },
+            ],
+        },
+        limit,
+        depth: 1,
+        sort: 'sortOrder',
+    })
+
+    if (featuredDocs.length < limit) {
+        const { docs: fallbackDocs } = await payload.find({
+            collection: 'projects',
+            where: {
+                and: [
+                    { _status: { equals: 'published' } },
+                    ...(featuredDocs.length > 0
+                        ? [{ id: { not_in: featuredDocs.map(d => d.id) } }]
+                        : []),
+                ],
+            },
+            limit: limit - featuredDocs.length,
+            depth: 1,
+            sort: 'sortOrder',
+        })
+        return [...featuredDocs, ...fallbackDocs]
+    }
+
+    return featuredDocs
 }

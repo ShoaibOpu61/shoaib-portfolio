@@ -1,4 +1,4 @@
-import type { Field } from 'payload'
+import type { CollectionSlug, Field, NumberField } from 'payload'
 
 import { formatSlug } from '../lib/formatSlug.ts'
 
@@ -51,11 +51,53 @@ export const sortOrderField: Field = {
     },
 }
 
-export const legacyNumericIdField: Field = {
+export const legacyNumericIdField: NumberField = {
     name: 'numericId',
     label: 'Legacy Route ID',
     type: 'number',
-    unique: true,
+    validate: async (value, { collectionSlug, id, req }) => {
+        if (value === null || value === undefined) {
+            return true
+        }
+
+        if (typeof value !== 'number' || !Number.isFinite(value)) {
+            return 'Legacy Route ID must be a valid number.'
+        }
+
+        if (!collectionSlug || !req?.payload) {
+            return true
+        }
+
+        const result = await req.payload.find({
+            collection: collectionSlug as CollectionSlug,
+            depth: 0,
+            limit: 2,
+            where: {
+                numericId: {
+                    equals: value,
+                },
+            },
+        })
+
+        const duplicate = result.docs.find((doc: { id: number | string }) => doc.id !== id)
+
+        if (duplicate) {
+            return 'Legacy Route ID must be unique when provided.'
+        }
+
+        return true
+    },
+    hooks: {
+        beforeValidate: [
+            ({ value }) => {
+                if (value === '' || value === null) {
+                    return undefined
+                }
+
+                return value
+            },
+        ],
+    },
     admin: {
         description: 'Optional legacy ID to preserve older /works links.',
     },

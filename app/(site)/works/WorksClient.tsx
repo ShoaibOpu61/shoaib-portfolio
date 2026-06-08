@@ -53,7 +53,7 @@ interface WorksClientProps {
 const FALLBACK_IMAGE = "/images/profile-photo.jpg";
 
 function getMediaUrl(media?: MediaField) {
-    return getPreferredMediaUrl(media) || FALLBACK_IMAGE;
+    return getPreferredMediaUrl(media, 'tablet') || FALLBACK_IMAGE;
 }
 
 function getFullMediaUrl(media?: MediaField) {
@@ -155,7 +155,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
         : [];
 
     return (
-        <main className="bg-background text-foreground selection:bg-white selection:text-black min-h-screen">
+        <main className="bg-[#050505] text-foreground selection:bg-white selection:text-black min-h-screen">
             <Navbar />
 
             {/* Decorative hero. Work data below remains CMS-driven. */}
@@ -164,10 +164,11 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                 onMouseMove={onHeroMouseMove}
                 onMouseLeave={onHeroMouseLeave}
             >
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(34,211,238,0.13),transparent_36%),radial-gradient(circle_at_56%_27%,rgba(139,92,246,0.12),transparent_40%),linear-gradient(180deg,rgba(5,5,5,0)_0%,#050505_92%)]" />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(34,211,238,0.13),transparent_36%),radial-gradient(circle_at_56%_27%,rgba(139,92,246,0.12),transparent_40%),linear-gradient(180deg,transparent_0%,#050505_92%)]" />
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-white/[0.025] to-transparent" />
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,transparent_0,transparent_34%,rgba(0,0,0,0.42)_88%)]" />
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_30%,rgba(255,255,255,0.075)_0_1px,transparent_1.5px),radial-gradient(circle_at_78%_54%,rgba(34,211,238,0.095)_0_1px,transparent_1.5px)] bg-[size:74px_74px] opacity-[0.16]" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#050505] to-transparent" />
 
                 <div className="relative mx-auto max-w-[1480px]">
                     <motion.div
@@ -300,7 +301,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
             <StackedCaseStudies items={initialCaseStudies} />
 
             {/* The Playground Section */}
-            <section className="py-32 px-0 overflow-hidden relative bg-black/20">
+            <section className="py-32 px-0 overflow-hidden relative">
                 <div className="mb-24 px-6 md:px-12 text-center max-w-3xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}

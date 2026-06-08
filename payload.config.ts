@@ -36,15 +36,14 @@ export default buildConfig({
         Users,
     ],
     plugins: [
-        vercelBlobStorage({
+        ...(isProduction || Boolean(blobToken) ? [vercelBlobStorage({
             collections: {
                 [Media.slug]: true,
             },
-            // Ensure we use Blob in production if ANY Vercel-related token is found
-            enabled: isProduction || Boolean(blobToken),
+            enabled: true,
             clientUploads: true,
-            token: blobToken || process.env.VERCEL_BLOB_READ_WRITE_TOKEN,
-        }),
+            token: (blobToken || process.env.VERCEL_BLOB_READ_WRITE_TOKEN) as string,
+        })] : []),
     ],
     typescript: {
         outputFile: path.resolve(dirname, 'payload-types.ts'),

@@ -49,7 +49,7 @@ type WorkDoc = {
 const FALLBACK_IMAGE = "/images/profile-photo.jpg";
 
 function getMediaUrl(media?: MediaField) {
-    return getPreferredMediaUrl(media) || FALLBACK_IMAGE;
+    return getPreferredMediaUrl(media, 'original') || FALLBACK_IMAGE;
 }
 
 function getWorkHref(item: WorkDoc) {

@@ -33,7 +33,10 @@ export function normalizeMediaUrl(url: string) {
     return url;
 }
 
-export function getPreferredMediaUrl(media?: string | MediaLike | null) {
+export function getPreferredMediaUrl(
+    media?: string | MediaLike | null,
+    preferSize: 'thumbnail' | 'card' | 'tablet' | 'original' = 'thumbnail'
+) {
     if (typeof media === "string" && media.length > 0) {
         return normalizeMediaUrl(media);
     }
@@ -42,13 +45,23 @@ export function getPreferredMediaUrl(media?: string | MediaLike | null) {
         return null;
     }
 
-    const candidateUrls = [
-        media.sizes?.thumbnail?.url,
-        media.thumbnailURL,
-        media.sizes?.card?.url,
-        media.sizes?.tablet?.url,
-        media.url,
-    ];
+    let candidateUrls: (string | null | undefined)[] = [];
+
+    if (preferSize === 'card') {
+        candidateUrls = [media.sizes?.card?.url, media.sizes?.tablet?.url, media.url, media.sizes?.thumbnail?.url, media.thumbnailURL];
+    } else if (preferSize === 'tablet') {
+        candidateUrls = [media.sizes?.tablet?.url, media.url, media.sizes?.card?.url, media.sizes?.thumbnail?.url, media.thumbnailURL];
+    } else if (preferSize === 'original') {
+        candidateUrls = [media.url, media.sizes?.tablet?.url, media.sizes?.card?.url, media.sizes?.thumbnail?.url, media.thumbnailURL];
+    } else {
+        candidateUrls = [
+            media.sizes?.thumbnail?.url,
+            media.thumbnailURL,
+            media.sizes?.card?.url,
+            media.sizes?.tablet?.url,
+            media.url,
+        ];
+    }
 
     const firstValidUrl = candidateUrls.find(
         (candidate): candidate is string => typeof candidate === "string" && candidate.length > 0,

@@ -20,8 +20,13 @@ const CaseStudies: CollectionConfig = {
         plural: 'Case Studies',
     },
     versions: {
-        drafts: true,
+        drafts: {
+            autosave: {
+                interval: 2000,
+            },
+        },
     },
+
     fields: [
         {
             type: 'tabs',
