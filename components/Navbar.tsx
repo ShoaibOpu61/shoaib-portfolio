@@ -57,7 +57,7 @@ export default function Navbar() {
                 <Link
                     href="/"
                     onClick={closeMenu}
-                    className="font-serif text-2xl font-bold tracking-tighter uppercase text-white mix-blend-difference"
+                    className="type-nav text-2xl text-white mix-blend-difference"
                 >
                     SHOAIB
                 </Link>
@@ -72,7 +72,7 @@ export default function Navbar() {
                                     <Link
                                         href={link.href}
                                         className={clsx(
-                                            "font-sans text-sm tracking-widest uppercase transition-colors relative z-10",
+                                            "type-nav text-sm transition-colors relative z-10",
                                             isActive ? "text-white" : "text-secondary hover:text-white"
                                         )}
                                     >
@@ -99,7 +99,7 @@ export default function Navbar() {
                     <button
                         type="button"
                         onClick={() => setMenuOpen((v) => !v)}
-                        className="md:hidden px-6 py-2.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-md text-white text-[10px] font-medium tracking-[0.2em] uppercase hover:border-white/30 transition-all duration-300"
+                        className="type-button md:hidden px-6 py-2.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-md text-white text-[10px] hover:border-white/30 transition-all duration-300"
                         aria-expanded={menuOpen}
                         aria-label={menuOpen ? "Close menu" : "Open menu"}
                     >
@@ -133,12 +133,12 @@ export default function Navbar() {
                             className="relative mx-4 mt-24 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-xl p-6"
                         >
                             <div className="flex items-center justify-between mb-6">
-                                <span className="font-sans text-xs tracking-widest uppercase text-white/60">
+                                <span className="type-label text-xs text-white/60">
                                     Navigation
                                 </span>
                                 <button
                                     onClick={closeMenu}
-                                    className="px-4 py-2 rounded-full border border-white/15 text-white/70 text-xs tracking-widest uppercase hover:text-white hover:border-white/30 transition"
+                                    className="type-button px-4 py-2 rounded-full border border-white/15 text-white/70 text-xs hover:text-white hover:border-white/30 transition"
                                 >
                                     Close
                                 </button>
@@ -150,7 +150,7 @@ export default function Navbar() {
                                         key={link.name}
                                         href={link.href}
                                         onClick={closeMenu}
-                                        className="py-3 border-b border-white/10 font-serif uppercase text-3xl tracking-tight text-white"
+                                        className="type-case-title py-3 border-b border-white/10 uppercase text-3xl text-white"
                                     >
                                         {link.name}
                                     </Link>
@@ -164,7 +164,7 @@ export default function Navbar() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={closeMenu}
-                                    className="group relative inline-flex w-full items-center justify-center px-6 py-4 border border-white/10 bg-white/5 rounded-full backdrop-blur-md font-sans text-xs tracking-widest uppercase text-white transition-all duration-500 hover:border-cyan-500/40 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] overflow-hidden"
+                                    className="type-button group relative inline-flex w-full items-center justify-center px-6 py-4 border border-white/10 bg-white/5 rounded-full backdrop-blur-md text-xs text-white transition-all duration-500 hover:border-cyan-500/40 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] overflow-hidden"
                                 >
                                     <span className="relative z-10">Resume</span>
                                     <div className="absolute inset-0 -z-10 bg-gradient-to-r from-cyan-500/10 to-violet-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

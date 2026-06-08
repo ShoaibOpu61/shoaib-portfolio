@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { GLSLHills } from "@/components/ui/glsl-hills";
 
@@ -20,6 +20,8 @@ const fadeUp = {
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [index, setIndex] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
+    const shouldReduceMotion = useReducedMotion();
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -34,9 +36,20 @@ export default function Hero() {
         return () => clearInterval(interval);
     }, []);
 
+    useEffect(() => {
+        const media = window.matchMedia("(max-width: 767px)");
+        const update = () => setIsMobile(media.matches);
+
+        update();
+        media.addEventListener("change", update);
+        return () => media.removeEventListener("change", update);
+    }, []);
+
     // Parallax transforms
-    const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-    const yText = useTransform(scrollYProgress, [0, 1], ["0%", "-5%"]);
+    const parallaxDisabled = shouldReduceMotion || isMobile;
+    const yBg = useTransform(scrollYProgress, [0, 1], parallaxDisabled ? ["0%", "0%"] : ["0%", "12%"]);
+    const yText = useTransform(scrollYProgress, [0, 1], parallaxDisabled ? ["0%", "0%"] : ["0%", "-4%"]);
+    const yCta = useTransform(scrollYProgress, [0, 1], parallaxDisabled ? ["0%", "0%"] : ["0%", "-10%"]);
     const opacityText = useTransform(scrollYProgress, [0, 0.4, 0.8], [1, 1, 0]);
     const glowOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
 
@@ -44,14 +57,14 @@ export default function Hero() {
         <section
             ref={containerRef}
             id="home"
-            className="relative h-screen w-full overflow-visible bg-[#050505]"
+            className="relative h-screen w-full overflow-hidden bg-[#050505]"
         >
             {/* Parallax Background Layer */}
             <motion.div
                 style={{ y: yBg }}
-                className="absolute inset-x-0 top-0 -bottom-32 z-0 md:-bottom-48"
+                className="absolute inset-0 z-0"
             >
-                <GLSLHills width="100%" height="calc(100vh + 12rem)" />
+                <GLSLHills width="100%" height="100%" />
             </motion.div>
 
             {/* Atmospheric Glows */}
@@ -63,8 +76,7 @@ export default function Hero() {
                 <div className="absolute bottom-[10%] -right-[10%] w-[80%] h-[80%] bg-violet-500/10 rounded-full blur-[140px] z-10" />
             </motion.div>
 
-            <div className="pointer-events-none absolute inset-x-0 top-0 -bottom-32 z-10 bg-black/40 backdrop-blur-[1px] md:-bottom-48" />
-            <div className="pointer-events-none absolute inset-x-0 -bottom-40 z-10 h-[56vh] bg-gradient-to-b from-transparent via-[#050505]/85 to-[#050505] md:-bottom-56 md:h-[64vh]" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-72 bg-gradient-to-b from-transparent via-[#050505]/80 to-[#050505] md:h-96" />
 
             <motion.div
                 style={{ y: yText, opacity: opacityText }}
@@ -77,8 +89,7 @@ export default function Hero() {
                     className="flex flex-col items-center text-center w-full"
                 >
                     <div className="flex flex-col items-center select-none w-full mb-12 md:mb-20 lg:mb-24">
-                        {/* Using Syne (font-display) with proper weights */}
-                        <span className="font-display italic text-[7vw] sm:text-4xl md:text-5xl lg:text-7xl text-white block mb-8 md:mb-14 lg:mb-16 tracking-tight leading-none opacity-90">
+                        <span className="type-accent text-[7vw] sm:text-4xl md:text-5xl lg:text-7xl text-white block mb-8 md:mb-14 lg:mb-16 leading-none opacity-90">
                             Designs That Speak
                         </span>
 
@@ -93,7 +104,7 @@ export default function Hero() {
                                         duration: 0.8,
                                         ease: [0.16, 1, 0.3, 1]
                                     }}
-                                    className="absolute font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-white to-violet-400 drop-shadow-2xl px-6 text-[10vw] sm:text-5xl md:text-7xl lg:text-[7.5rem] whitespace-nowrap leading-none tracking-tighter"
+                                    className="type-hero absolute bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-white to-violet-400 drop-shadow-2xl px-6 text-[10vw] sm:text-5xl md:text-7xl lg:text-[7.5rem] whitespace-nowrap leading-none"
                                 >
                                     {phrases[index]}
                                 </motion.span>
@@ -102,20 +113,21 @@ export default function Hero() {
                     </div>
 
                     <div className="max-w-[85vw] md:max-w-2xl lg:max-w-3xl mb-16 md:mb-24 px-4">
-                        <p className="text-sm sm:text-base md:text-lg text-white/50 leading-[1.8] font-sans tracking-wide">
+                        <p className="type-body text-sm sm:text-base md:text-lg text-white/50 leading-[1.8]">
                             I’m Shoaib, a UI/UX Designer crafting modern mobile and web experiences <br className="hidden md:block" />
                             using product thinking, visual storytelling, and AI-powered creative workflows.
                         </p>
                     </div>
 
                     <motion.div
+                        style={{ y: yCta }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.98 }}
                         className="relative z-30"
                     >
                         <a
                             href="#works"
-                            className="group relative inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 py-4 md:py-6 px-10 md:px-16 text-[11px] md:text-sm font-sans font-medium tracking-[0.3em] uppercase text-white backdrop-blur-xl transition-all duration-700 hover:border-cyan-500/50 hover:shadow-[0_0_50px_rgba(34,211,238,0.25)] overflow-hidden"
+                            className="type-button group relative inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 py-4 md:py-6 px-10 md:px-16 text-[11px] md:text-sm text-white backdrop-blur-xl transition-all duration-700 hover:border-cyan-500/50 hover:shadow-[0_0_50px_rgba(34,211,238,0.25)] overflow-hidden"
                         >
                             <span className="relative z-10">VIEW WORK</span>
                             <div className="absolute inset-0 -z-10 bg-gradient-to-r from-cyan-500/20 to-violet-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
@@ -125,16 +137,16 @@ export default function Hero() {
                 </motion.div>
             </motion.div>
 
-            <div className="absolute inset-x-0 bottom-8 md:bottom-12 z-30 px-6 md:px-12 pointer-events-none">
+            <div className="absolute inset-x-0 bottom-8 md:bottom-12 z-40 px-6 md:px-12 pointer-events-none">
                 <div className="flex flex-col md:flex-row justify-between items-center w-full gap-8">
                     <div className="flex items-center gap-4">
-                        <div className="h-[1px] w-8 md:w-16 bg-white/10 hidden md:block" />
-                        <span className="text-white/20 text-[9px] tracking-[0.6em] uppercase font-sans font-light">
+                        <div className="h-[1px] w-8 md:w-16 bg-white/25 hidden md:block" />
+                        <span className="type-label text-white/55 text-[9px] drop-shadow-[0_0_12px_rgba(255,255,255,0.18)]">
                             UI/UX • PRODUCT DESIGN • AI
                         </span>
                     </div>
                     <div className="flex flex-col items-center md:items-end gap-3 text-center">
-                        <span className="font-sans text-[8px] tracking-[0.5em] uppercase text-white/30 animate-pulse">
+                        <span className="type-label text-[8px] text-white/60 drop-shadow-[0_0_12px_rgba(255,255,255,0.18)] animate-pulse">
                             Scroll To Explore
                         </span>
                     </div>

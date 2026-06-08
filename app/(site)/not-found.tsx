@@ -13,7 +13,7 @@ export default function NotFound() {
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-[8rem] md:text-[12rem] font-serif leading-none"
+                    className="text-[8rem] md:text-[12rem] font-sans leading-none"
                 >
                     4
                 </motion.span>
@@ -35,7 +35,7 @@ export default function NotFound() {
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-[8rem] md:text-[12rem] font-serif leading-none"
+                    className="text-[8rem] md:text-[12rem] font-sans leading-none"
                 >
                     4
                 </motion.span>
@@ -47,7 +47,7 @@ export default function NotFound() {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="text-center z-20"
             >
-                <h2 className="text-2xl md:text-3xl font-serif mb-2">Whoops!</h2>
+                <h2 className="text-2xl md:text-3xl font-sans mb-2">Whoops!</h2>
                 <p className="text-white/60 mb-12 max-w-md mx-auto font-sans">
                     We couldn&apos;t find the site you were looking for.
                 </p>

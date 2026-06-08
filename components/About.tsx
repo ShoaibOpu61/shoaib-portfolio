@@ -15,7 +15,7 @@ const Word = ({ children, progress, range }: { children: React.ReactNode, progre
     const y = useTransform(progress, range, [20, 0]); 
     
     return (
-        <span className="relative mx-[0.12em] inline-block">
+        <span className="relative mx-[0.1em] inline-block md:mx-[0.11em]">
             <motion.span style={{ opacity, y }} className="inline-block">
                 {children}
             </motion.span>
@@ -45,28 +45,28 @@ export default function About() {
             className="py-24 md:py-32 px-6 md:px-12 border-t border-white/5 bg-background relative"
         >
             <div className="max-w-7xl mx-auto relative z-10">
-                <motion.span
+                <motion.h2
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="block text-sm font-medium font-sans tracking-widest text-secondary mb-12 text-center"
+                    className="type-section mb-16 text-center uppercase text-white"
                 >
                     ABOUT ME
-                </motion.span>
+                </motion.h2>
 
-                <div className="mb-24 max-w-5xl mx-auto px-4">
+                <div className="mb-24 max-w-6xl mx-auto px-1 sm:px-4 lg:px-6">
                     <h3 
                         ref={textRef}
-                        className="text-xl md:text-3xl lg:text-4xl font-sans font-normal leading-[1.8] text-white mb-12 text-center tracking-tight"
+                        className="type-body text-xl md:text-[2rem] lg:text-[2.5rem] font-normal leading-[1.9] md:leading-[1.82] lg:leading-[1.78] text-white mb-12 text-center"
                     >
                         {allWords.map((word, i) => {
                             const start = i / totalItems;
                             const end = (i + 1) / totalItems;
                             
-                            if (word === "MOBILE_MOCKUP") return <span key={i} className="inline-block mx-1.5 align-middle scale-90 md:scale-100"><MobileMockup /></span>;
-                            if (word === "WEB_MOCKUP") return <span key={i} className="inline-block mx-1.5 align-middle scale-90 md:scale-100"><WebMockup /></span>;
-                            if (word === "AI_MOCKUP") return <span key={i} className="inline-block mx-1.5 align-middle scale-90 md:scale-100"><AIMockup /></span>;
-                            if (word === "HANDOFF_MOCKUP") return <span key={i} className="inline-block mx-1.5 align-middle scale-90 md:scale-100"><HandoffMockup /></span>;
+                            if (word === "MOBILE_MOCKUP") return <span key={i} className="inline-block mx-1 align-middle scale-90 md:mx-1.5 md:scale-100"><MobileMockup /></span>;
+                            if (word === "WEB_MOCKUP") return <span key={i} className="inline-block mx-1 align-middle scale-90 md:mx-1.5 md:scale-100"><WebMockup /></span>;
+                            if (word === "AI_MOCKUP") return <span key={i} className="inline-block mx-1 align-middle scale-90 md:mx-1.5 md:scale-100"><AIMockup /></span>;
+                            if (word === "HANDOFF_MOCKUP") return <span key={i} className="inline-block mx-1 align-middle scale-90 md:mx-1.5 md:scale-100"><HandoffMockup /></span>;
 
                             return (
                                 <Word key={i} progress={scrollYProgress} range={[start, end]}>
@@ -77,7 +77,7 @@ export default function About() {
                         <br /><br />
                         <motion.span 
                             style={{ opacity: useTransform(scrollYProgress, [0.9, 1], [0.1, 1]) }}
-                            className="text-secondary text-lg md:text-2xl mt-4 block font-light text-center"
+                            className="type-body text-secondary text-lg md:text-2xl mt-4 block font-light text-center leading-relaxed"
                         >
                             Want to dive deeper into how I craft seamless experiences and make an impact?
                         </motion.span>
@@ -90,7 +90,7 @@ export default function About() {
                         >
                             <Link
                                 href="/about"
-                                className="group relative inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-10 py-4 text-sm font-medium tracking-widest uppercase text-white backdrop-blur-md transition-all duration-500 hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)] overflow-hidden"
+                            className="type-button group relative inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-10 py-4 text-sm text-white backdrop-blur-md transition-all duration-500 hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)] overflow-hidden"
                             >
                                 <span className="relative z-10 flex items-center">
                                     Read More
@@ -112,8 +112,8 @@ export default function About() {
                             transition={{ delay: i * 0.1, duration: 0.8 }}
                             className="flex flex-col items-center group cursor-default"
                         >
-                            <h4 className="text-5xl md:text-7xl font-display mb-2 text-white group-hover:scale-105 transition-transform duration-300 tracking-tighter">{stat.value}</h4>
-                            <p className="text-[10px] font-sans tracking-[0.4em] text-secondary uppercase group-hover:text-primary transition-colors">
+                            <h4 className="type-case-title text-5xl md:text-7xl mb-2 text-white group-hover:scale-105 transition-transform duration-300">{stat.value}</h4>
+                            <p className="type-label text-[10px] text-secondary group-hover:text-primary transition-colors">
                                 {stat.label}
                             </p>
                         </motion.div>

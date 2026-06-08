@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="relative bg-background text-foreground overflow-hidden selection:bg-white selection:text-black">
+    <main className="relative bg-[#050505] text-foreground overflow-hidden selection:bg-white selection:text-black">
       <Navbar />
       <Hero />
       <Works />

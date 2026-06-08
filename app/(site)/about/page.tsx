@@ -33,7 +33,7 @@ const BioCard = ({ title, icon, children, delay }: { title: string, icon: string
     >
         <div className="flex items-center gap-3 mb-3">
             <span className="text-2xl">{icon}</span>
-            <h3 className="font-display text-lg uppercase text-white/90">{title}</h3>
+            <h3 className="font-sans text-lg uppercase text-white/90">{title}</h3>
         </div>
         <div className="font-sans text-sm md:text-base leading-relaxed text-secondary/80">
             {children}
@@ -57,7 +57,7 @@ export default function AboutPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="text-6xl md:text-8xl font-display uppercase leading-[0.85] mb-12"
+                            className="text-6xl md:text-8xl font-sans uppercase leading-[0.85] mb-12"
                         >
                             <span className="text-white">About </span>
                             <span className="text-primary">Shoaib</span>
@@ -101,7 +101,7 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             className="text-center group cursor-default"
                         >
-                            <h3 className="text-6xl md:text-8xl font-serif text-primary mb-3 group-hover:text-white transition-colors duration-300">
+                            <h3 className="text-6xl md:text-8xl font-sans text-primary mb-3 group-hover:text-white transition-colors duration-300">
                                 {stat.number}
                             </h3>
                             <p className="font-sans text-sm text-secondary/60 uppercase tracking-[0.3em]">
@@ -118,7 +118,7 @@ export default function AboutPage() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-6xl font-serif uppercase mb-20 text-primary"
+                    className="text-4xl md:text-6xl font-sans uppercase mb-20 text-primary"
                 >
                     Experience
                 </motion.h2>
@@ -159,12 +159,12 @@ export default function AboutPage() {
                             className="grid grid-cols-1 md:grid-cols-12 gap-4 items-baseline pb-6 border-b border-white/5 last:border-0 group hover:border-white/20 transition-all duration-300"
                         >
                             <div className="md:col-span-1">
-                                <span className="text-5xl md:text-6xl font-serif text-primary/20 group-hover:text-primary/60 transition-colors">
+                                <span className="text-5xl md:text-6xl font-sans text-primary/20 group-hover:text-primary/60 transition-colors">
                                     0{i + 1}
                                 </span>
                             </div>
                             <div className="md:col-span-6">
-                                <h3 className="text-2xl md:text-4xl font-serif uppercase text-white/90 group-hover:text-primary transition-colors mb-2">
+                                <h3 className="text-2xl md:text-4xl font-sans uppercase text-white/90 group-hover:text-primary transition-colors mb-2">
                                     {job.role}
                                 </h3>
                                 <p className="font-sans text-sm md:text-base text-secondary/80 uppercase tracking-[0.2em]">
@@ -181,91 +181,205 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Skills - Visual Cards */}
-            <section className="py-24 px-6 md:px-12 border-t border-white/10">
-                <motion.h2
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="text-4xl md:text-6xl font-serif uppercase mb-20 text-primary"
-                >
-                    Expertise
-                </motion.h2>
+            {/* Expertise - Premium Bento */}
+            <section className="relative overflow-hidden border-t border-white/10 px-6 py-24 md:px-12">
+                <div className="pointer-events-none absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/[0.035] blur-[130px]" />
+                <div className="mx-auto max-w-7xl">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 18 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.7 }}
+                        className="type-section mb-14 uppercase text-primary md:mb-18"
+                    >
+                        Expertise
+                    </motion.h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                    {[
-                        {
-                            icon: "📱",
-                            title: "Mobile Design",
-                            desc: "iOS & Android"
-                        },
-                        {
-                            icon: "💻",
-                            title: "Web Design",
-                            desc: "Responsive & Modern"
-                        },
-                        {
-                            icon: "🤖",
-                            title: "AI Workflow",
-                            desc: "Enhanced Process"
-                        }
-                    ].map((skill, i) => (
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12 lg:auto-rows-[190px]">
                         <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 40 }}
+                            initial={{ opacity: 0, y: 28 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: i * 0.15 }}
                             viewport={{ once: true }}
-                            whileHover={{ y: -8 }}
-                            className="relative overflow-hidden border border-white/10 rounded-2xl p-10 hover:border-primary/50 transition-all duration-300 group cursor-pointer bg-gradient-to-br from-white/5 to-transparent"
+                            transition={{ duration: 0.65 }}
+                            whileHover={{ y: -6 }}
+                            className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] p-8 shadow-[0_24px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/30 hover:shadow-[0_28px_110px_rgba(34,211,238,0.055)] md:p-10 lg:col-span-6 lg:row-span-2"
                         >
-                            <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                                {skill.icon}
+                            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.11),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(139,92,246,0.09),transparent_42%)] opacity-80" />
+                            <div className="relative z-10 flex h-full flex-col justify-between gap-16">
+                                <div>
+                                    <span className="type-label mb-6 block text-[10px] text-cyan-200/65">
+                                        Capability System
+                                    </span>
+                                    <h3 className="type-case-title max-w-2xl text-4xl leading-[1.02] text-white md:text-5xl">
+                                        Designing products with clarity, craft, and AI-powered speed.
+                                    </h3>
+                                </div>
+                                <p className="type-body max-w-xl text-base leading-8 text-white/55 md:text-lg">
+                                    From mobile apps to web platforms, I turn complex ideas into simple, usable, and visually refined experiences.
+                                </p>
                             </div>
-                            <h3 className="text-3xl font-serif uppercase text-primary mb-3 group-hover:text-white transition-colors">
-                                {skill.title}
-                            </h3>
-                            <p className="font-sans text-sm text-secondary/60 uppercase tracking-[0.2em]">
-                                {skill.desc}
-                            </p>
                         </motion.div>
-                    ))}
-                </div>
 
+                        {[
+                            ["Mobile Design", "iOS & Android experiences"],
+                            ["Web Design", "Responsive modern interfaces"],
+                            ["Product Thinking", "UX flows, strategy, usability"],
+                            ["AI Workflow", "Faster ideation and production"],
+                        ].map(([title, subtitle], i) => (
+                            <motion.div
+                                key={title}
+                                initial={{ opacity: 0, y: 24 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.55, delay: i * 0.06 }}
+                                whileHover={{ y: -5 }}
+                                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/30 hover:bg-white/[0.045] hover:shadow-[0_20px_80px_rgba(34,211,238,0.045)] md:min-h-[180px] lg:col-span-3"
+                            >
+                                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),transparent_42%,rgba(34,211,238,0.04))] opacity-60" />
+                                <div className="relative z-10 flex h-full flex-col justify-between gap-10">
+                                    <div className="h-1.5 w-10 rounded-full bg-gradient-to-r from-cyan-300/70 to-violet-300/50 opacity-60 transition-opacity duration-300 group-hover:opacity-100" />
+                                    <div>
+                                        <h3 className="type-case-title mb-3 text-2xl uppercase text-white">
+                                            {title}
+                                        </h3>
+                                        <p className="type-body text-sm leading-6 text-white/45">
+                                            {subtitle}
+                                        </p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
 
-
-                {/* Tools Grid */}
-                <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-                    {[
-                        { name: "Figma", icon: "/logos/design/figma.png" },
-                        { name: "Adobe XD", icon: "/logos/design/xd.png" },
-                        { name: "Illustrator", icon: "/logos/design/illustrator.png" },
-                        { name: "Photoshop", icon: "/logos/design/photoshop.png" },
-                        { name: "MidJourney", icon: "/logos/ai/midjourney.png" },
-                        { name: "ChatGPT", icon: "/logos/ai/chatgpt.png" }
-                    ].map((tool, i) => (
                         <motion.div
-                            key={i}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.4, delay: i * 0.05 }}
+                            initial={{ opacity: 0, y: 28 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            whileHover={{ scale: 1.1 }}
-                            className="aspect-square rounded-xl border border-white/5 flex flex-col items-center justify-center hover:border-primary/30 hover:bg-white/5 transition-all duration-300 cursor-pointer gap-2"
+                            transition={{ duration: 0.65, delay: 0.12 }}
+                            whileHover={{ y: -6 }}
+                            className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] p-7 shadow-[0_24px_90px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:border-violet-300/25 hover:shadow-[0_28px_110px_rgba(139,92,246,0.055)] md:col-span-2 lg:col-span-6 lg:row-span-2"
                         >
-                            <div className="relative w-10 h-10 md:w-12 md:h-12">
-                                <Image
-                                    src={tool.icon}
-                                    alt={tool.name}
-                                    fill
-                                    className="object-contain"
-                                />
+                            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(139,92,246,0.11),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(34,211,238,0.08),transparent_42%)]" />
+                            <div className="relative z-10 flex h-full flex-col gap-8">
+                                <div>
+                                    <span className="type-label mb-4 block text-[10px] text-violet-200/60">
+                                        Tools I Use
+                                    </span>
+                                    <h3 className="type-case-title text-3xl uppercase text-white">
+                                        Creative stack
+                                    </h3>
+                                </div>
+
+                                <div className="relative min-h-[300px] flex-1">
+                                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(34,211,238,0.11),transparent_36%),radial-gradient(circle_at_54%_52%,rgba(139,92,246,0.105),transparent_40%)]" />
+                                    <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.035] blur-3xl" />
+                                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_32%_30%,rgba(255,255,255,0.075)_0_1px,transparent_1.5px),radial-gradient(circle_at_70%_66%,rgba(34,211,238,0.09)_0_1px,transparent_1.5px)] bg-[size:64px_64px] opacity-18" />
+                                    <div className="grid grid-cols-4 gap-3 md:block">
+                                        {[
+                                            { name: "Figma", icon: "/logos/design/figma.png", className: "md:left-[27%] md:top-[20%] md:z-30 md:h-[5.1rem] md:w-[5.1rem] md:rotate-[-5deg]", iconClass: "md:h-10 md:w-10" },
+                                            { name: "Photoshop", icon: "/logos/design/photoshop.png", className: "md:left-[43%] md:top-[13%] md:z-20 md:h-[4.75rem] md:w-[4.75rem] md:rotate-[4deg]", iconClass: "md:h-9 md:w-9" },
+                                            { name: "Illustrator", icon: "/logos/design/illustrator.png", className: "md:left-[57%] md:top-[24%] md:z-30 md:h-[4.95rem] md:w-[4.95rem] md:rotate-[-4deg]", iconClass: "md:h-9 md:w-9" },
+                                            { name: "Framer", icon: "/logos/design/framer.png", className: "md:right-[21%] md:top-[41%] md:z-20 md:h-[4.7rem] md:w-[4.7rem] md:rotate-[5deg]", iconClass: "md:h-9 md:w-9" },
+                                            { name: "ChatGPT", icon: "/logos/ai/chatgpt.png", className: "md:left-[23%] md:bottom-[26%] md:z-20 md:h-[4.8rem] md:w-[4.8rem] md:rotate-[4deg]", iconClass: "md:h-9 md:w-9" },
+                                            { name: "Midjourney", icon: "/logos/ai/midjourney.png", className: "md:left-[39%] md:bottom-[17%] md:z-30 md:h-[5rem] md:w-[5rem] md:rotate-[-5deg]", iconClass: "md:h-10 md:w-10" },
+                                            { name: "Claude", icon: "/logos/ai/claude-icon.png", className: "md:left-[55%] md:bottom-[25%] md:z-20 md:h-[4.7rem] md:w-[4.7rem] md:rotate-[4deg]", iconClass: "md:h-9 md:w-9" },
+                                            { name: "Google Antigravity", icon: "/logos/ai/google-antigravity.png", className: "md:right-[25%] md:bottom-[15%] md:z-10 md:h-[4.85rem] md:w-[4.85rem] md:rotate-[-4deg] md:opacity-90", iconClass: "md:h-9 md:w-9" },
+                                        ].map((tool, i) => (
+                                            <motion.div
+                                                key={tool.name}
+                                                initial={{ opacity: 0, scale: 0.88, y: 14 }}
+                                                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                                                viewport={{ once: true }}
+                                                transition={{
+                                                    opacity: { duration: 0.45, delay: 0.18 + i * 0.035 },
+                                                    scale: { duration: 0.45, delay: 0.18 + i * 0.035 },
+                                                    y: { duration: 4.8 + i * 0.18, repeat: Infinity, ease: "easeInOut", delay: i * 0.12 },
+                                                    rotate: { duration: 5.8 + i * 0.14, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 },
+                                                }}
+                                                animate={{ y: [0, i % 2 === 0 ? -6 : 5, 0], rotate: [0, i % 2 === 0 ? 1.5 : -1.5, 0] }}
+                                                whileHover={{ y: -8, scale: 1.055, rotate: 0 }}
+                                                className={["relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-black/44 shadow-[0_18px_55px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-colors duration-300 before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/[0.07] before:to-transparent before:opacity-55 hover:border-cyan-300/32 hover:bg-white/[0.065] md:absolute", tool.className].join(" ")}
+                                                title={tool.name}
+                                            >
+                                                <Image
+                                                    src={tool.icon}
+                                                    alt={tool.name + " logo"}
+                                                    width={42}
+                                                    height={42}
+                                                    className={["relative z-10 h-8 w-8 object-contain", tool.iconClass].join(" ")}
+                                                />
+                                            </motion.div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
-                            <p className="font-sans text-xs md:text-sm text-secondary/80 text-center px-2">
-                                {tool.name}
-                            </p>
                         </motion.div>
-                    ))}
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 28 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.65, delay: 0.18 }}
+                            whileHover={{ y: -6 }}
+                            className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.032] p-8 shadow-[0_24px_90px_rgba(0,0,0,0.24)] backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/25 hover:shadow-[0_28px_110px_rgba(34,211,238,0.05)] md:col-span-2 lg:col-span-6 lg:row-span-2"
+                        >
+                            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.1),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(139,92,246,0.1),transparent_42%)] opacity-80" />
+                            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:38px_38px] opacity-30" />
+
+                            <div className="relative z-10 flex h-full min-h-[320px] flex-col">
+                                <span className="type-label mb-5 block text-[10px] text-cyan-200/60">
+                                    Process Layer
+                                </span>
+                                <h3 className="type-case-title text-3xl uppercase text-white md:text-4xl">
+                                    Thinking System
+                                </h3>
+
+                                <div className="relative mt-10 flex flex-1 items-center justify-center overflow-hidden rounded-[1.5rem]">
+                                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(34,211,238,0.08),transparent_42%)]" />
+                                    <div className="pointer-events-none absolute left-[10%] right-[10%] top-1/2 hidden h-px -translate-y-1/2 overflow-hidden bg-white/10 md:block">
+                                        <motion.div
+                                            className="h-full w-1/4 bg-gradient-to-r from-transparent via-cyan-200/70 to-transparent"
+                                            animate={{ x: ["-120%", "520%"] }}
+                                            transition={{ duration: 5.4, repeat: Infinity, ease: "linear" }}
+                                        />
+                                    </div>
+
+                                    <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-5 md:gap-3">
+                                    {[
+                                        ["01", "AI-assisted research"],
+                                        ["02", "Pattern analysis"],
+                                        ["03", "Concept generation"],
+                                        ["04", "Human refinement"],
+                                        ["05", "Developer execution"],
+                                    ].map(([step, item], i) => (
+                                        <motion.div
+                                            key={item}
+                                            initial={{ opacity: 0, y: 12 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.45, delay: 0.14 + i * 0.055 }}
+                                            whileHover={{ y: -5, scale: 1.02 }}
+                                            className="group relative rounded-2xl border border-white/10 bg-black/28 px-4 py-4 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/30 hover:bg-white/[0.045] hover:shadow-[0_18px_55px_rgba(34,211,238,0.045)] md:min-h-[142px]"
+                                        >
+                                            <motion.span
+                                                className="mx-auto mb-4 flex h-5 w-5 items-center justify-center rounded-full border border-cyan-200/35 bg-cyan-200/10 shadow-[0_0_18px_rgba(34,211,238,0.22)]"
+                                                animate={{ scale: [1, 1.18, 1], opacity: [0.72, 1, 0.72] }}
+                                                transition={{ duration: 3, repeat: Infinity, delay: i * 0.28 }}
+                                            >
+                                                <span className="h-1.5 w-1.5 rounded-full bg-cyan-100/80" />
+                                            </motion.span>
+                                            <span className="type-label mb-4 block text-[9px] text-white/32">
+                                                {step}
+                                            </span>
+                                            <span className="type-body block text-sm leading-6 text-white/68 md:text-[13px] md:leading-5">
+                                                {item}
+                                            </span>
+                                        </motion.div>
+                                    ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
                 </div>
             </section>
 
@@ -275,7 +389,7 @@ export default function AboutPage() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-6xl font-serif uppercase mb-20 text-primary"
+                    className="text-4xl md:text-6xl font-sans uppercase mb-20 text-primary"
                 >
                     Selected Work
                 </motion.h2>
@@ -301,7 +415,7 @@ export default function AboutPage() {
                                     />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
                                 </div>
-                                <h3 className="text-2xl font-serif uppercase text-primary mb-2 group-hover:text-white transition-colors">
+                                <h3 className="text-2xl font-sans uppercase text-primary mb-2 group-hover:text-white transition-colors">
                                     {project.title}
                                 </h3>
                                 <p className="font-sans text-sm text-secondary/50 uppercase tracking-[0.2em]">
@@ -319,7 +433,7 @@ export default function AboutPage() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-6xl font-serif uppercase mb-20 text-primary"
+                    className="text-4xl md:text-6xl font-sans uppercase mb-20 text-primary"
                 >
                     Recognition
                 </motion.h2>
@@ -355,7 +469,7 @@ export default function AboutPage() {
                                         {award.emoji}
                                     </div>
                                     <div>
-                                        <h3 className="font-serif text-2xl uppercase text-primary mb-2 group-hover:text-white transition-colors">
+                                        <h3 className="font-sans text-2xl uppercase text-primary mb-2 group-hover:text-white transition-colors">
                                             {award.title}
                                         </h3>
                                         <p className="font-sans text-sm text-secondary/50 uppercase tracking-[0.2em]">

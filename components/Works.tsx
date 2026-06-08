@@ -93,13 +93,10 @@ export default function Works() {
     return (
         <section
             id="works"
-            className="relative z-10 -mt-24 overflow-hidden pt-36 pb-24 md:-mt-32 md:pt-44 md:pb-32"
+            className="relative z-10 overflow-hidden bg-[#050505] py-24 md:py-32"
         >
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-72 bg-gradient-to-b from-[#050505] via-[#050505]/70 to-transparent md:h-96" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-96 bg-[radial-gradient(ellipse_at_top,rgba(34,211,238,0.08),transparent_62%)]" />
-
             <div className="relative z-10 px-6 md:px-12 mb-12 flex items-end justify-between gap-6">
-                <h2 className="text-4xl md:text-6xl font-serif uppercase leading-tight text-white">
+                <h2 className="type-section uppercase leading-tight text-white">
                     Some Live <br /> Projects
                 </h2>
 
@@ -115,13 +112,13 @@ export default function Works() {
                     <div className="hidden md:flex items-center gap-3">
                         <button
                             onClick={prev}
-                            className="h-11 px-6 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-white/70 text-xs font-medium tracking-widest uppercase hover:text-white hover:border-cyan-500/40 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500"
+                            className="type-button h-11 px-6 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-white/70 text-xs hover:text-white hover:border-cyan-500/40 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500"
                         >
                             Prev
                         </button>
                         <button
                             onClick={next}
-                            className="h-11 px-6 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-white/70 text-xs font-medium tracking-widest uppercase hover:text-white hover:border-cyan-500/40 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500"
+                            className="type-button h-11 px-6 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-white/70 text-xs hover:text-white hover:border-cyan-500/40 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500"
                         >
                             Next
                         </button>
@@ -180,10 +177,10 @@ export default function Works() {
 
                                 <div className="flex justify-between items-start border-t border-white/20 pt-4">
                                     <div>
-                                        <span className="block text-xs font-sans tracking-widest text-white/60 mb-2 uppercase">
+                                        <span className="type-label block text-xs text-white/60 mb-2">
                                             {project.category}
                                         </span>
-                                        <h3 className="text-2xl md:text-3xl font-display uppercase text-white">
+                                        <h3 className="type-case-title text-2xl md:text-3xl uppercase text-white">
                                             {project.title}
                                         </h3>
                                     </div>
@@ -198,7 +195,7 @@ export default function Works() {
                         href="/works"
                         className="flex-shrink-0 w-[75vw] md:w-[360px] rounded-2xl flex flex-col justify-center items-center border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-500 hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(34,211,238,0.1)] group relative overflow-hidden"
                     >
-                        <span className="font-display text-2xl uppercase text-white/60 group-hover:text-white mb-4 relative z-10 transition-colors duration-500">
+                        <span className="type-case-title text-2xl uppercase text-white/60 group-hover:text-white mb-4 relative z-10 transition-colors duration-500">
                             See All Projects
                         </span>
                         <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:scale-110 group-hover:border-white/40 transition-all duration-500 relative z-10">
@@ -214,3 +211,4 @@ export default function Works() {
         </section>
     );
 }
+

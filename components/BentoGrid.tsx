@@ -46,12 +46,12 @@ export default function BentoGrid() {
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     <div>
-                        <h3 className="font-serif text-3xl md:text-4xl uppercase mb-2">My Arsenal</h3>
-                        <p className="font-sans text-secondary text-sm">The tools that power my workflow.</p>
+                        <h3 className="type-case-title text-3xl md:text-4xl uppercase mb-2">My Arsenal</h3>
+                        <p className="type-body text-secondary text-sm">The tools that power my workflow.</p>
                     </div>
                     <div className="flex gap-2">
                         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                        <span className="text-xs font-mono uppercase text-secondary">Always Learning</span>
+                        <span className="type-label text-xs text-secondary">Always Learning</span>
                     </div>
                 </motion.div>
 
@@ -60,7 +60,7 @@ export default function BentoGrid() {
                     variants={cardVariants}
                     className="col-span-1 md:col-span-1 row-span-1 md:row-span-2 bg-[#111] rounded-2xl p-6 border border-white/5 flex flex-col"
                 >
-                    <h4 className="font-sans text-xs tracking-widest text-secondary uppercase mb-6 flex items-center gap-2">
+                    <h4 className="type-label text-xs text-secondary mb-6 flex items-center gap-2">
                         <Layout className="w-4 h-4" /> Design
                     </h4>
                     <div className="grid grid-cols-2 gap-4 flex-1 content-start">
@@ -77,7 +77,7 @@ export default function BentoGrid() {
                                         className="object-contain group-hover:scale-110 transition-transform duration-300"
                                     />
                                 </div>
-                                <span className="text-[10px] uppercase tracking-wide text-secondary group-hover:text-white transition-colors">
+                                <span className="type-label text-[10px] text-secondary group-hover:text-white transition-colors">
                                     {tool.name}
                                 </span>
                             </div>
@@ -90,7 +90,7 @@ export default function BentoGrid() {
                     variants={cardVariants}
                     className="col-span-1 md:col-span-1 row-span-1 md:row-span-2 bg-[#111] rounded-2xl p-6 border border-white/5 flex flex-col"
                 >
-                    <h4 className="font-sans text-xs tracking-widest text-secondary uppercase mb-6 flex items-center gap-2">
+                    <h4 className="type-label text-xs text-secondary mb-6 flex items-center gap-2">
                         <Cpu className="w-4 h-4" /> AI Stack
                     </h4>
                     <div className="grid grid-cols-1 gap-2 flex-1">
@@ -107,7 +107,7 @@ export default function BentoGrid() {
                                         className="object-contain group-hover:scale-110 transition-transform duration-300"
                                     />
                                 </div>
-                                <span className="text-xs uppercase tracking-wide text-secondary group-hover:text-white transition-colors">
+                                <span className="type-label text-xs text-secondary group-hover:text-white transition-colors">
                                     {tool.name}
                                 </span>
                             </div>
@@ -123,8 +123,8 @@ export default function BentoGrid() {
                     {/* Abstract Decoration */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
-                    <h3 className="font-serif text-2xl md:text-3xl uppercase text-white/80 leading-tight relative z-10">
-                        &ldquo;Bridging the gap between <span className="text-white border-b border-white/30">Human Creativity</span> and <span className="text-purple-300 border-b border-purple-500/30">Artificial Intelligence</span>.&rdquo;
+                    <h3 className="type-case-title text-2xl md:text-3xl uppercase text-white/80 leading-tight relative z-10">
+                        &ldquo;Bridging the gap between <span className="type-accent text-white border-b border-white/30">Human Creativity</span> and <span className="type-accent text-purple-300 border-b border-purple-500/30">Artificial Intelligence</span>.&rdquo;
                     </h3>
                 </motion.div>
 
@@ -132,3 +132,4 @@ export default function BentoGrid() {
         </section>
     );
 }
+

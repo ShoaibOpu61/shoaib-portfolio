@@ -128,7 +128,7 @@ export default function ContactPage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-display text-white">
+                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans text-white">
                             Reach out
                         </h1>
                         <motion.div
@@ -210,17 +210,12 @@ export default function ContactPage() {
                                             href={social.href}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary transition-all duration-300 group relative overflow-hidden"
-                                            whileHover={{ scale: 1.1, rotate: 5 }}
+                                            className="group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5 text-white/70 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-cyan-300/50 hover:bg-cyan-300/10 hover:text-cyan-100 hover:shadow-[0_0_30px_rgba(34,211,238,0.18)]"
+                                            whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
                                         >
-                                            <motion.div
-                                                className="absolute inset-0 bg-primary/20"
-                                                initial={{ scale: 0, opacity: 0 }}
-                                                whileHover={{ scale: 2, opacity: 1 }}
-                                                transition={{ duration: 0.4 }}
-                                            />
-                                            <social.icon className="w-5 h-5 text-secondary group-hover:text-black relative z-10" />
+                                            <div className="absolute inset-0 bg-gradient-to-br from-cyan-300/10 via-white/0 to-violet-400/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                                            <social.icon className="relative z-10 h-5 w-5 transition-colors duration-300" />
                                         </motion.a>
                                     ))}
                                 </div>
@@ -372,7 +367,7 @@ export default function ContactPage() {
                                 >
                                     <Mail className="w-7 h-7 text-purple-400" />
                                 </motion.div>
-                                <h3 className="text-xl font-display text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">
+                                <h3 className="text-xl font-sans text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">
                                     Email me
                                 </h3>
                                 <p className="text-secondary font-sans text-sm mb-1">shoaibopu@gmail.com</p>
@@ -411,7 +406,7 @@ export default function ContactPage() {
                                 >
                                     <Phone className="w-7 h-7 text-blue-400" />
                                 </motion.div>
-                                <h3 className="text-xl font-display text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
+                                <h3 className="text-xl font-sans text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
                                     Call me
                                 </h3>
                                 <p className="text-secondary font-sans text-sm mb-1">Available on request</p>
@@ -462,7 +457,7 @@ export default function ContactPage() {
                                 >
                                     <MapPin className="w-7 h-7 text-emerald-400" />
                                 </motion.div>
-                                <h3 className="text-xl font-display text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
+                                <h3 className="text-xl font-sans text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
                                     My location
                                 </h3>
                                 <p className="text-secondary font-sans text-sm mb-1">Dhaka, Bangladesh</p>

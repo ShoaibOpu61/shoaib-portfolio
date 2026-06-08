@@ -71,23 +71,23 @@ export default function IdCard() {
 
                 {/* Details */}
                 <div className="pt-6 pb-4 text-center">
-                    <h2 className="font-serif text-2xl text-black uppercase tracking-tight mb-1">SHOAIB OPU</h2>
-                    <p className="font-sans text-xs text-gray-500 tracking-widest uppercase">UI/UX Designer</p>
+                    <h2 className="type-case-title text-2xl text-black uppercase mb-1">SHOAIB OPU</h2>
+                    <p className="type-label text-xs text-gray-500">UI/UX Designer</p>
                 </div>
 
                 {/* Stats / Info */}
                 <div className="w-full px-8 space-y-3">
                     <div className="flex justify-between border-b border-gray-300 pb-2">
-                        <span className="font-sans text-[10px] text-gray-500 uppercase">Location</span>
-                        <span className="font-sans text-[10px] text-black font-bold uppercase">Dhaka, BD</span>
+                        <span className="type-label text-[10px] text-gray-500">Location</span>
+                        <span className="type-label text-[10px] text-black font-bold">Dhaka, BD</span>
                     </div>
                     <div className="flex justify-between border-b border-gray-300 pb-2">
-                        <span className="font-sans text-[10px] text-gray-500 uppercase">Mobile No.</span>
-                        <span className="font-sans text-[10px] text-black font-bold uppercase">+880 1687716661</span>
+                        <span className="type-label text-[10px] text-gray-500">Mobile No.</span>
+                        <span className="type-label text-[10px] text-black font-bold">+880 1687716661</span>
                     </div>
                     <div className="flex justify-between border-b border-gray-300 pb-2">
-                        <span className="font-sans text-[10px] text-gray-500 uppercase">Email Address</span>
-                        <span className="font-sans text-[10px] text-black font-bold lowercase">shoaibopu@gmail.com</span>
+                        <span className="type-label text-[10px] text-gray-500">Email Address</span>
+                        <span className="type-body text-[10px] text-black font-bold lowercase">shoaibopu@gmail.com</span>
                     </div>
                 </div>
 

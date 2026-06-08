@@ -57,13 +57,7 @@ function getCaseStudyHref(item: CaseStudyCardItem) {
 }
 
 function getCaseStudyTags(item: CaseStudyCardItem) {
-    const title = item.title.toLowerCase();
     const tags = new Set<string>();
-
-    if (title.includes("research")) tags.add("UX Research");
-    if (title.includes("rebrand")) tags.add("Brand Strategy");
-    if (title.includes("beauty")) tags.add("Mobile UX");
-    if (title.includes("dairy")) tags.add("Product Design");
 
     if (item.category) tags.add(item.category);
     if (tags.size === 0) tags.add("Case Study");
@@ -120,26 +114,26 @@ function StackedCaseStudyCard({
                         <div>
                             <div className="mb-6 flex flex-wrap items-center gap-3">
                                 {item.year && (
-                                    <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.28em] text-white/50">
+                                    <span className="type-label rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] text-white/50">
                                         {item.year}
                                     </span>
                                 )}
                                 {getCaseStudyTags(item).map((tag) => (
                                     <span
                                         key={`${item.id}-${tag}`}
-                                        className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.24em] text-white/65"
+                                        className="type-label rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[10px] text-white/65"
                                     >
                                         {tag}
                                     </span>
                                 ))}
                             </div>
 
-                            <h3 className="max-w-[10ch] text-4xl uppercase leading-[0.92] text-white md:text-5xl lg:text-6xl">
+                            <h3 className="type-case-title max-w-[10ch] text-4xl uppercase leading-[0.92] text-white md:text-5xl lg:text-6xl">
                                 {item.title}
                             </h3>
 
                             {item.description && (
-                                <p className="mt-5 max-w-xl text-sm leading-7 text-white/58 md:text-[15px] lg:text-base">
+                                <p className="type-body mt-5 max-w-xl text-sm leading-7 text-white/58 md:text-[15px] lg:text-base">
                                     {item.description}
                                 </p>
                             )}
@@ -147,7 +141,7 @@ function StackedCaseStudyCard({
 
                         <Link
                             href={getCaseStudyHref(item)}
-                            className="mt-8 inline-flex w-fit items-center gap-3 text-xs font-medium uppercase tracking-[0.28em] text-white/82 transition-colors duration-300 hover:text-white"
+                            className="type-button mt-8 inline-flex w-fit items-center gap-3 text-xs text-white/82 transition-colors duration-300 hover:text-white"
                         >
                             <span>View Case Study</span>
                             <ArrowUpRight className="h-4 w-4" />
@@ -190,10 +184,10 @@ export default function StackedCaseStudies({ items }: StackedCaseStudiesProps) {
         <section className="relative border-t border-white/10 px-6 py-24 md:px-12 md:py-28">
             <div className="mx-auto max-w-[1480px]">
                 <div className="mb-14 max-w-3xl md:mb-20">
-                    <h2 className="text-4xl uppercase text-white md:text-6xl lg:text-7xl">
+                    <h2 className="type-section uppercase text-white">
                         My Case Studies
                     </h2>
-                    <p className="mt-5 max-w-2xl text-sm leading-7 text-white/52 md:text-base">
+                    <p className="type-body mt-5 max-w-2xl text-sm leading-7 text-white/52 md:text-base">
                         Deep dives into my design process, research, and problem-solving methodologies.
                     </p>
                 </div>
@@ -211,3 +205,4 @@ export default function StackedCaseStudies({ items }: StackedCaseStudiesProps) {
         </section>
     );
 }
+

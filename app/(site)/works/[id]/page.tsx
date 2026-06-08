@@ -116,7 +116,7 @@ export default async function ProjectPage({
                         </div>
 
                         <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-16">
-                            <h1 className="text-5xl md:text-8xl font-serif uppercase leading-[0.85] text-white mb-6">{project.title}</h1>
+                            <h1 className="type-hero text-5xl md:text-8xl uppercase leading-[0.85] text-white mb-6">{project.title}</h1>
                             {project.description && (
                                 <p className="max-w-3xl text-secondary text-base md:text-lg leading-relaxed">{project.description}</p>
                             )}
@@ -129,7 +129,7 @@ export default async function ProjectPage({
                                         {(section.title || section.text) && (
                                             <div className="max-w-4xl mb-10">
                                                 {section.title && (
-                                                    <h2 className="text-3xl md:text-5xl font-serif uppercase text-white mb-4">{section.title}</h2>
+                                                    <h2 className="type-section uppercase text-white mb-4">{section.title}</h2>
                                                 )}
                                                 {section.text && (
                                                     <p className="text-secondary text-base md:text-lg leading-relaxed">{section.text}</p>
@@ -172,7 +172,7 @@ export default async function ProjectPage({
                         )}
 
                         <div className="max-w-[1400px] mx-auto px-6 md:px-12 mt-24">
-                            <h3 className="text-2xl font-serif uppercase text-white mb-6 text-center">End of Case Study</h3>
+                            <h3 className="type-case-title text-2xl uppercase text-white mb-6 text-center">End of Case Study</h3>
                             <div className="flex justify-center">
                                 <Link href="/works" className="px-8 py-3 border border-white/20 rounded-full text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all">
                                     View Other Works
@@ -188,17 +188,17 @@ export default async function ProjectPage({
 
                         <div className="mb-16">
                             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
-                                <h1 className="text-5xl md:text-8xl font-serif uppercase leading-[0.85] text-white">
+                                <h1 className="type-hero text-5xl md:text-8xl uppercase leading-[0.85] text-white">
                                     {project.title}
                                 </h1>
                                 <div className="flex flex-col items-end text-right">
                                     {project.category && (
-                                        <span className="font-sans text-sm tracking-widest text-secondary uppercase block mb-1">
+                                        <span className="type-label text-sm text-secondary block mb-1">
                                             {project.category}
                                         </span>
                                     )}
                                     {project.year && (
-                                        <span className="font-sans text-sm tracking-widest text-secondary/50 uppercase block">
+                                        <span className="type-label text-sm text-secondary/50 block">
                                             Year: {project.year}
                                         </span>
                                     )}
@@ -219,7 +219,7 @@ export default async function ProjectPage({
 
                         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24">
                             <div className="md:col-span-4">
-                                <h3 className="text-sm font-sans uppercase tracking-widest text-white mb-4">Overview</h3>
+                                <h3 className="type-label text-sm text-white mb-4">Overview</h3>
                                 {project.description && (
                                     <p className="text-secondary text-sm md:text-base leading-relaxed mb-6">
                                         {project.description}
@@ -238,7 +238,7 @@ export default async function ProjectPage({
                                 </div>
                             </div>
                             <div className="md:col-span-8">
-                                <h3 className="text-sm font-sans uppercase tracking-widest text-white mb-4">Project Showcase</h3>
+                                <h3 className="type-label text-sm text-white mb-4">Project Showcase</h3>
                                 <p className="text-secondary text-sm md:text-base leading-relaxed">
                                     This project page is intentionally light on text and focused on visuals, mockups, and key context.
                                 </p>
@@ -264,7 +264,7 @@ export default async function ProjectPage({
                 )}
 
                 <section className="border-t border-white/10 pt-24 px-6 md:px-12 max-w-[1400px] mx-auto pb-24">
-                    <h2 className="text-3xl md:text-4xl font-serif uppercase mb-12">You Might Also Like</h2>
+                    <h2 className="type-section uppercase mb-12">You Might Also Like</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {otherProjects.map((p) => (
                             <Link key={p.id} href={getWorkHref(p)} className="group block">
@@ -280,10 +280,10 @@ export default async function ProjectPage({
                                 </div>
                                 <div className="flex justify-between items-start border-t border-white/20 pt-4">
                                     <div>
-                                        <span className="block text-sm font-sans tracking-widest text-secondary mb-2 uppercase">
+                                        <span className="type-label block text-sm text-secondary mb-2">
                                             {p.category || (isCaseStudy ? "Case Study" : "Project")}
                                         </span>
-                                        <h3 className="text-2xl md:text-3xl font-serif uppercase group-hover:text-primary transition-colors">
+                                        <h3 className="type-case-title text-2xl md:text-3xl uppercase group-hover:text-primary transition-colors">
                                             {p.title}
                                         </h3>
                                     </div>
@@ -299,3 +299,4 @@ export default async function ProjectPage({
         </main>
     );
 }
+

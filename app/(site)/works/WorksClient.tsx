@@ -1,11 +1,12 @@
 "use client";
 
-import { motion, useMotionValue, AnimatePresence, useTransform, useSpring } from "framer-motion";
+import { motion, useMotionValue, AnimatePresence, useTransform, useSpring, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Image from "next/image";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import { getPreferredMediaUrl } from "@/lib/media";
 import StackedCaseStudies from "@/components/works/StackedCaseStudies";
@@ -71,6 +72,22 @@ function getWorkHref(item: WorkCard) {
     return `/works/${item.slug || item.numericId || item.id}`;
 }
 
+const TOOL_CLOUD = [
+    { name: "Mobbin", initials: "Mb", className: "left-[14%] top-[20%] scale-75 opacity-32 hidden md:flex", drift: -4 },
+    { name: "ChatGPT", icon: "/logos/ai/chatgpt.png", className: "left-[24%] top-[10%] scale-90 opacity-68 hidden sm:flex", imageClass: "h-9 w-9 md:h-10 md:w-10", drift: 5 },
+    { name: "Photoshop", icon: "/logos/design/photoshop.png", className: "left-[37%] top-[17%] scale-75 opacity-44 hidden lg:flex", imageClass: "h-8 w-8 md:h-9 md:w-9", drift: -4 },
+    { name: "Claude", icon: "/logos/ai/claude-icon.png", className: "right-[36%] top-[13%] scale-80 opacity-52 hidden md:flex", imageClass: "h-8 w-8 md:h-9 md:w-9", drift: 4 },
+    { name: "Freepik AI", icon: "/logos/ai/freepik.png", className: "right-[22%] top-[21%] scale-75 opacity-36 hidden lg:flex", imageClass: "h-8 w-8 md:h-9 md:w-9", drift: -5 },
+    { name: "Framer", icon: "/logos/design/framer.png", className: "left-[18%] top-[46%] scale-92 opacity-72 hidden sm:flex", imageClass: "h-9 w-9 md:h-10 md:w-10", drift: 4 },
+    { name: "Google Stitch", icon: "/logos/ai/google-stitch.png", className: "left-[31%] top-[40%] scale-90 opacity-72 hidden md:flex", imageClass: "h-9 w-9 md:h-10 md:w-10", drift: -4 },
+    { name: "Figma", icon: "/logos/design/figma.png", className: "left-[47%] top-[34%] scale-105 opacity-100", imageClass: "h-10 w-10 md:h-11 md:w-11", drift: 5 },
+    { name: "Midjourney", icon: "/logos/ai/midjourney.png", className: "right-[31%] top-[42%] scale-92 opacity-72 hidden sm:flex", imageClass: "h-9 w-9 md:h-10 md:w-10", drift: -4 },
+    { name: "Illustrator", icon: "/logos/design/illustrator.png", className: "right-[17%] top-[47%] scale-80 opacity-54 hidden md:flex", imageClass: "h-8 w-8 md:h-9 md:w-9", drift: 4 },
+    { name: "Google Antigravity", icon: "/logos/ai/google-antigravity.png", className: "left-[29%] bottom-[17%] scale-78 opacity-44 hidden lg:flex", imageClass: "h-8 w-8 md:h-9 md:w-9", drift: -4 },
+    { name: "FigJam", initials: "FJ", className: "right-[27%] bottom-[17%] scale-78 opacity-40 hidden lg:flex", drift: 4 },
+    { name: "Notion", initials: "N", className: "right-[42%] bottom-[9%] scale-70 opacity-30 hidden md:flex", drift: -3 },
+];
+
 const MarqueeItem = ({ item, onClick, index }: { item: PlaygroundCard, onClick: () => void, index: number }) => {
     const yOffset = index % 2 === 0 ? "8%" : "-8%";
     
@@ -89,8 +106,8 @@ const MarqueeItem = ({ item, onClick, index }: { item: PlaygroundCard, onClick: 
                 className="object-cover opacity-90 group-hover:opacity-100 transition-all duration-500" 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                <span className="text-[9px] font-sans tracking-[0.2em] text-cyan-400 uppercase mb-1">{item.category || "Exploration"}</span>
-                <h4 className="text-base font-serif uppercase text-white leading-tight">{item.title}</h4>
+                <span className="type-label text-[9px] text-cyan-400 mb-1">{item.category || "Exploration"}</span>
+                <h4 className="type-case-title text-base uppercase text-white leading-tight">{item.title}</h4>
             </div>
         </motion.div>
     );
@@ -98,12 +115,17 @@ const MarqueeItem = ({ item, onClick, index }: { item: PlaygroundCard, onClick: 
 
 export default function WorksClient({ initialProjects, initialCaseStudies, initialPlayground }: WorksClientProps) {
     const [selectedId, setSelectedId] = useState<string | null>(null);
+    const prefersReducedMotion = useReducedMotion();
 
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
+    const heroMouseX = useMotionValue(0);
+    const heroMouseY = useMotionValue(0);
 
     const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), { stiffness: 150, damping: 20 });
     const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), { stiffness: 150, damping: 20 });
+    const cloudX = useSpring(useTransform(heroMouseX, [-0.5, 0.5], [-10, 10]), { stiffness: 90, damping: 28 });
+    const cloudY = useSpring(useTransform(heroMouseY, [-0.5, 0.5], [-6, 6]), { stiffness: 90, damping: 28 });
 
     function onMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
         const { left, top, width, height } = currentTarget.getBoundingClientRect();
@@ -116,6 +138,18 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
         mouseY.set(0);
     }
 
+    function onHeroMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+        if (prefersReducedMotion) return;
+        const { left, top, width, height } = currentTarget.getBoundingClientRect();
+        heroMouseX.set((clientX - left) / width - 0.5);
+        heroMouseY.set((clientY - top) / height - 0.5);
+    }
+
+    function onHeroMouseLeave() {
+        heroMouseX.set(0);
+        heroMouseY.set(0);
+    }
+
     const doubledPlayground = initialPlayground.length > 0 
         ? [...initialPlayground, ...initialPlayground, ...initialPlayground, ...initialPlayground] 
         : [];
@@ -124,57 +158,142 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
         <main className="bg-background text-foreground selection:bg-white selection:text-black min-h-screen">
             <Navbar />
 
-            {/* Projects Header section preserved */}
-            <section className="pt-32 pb-12 px-6 md:px-12">
-                <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="text-6xl md:text-9xl font-serif uppercase leading-[0.85] mb-12 text-primary"
-                >
-                    My <br /> Projects
-                </motion.h1>
+            {/* Decorative hero. Work data below remains CMS-driven. */}
+            <section
+                className="relative overflow-hidden px-6 pb-14 pt-28 md:px-12 md:pb-16 md:pt-32"
+                onMouseMove={onHeroMouseMove}
+                onMouseLeave={onHeroMouseLeave}
+            >
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(34,211,238,0.13),transparent_36%),radial-gradient(circle_at_56%_27%,rgba(139,92,246,0.12),transparent_40%),linear-gradient(180deg,rgba(5,5,5,0)_0%,#050505_92%)]" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-white/[0.025] to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,transparent_0,transparent_34%,rgba(0,0,0,0.42)_88%)]" />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_30%,rgba(255,255,255,0.075)_0_1px,transparent_1.5px),radial-gradient(circle_at_78%_54%,rgba(34,211,238,0.095)_0_1px,transparent_1.5px)] bg-[size:74px_74px] opacity-[0.16]" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24 mb-32">
+                <div className="relative mx-auto max-w-[1480px]">
+                    <motion.div
+                        style={{ x: cloudX, y: cloudY }}
+                        className="pointer-events-none relative mx-auto mb-4 h-[250px] max-w-6xl overflow-visible md:mb-3 md:h-[330px]"
+                    >
+                        <div className="pointer-events-none absolute left-1/2 top-[42%] h-52 w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/[0.07] blur-3xl" />
+                        <div className="pointer-events-none absolute left-1/2 top-[46%] h-44 w-[460px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-400/[0.065] blur-3xl" />
+
+                        {TOOL_CLOUD.map((tool, i) => (
+                            <motion.div
+                                key={tool.name}
+                                initial={{ opacity: 0, y: 14, scale: 0.9 }}
+                                animate={{
+                                    opacity: 1,
+                                    y: prefersReducedMotion ? 0 : [0, tool.drift, 0],
+                                    rotate: prefersReducedMotion ? 0 : [0, i % 2 === 0 ? 1.4 : -1.4, 0],
+                                }}
+                                transition={{
+                                    opacity: { duration: 0.55, delay: 0.08 + i * 0.035 },
+                                    scale: { duration: 0.55, delay: 0.08 + i * 0.035 },
+                                    y: { duration: 5.4 + i * 0.12, repeat: Infinity, ease: "easeInOut", delay: i * 0.08 },
+                                    rotate: { duration: 6.2 + i * 0.1, repeat: Infinity, ease: "easeInOut", delay: i * 0.08 },
+                                }}
+                                className={[
+                                    "absolute flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.052] text-sm font-medium text-white/75 shadow-[0_18px_55px_rgba(0,0,0,0.28)] backdrop-blur-xl ring-1 ring-white/[0.025] md:h-16 md:w-16",
+                                    tool.className,
+                                ].join(" ")}
+                                title={tool.name}
+                            >
+                                {tool.icon ? (
+                                    <Image
+                                        src={tool.icon}
+                                        alt={`${tool.name} logo`}
+                                        width={48}
+                                        height={48}
+                                        quality={100}
+                                        className={["object-contain [image-rendering:auto]", tool.imageClass || "h-8 w-8 md:h-9 md:w-9"].join(" ")}
+                                    />
+                                ) : (
+                                    <span className="type-label text-[11px] tracking-[0.18em] text-cyan-50/75">
+                                        {tool.initials}
+                                    </span>
+                                )}
+                            </motion.div>
+                        ))}
+
+                    </motion.div>
+
+                    <div className="mx-auto max-w-4xl text-center">
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="type-hero text-6xl uppercase leading-[0.85] text-primary md:text-9xl"
+                        >
+                            Projects
+                        </motion.h1>
+                        <motion.p
+                            initial={{ opacity: 0, y: 18 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.12 }}
+                            className="type-body mx-auto mt-7 max-w-2xl text-base leading-8 text-white/58 md:text-lg"
+                        >
+                            A curated collection of product design, UI/UX, and AI-assisted explorations from shipped apps to experimental interfaces.
+                        </motion.p>
+                    </div>
+                </div>
+            </section>
+
+            <section className="px-6 pb-12 md:px-12">
+                <div className="mx-auto max-w-[1480px]">
+
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 mb-28">
                     {initialProjects.map((project, i) => (
-                        <Link href={getWorkHref(project)} key={project.id}>
+                        <Link href={getWorkHref(project)} key={project.id} className="group block">
                             <motion.div
                                 initial={{ opacity: 0, y: 40 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                                className="group cursor-pointer"
+                                whileHover={{ y: -7 }}
+                                className="relative h-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] p-3 shadow-[0_18px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 group-hover:border-cyan-300/30 group-hover:bg-white/[0.055] group-hover:shadow-[0_26px_90px_rgba(34,211,238,0.08)]"
                             >
-                                <div className="aspect-[4/3] w-full bg-zinc-900 mb-6 overflow-hidden relative rounded-sm group-hover:scale-[1.02] transition-transform duration-500">
+                                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(139,92,246,0.12),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(34,211,238,0.08),transparent_42%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-zinc-950">
                                     <ImageWithSkeleton
                                         src={getCardImage(project)}
                                         alt={project.title}
                                         fill
                                         unoptimized={true}
-                                        className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                                        className="object-cover opacity-88 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
                                     />
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent transition-opacity duration-500 group-hover:opacity-70" />
+                                    <div className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white/75 shadow-[0_12px_30px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all duration-300 group-hover:border-cyan-300/50 group-hover:bg-cyan-300/10 group-hover:text-cyan-100 group-hover:shadow-[0_0_30px_rgba(34,211,238,0.18)]">
+                                        <ArrowUpRight className="h-4 w-4" />
+                                    </div>
                                 </div>
 
-                                <div className="flex justify-between items-start border-t border-white/20 pt-4">
-                                    <div className="w-full">
-                                        <div className="flex justify-between items-center mb-2">
-                                            <span className="text-sm font-sans tracking-widest text-secondary uppercase">
-                                                {[project.category, project.year].filter(Boolean).join(" - ")}
+                                <div className="relative z-10 flex min-h-[190px] flex-col px-2 pb-2 pt-5">
+                                    <div className="mb-4 flex flex-wrap gap-2">
+                                        {project.category && (
+                                            <span className="type-label rounded-full border border-white/10 bg-white/[0.045] px-3 py-1 text-[9px] text-white/62">
+                                                {project.category}
                                             </span>
-                                            <ArrowUpRight className="w-5 h-5 text-secondary group-hover:text-primary transition-colors" />
-                                        </div>
-                                        <h3 className="text-3xl md:text-4xl font-serif uppercase text-primary mb-2">
-                                            {project.title}
-                                        </h3>
-                                        <p className="text-secondary text-sm font-sans max-w-sm line-clamp-2">
-                                            {project.description}
-                                        </p>
+                                        )}
+                                        {project.year && (
+                                            <span className="type-label rounded-full border border-cyan-200/15 bg-cyan-300/[0.045] px-3 py-1 text-[9px] text-cyan-100/68">
+                                                {project.year}
+                                            </span>
+                                        )}
                                     </div>
+
+                                    <h3 className="type-case-title mb-3 text-2xl uppercase leading-tight text-white transition-colors duration-300 group-hover:text-cyan-50 md:text-[1.7rem]">
+                                        {project.title}
+                                    </h3>
+
+                                    <p className="type-body line-clamp-3 text-sm leading-6 text-white/52">
+                                        {project.description}
+                                    </p>
                                 </div>
                             </motion.div>
                         </Link>
                     ))}
+                </div>
                 </div>
             </section>
 
@@ -188,7 +307,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-5xl md:text-7xl font-serif uppercase text-white mb-6">The Playground</h2>
+                        <h2 className="type-section uppercase text-white mb-6">The Playground</h2>
                         <div className="h-px w-24 bg-gradient-to-r from-cyan-500 to-violet-500 mx-auto mb-6" />
                         <p className="text-secondary/80 text-lg leading-relaxed">
                             Breaking the rules. Experimental designs, digital art, <br className="hidden md:block" /> and creative explorations.
@@ -267,17 +386,17 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                                         <div className="max-w-3xl">
                                             <div className="flex items-center gap-3 mb-4">
                                                 <div className="h-px w-6 bg-cyan-500" />
-                                                <span className="text-[10px] font-sans tracking-[0.4em] text-cyan-400 uppercase">
+                                                <span className="type-label text-[10px] text-cyan-400">
                                                     {item.category || "Exploration"}
                                                 </span>
                                             </div>
                                             
-                                            <h4 className="text-3xl md:text-5xl font-display font-bold leading-tight text-white mb-6 tracking-tighter">
+                                            <h4 className="type-case-title text-3xl md:text-5xl leading-tight text-white mb-6">
                                                 {item.title}
                                             </h4>
 
                                             {item.caption && (
-                                                <p className="text-base md:text-lg text-white/40 font-sans leading-relaxed line-clamp-3">
+                                                <p className="type-body text-base md:text-lg text-white/40 leading-relaxed line-clamp-3">
                                                     {item.caption}
                                                 </p>
                                             )}
@@ -294,3 +413,4 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
         </main>
     );
 }
+

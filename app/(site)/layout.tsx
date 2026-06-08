@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Syne, Manrope } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "../globals.css";
 import { seoConfig } from "@/lib/seo-config";
 import StructuredData from "@/components/StructuredData";
@@ -11,9 +11,11 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const syne = Syne({
-  variable: "--font-display",
+const editorial = Cormorant_Garamond({
+  variable: "--font-editorial",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -78,7 +80,7 @@ export default function RootLayout({
         <StructuredData type="website" />
       </head>
       <body
-        className={`${manrope.variable} ${syne.variable} antialiased bg-background text-foreground`}
+        className={`${manrope.variable} ${editorial.variable} antialiased bg-background text-foreground`}
         suppressHydrationWarning
       >
         <GradientBackground />
