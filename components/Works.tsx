@@ -93,9 +93,12 @@ export default function Works() {
     return (
         <section
             id="works"
-            className="py-24 md:py-32 border-t border-white/10 relative"
+            className="relative z-10 -mt-24 overflow-hidden pt-36 pb-24 md:-mt-32 md:pt-44 md:pb-32"
         >
-            <div className="px-6 md:px-12 mb-12 flex items-end justify-between gap-6">
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-72 bg-gradient-to-b from-[#050505] via-[#050505]/70 to-transparent md:h-96" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-96 bg-[radial-gradient(ellipse_at_top,rgba(34,211,238,0.08),transparent_62%)]" />
+
+            <div className="relative z-10 px-6 md:px-12 mb-12 flex items-end justify-between gap-6">
                 <h2 className="text-4xl md:text-6xl font-serif uppercase leading-tight text-white">
                     Some Live <br /> Projects
                 </h2>
@@ -127,7 +130,7 @@ export default function Works() {
             </div>
 
             {/* Viewport */}
-            <div ref={viewportRef} className="overflow-hidden">
+            <div ref={viewportRef} className="relative z-10 overflow-hidden">
                 <motion.div
                     ref={trackRef}
                     className="flex px-6 md:px-12 gap-8 md:gap-12 pb-12 cursor-grab active:cursor-grabbing"
@@ -207,7 +210,7 @@ export default function Works() {
             </div>
 
             {/* bottom fade */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/70 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-36 bg-gradient-to-t from-black/70 to-transparent" />
         </section>
     );
 }

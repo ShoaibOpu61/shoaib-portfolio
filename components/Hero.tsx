@@ -44,14 +44,14 @@ export default function Hero() {
         <section
             ref={containerRef}
             id="home"
-            className="relative h-screen w-full overflow-hidden bg-background"
+            className="relative h-screen w-full overflow-visible bg-[#050505]"
         >
             {/* Parallax Background Layer */}
             <motion.div
                 style={{ y: yBg }}
-                className="absolute inset-0 z-0"
+                className="absolute inset-x-0 top-0 -bottom-32 z-0 md:-bottom-48"
             >
-                <GLSLHills width="100%" height="100%" />
+                <GLSLHills width="100%" height="calc(100vh + 12rem)" />
             </motion.div>
 
             {/* Atmospheric Glows */}
@@ -63,8 +63,8 @@ export default function Hero() {
                 <div className="absolute bottom-[10%] -right-[10%] w-[80%] h-[80%] bg-violet-500/10 rounded-full blur-[140px] z-10" />
             </motion.div>
 
-            <div className="pointer-events-none absolute inset-0 z-10 bg-black/40 backdrop-blur-[1px]" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-64 bg-gradient-to-t from-background via-background/60 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 -bottom-32 z-10 bg-black/40 backdrop-blur-[1px] md:-bottom-48" />
+            <div className="pointer-events-none absolute inset-x-0 -bottom-40 z-10 h-[56vh] bg-gradient-to-b from-transparent via-[#050505]/85 to-[#050505] md:-bottom-56 md:h-[64vh]" />
 
             <motion.div
                 style={{ y: yText, opacity: opacityText }}
