@@ -4,10 +4,18 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
-const BARCODE_BARS = Array.from({ length: 40 }, () => ({
-    width: Math.random() > 0.5 ? "2px" : "4px",
-    opacity: Math.random() > 0.3 ? 1 : 0.5,
-}));
+const BARCODE_BARS = [
+    { width: "2px", opacity: 1 }, { width: "4px", opacity: 1 }, { width: "2px", opacity: 0.5 }, { width: "2px", opacity: 1 },
+    { width: "4px", opacity: 1 }, { width: "2px", opacity: 1 }, { width: "4px", opacity: 0.5 }, { width: "2px", opacity: 1 },
+    { width: "2px", opacity: 1 }, { width: "4px", opacity: 1 }, { width: "2px", opacity: 1 }, { width: "2px", opacity: 0.5 },
+    { width: "4px", opacity: 1 }, { width: "2px", opacity: 1 }, { width: "2px", opacity: 1 }, { width: "4px", opacity: 1 },
+    { width: "2px", opacity: 0.5 }, { width: "4px", opacity: 1 }, { width: "2px", opacity: 1 }, { width: "2px", opacity: 1 },
+    { width: "4px", opacity: 1 }, { width: "2px", opacity: 0.5 }, { width: "2px", opacity: 1 }, { width: "4px", opacity: 1 },
+    { width: "2px", opacity: 1 }, { width: "2px", opacity: 1 }, { width: "4px", opacity: 0.5 }, { width: "2px", opacity: 1 },
+    { width: "4px", opacity: 1 }, { width: "2px", opacity: 1 }, { width: "2px", opacity: 1 }, { width: "4px", opacity: 1 },
+    { width: "2px", opacity: 0.5 }, { width: "4px", opacity: 1 }, { width: "2px", opacity: 1 }, { width: "2px", opacity: 1 },
+    { width: "4px", opacity: 1 }, { width: "2px", opacity: 0.5 }, { width: "2px", opacity: 1 }, { width: "4px", opacity: 1 },
+];
 
 export default function IdCard() {
     const cardRef = useRef<HTMLDivElement>(null);

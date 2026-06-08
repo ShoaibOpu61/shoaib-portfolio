@@ -1,5 +1,4 @@
 "use client";
-
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,6 +6,8 @@ import IdCard from "@/components/IdCard";
 import Image from "next/image";
 import { projects } from "@/lib/data";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 const Highlight = ({ children }: { children: React.ReactNode }) => (
     <motion.span
@@ -383,7 +384,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Featured Projects - Image Placeholders */}
+            {/* Featured Projects */}
             <section className="py-24 px-6 md:px-12 border-t border-white/10">
                 <motion.h2
                     initial={{ opacity: 0 }}
@@ -394,33 +395,56 @@ export default function AboutPage() {
                     Selected Work
                 </motion.h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 mb-28">
                     {/* Using real data from lib/data.ts */}
-                    {projects.slice(0, 4).map((project, i) => (
-                        <Link href={`/works/${project.id}`} key={project.id} className="block group">
+                    {projects.slice(0, 3).map((project, i) => (
+                        <Link href={`/works/${project.id}`} key={project.id} className="group block">
                             <motion.div
                                 initial={{ opacity: 0, y: 40 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: i * 0.1 }}
                                 viewport={{ once: true }}
-                                whileHover={{ y: -10 }}
-                                className="block"
+                                transition={{ delay: i * 0.1, duration: 0.6 }}
+                                whileHover={{ y: -7 }}
+                                className="relative h-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] p-3 shadow-[0_18px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 group-hover:border-primary/30 group-hover:bg-white/[0.055] group-hover:shadow-[0_26px_90px_rgba(34,211,238,0.08)]"
                             >
-                                <div className="aspect-[4/3] rounded-2xl overflow-hidden relative mb-6 border border-white/10 group-hover:border-primary/50 transition-all duration-300">
-                                    <Image
+                                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(139,92,246,0.12),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(34,211,238,0.08),transparent_42%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-zinc-950">
+                                    <ImageWithSkeleton
                                         src={project.image}
                                         alt={project.title}
                                         fill
-                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        unoptimized={true}
+                                        className="object-cover opacity-88 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
                                     />
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent transition-opacity duration-500 group-hover:opacity-70" />
+                                    <div className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white/75 shadow-[0_12px_30px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all duration-300 group-hover:border-primary/50 group-hover:bg-primary/10 group-hover:text-white group-hover:shadow-[0_0_30px_rgba(34,211,238,0.18)]">
+                                        <ArrowUpRight className="h-4 w-4" />
+                                    </div>
                                 </div>
-                                <h3 className="text-2xl font-sans uppercase text-primary mb-2 group-hover:text-white transition-colors">
-                                    {project.title}
-                                </h3>
-                                <p className="font-sans text-sm text-secondary/50 uppercase tracking-[0.2em]">
-                                    {project.category}
-                                </p>
+
+                                <div className="relative z-10 flex min-h-[190px] flex-col px-2 pb-2 pt-5">
+                                    <div className="mb-4 flex flex-wrap gap-2">
+                                        {project.category && (
+                                            <span className="type-label rounded-full border border-white/10 bg-white/[0.045] px-3 py-1 text-[9px] text-white/62">
+                                                {project.category}
+                                            </span>
+                                        )}
+                                        {project.year && (
+                                            <span className="type-label rounded-full border border-primary/15 bg-primary/[0.045] px-3 py-1 text-[9px] text-primary/68">
+                                                {project.year}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <h3 className="type-case-title mb-3 text-2xl uppercase leading-tight text-white transition-colors duration-300 group-hover:text-primary md:text-[1.7rem]">
+                                        {project.title}
+                                    </h3>
+
+                                    <p className="type-body line-clamp-3 text-sm leading-6 text-white/52">
+                                        {project.description}
+                                    </p>
+                                </div>
                             </motion.div>
                         </Link>
                     ))}
