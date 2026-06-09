@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { featuredField, legacyNumericIdField, slugField, sortOrderField } from './shared.ts'
+import { featuredField, slugField, sortOrderField } from './shared.ts'
 
 const Projects: CollectionConfig = {
     slug: 'projects',
@@ -18,6 +18,13 @@ const Projects: CollectionConfig = {
     labels: {
         singular: 'Project',
         plural: 'Projects',
+    },
+    versions: {
+        drafts: {
+            autosave: {
+                interval: 2000,
+            },
+        },
     },
     fields: [
         {
