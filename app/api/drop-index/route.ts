@@ -6,15 +6,12 @@ export async function GET() {
     try {
         const payload = await getPayload({ config: configPromise });
         
-        // Payload's db adapter gives us access to mongoose
-        // But since this is Payload 3 with @payloadcms/db-mongodb, we can access the db instance
         const db = payload.db;
         
-        let results = [];
+        const results: string[] = [];
         
-        // We will try to drop the index using the raw mongoose connection
-        if (db && (db as any).connection) {
-            const mongooseConnection = (db as any).connection;
+        if (db && (db as unknown as Record<string, unknown>).connection) {
+            const mongooseConnection = (db as unknown as Record<string, unknown>).connection as { collection: (name: string) => { indexes: () => Promise<{name: string, key?: Record<string, unknown>}[]>, dropIndex: (name: string) => Promise<void> } };
             
             const collections = ['projects', 'case-studies'];
             
@@ -29,8 +26,10 @@ export async function GET() {
                             results.push(`Dropped index ${index.name} from ${coll}`);
                         }
                     }
-                } catch (err: any) {
-                    results.push(`Error checking ${coll}: ${err.message}`);
+                } catch (err: unknown) {
+                    if (err instanceof Error) {
+                        results.push(`Error checking ${coll}: ${err.message}`);
+                    }
                 }
             }
         }
@@ -40,7 +39,10 @@ export async function GET() {
             message: 'Index check completed',
             results
         });
-    } catch (error: any) {
-        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+        }
+        return NextResponse.json({ success: false, error: 'Unknown error' }, { status: 500 });
     }
 }
