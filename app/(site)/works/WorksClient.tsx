@@ -107,7 +107,7 @@ const MarqueeItem = ({ item, onClick, index }: { item: PlaygroundCard, onClick: 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                 <span className="type-label text-[9px] text-cyan-400 mb-1">{item.category || "Exploration"}</span>
-                <h4 className="type-case-title text-base uppercase text-white leading-tight">{item.title}</h4>
+                <h4 className="type-case-title text-base uppercase text-white leading-tight line-clamp-1">{item.title}</h4>
             </div>
         </motion.div>
     );
@@ -322,7 +322,7 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                             className="flex whitespace-nowrap"
                             animate={{ x: [0, "-33.33%"] }}
                             transition={{ 
-                                duration: 25, 
+                                duration: 50, 
                                 repeat: Infinity, 
                                 ease: "linear",
                                 repeatType: "loop"

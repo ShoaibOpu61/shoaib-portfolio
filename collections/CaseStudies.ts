@@ -29,97 +29,65 @@ const CaseStudies: CollectionConfig = {
 
     fields: [
         {
-            type: 'tabs',
-            tabs: [
+            name: 'title',
+            label: 'Case Study Title',
+            type: 'text',
+            required: true,
+            admin: {
+                position: 'sidebar',
+            }
+        },
+        slugField(),
+        {
+            name: 'description',
+            label: 'Intro Text',
+            type: 'textarea',
+            required: true,
+        },
+        {
+            name: 'image',
+            label: 'Cover Image',
+            type: 'upload',
+            relationTo: 'media',
+            required: true,
+        },
+        {
+            name: 'sections',
+            label: 'Story Sections',
+            type: 'array',
+            required: true,
+            fields: [
                 {
-                    label: 'Basic Info',
-                    fields: [
-                        {
-                            name: 'title',
-                            label: 'Case Study Title',
-                            type: 'text',
-                            required: true,
-                        },
-                        slugField(),
-                        {
-                            name: 'description',
-                            label: 'Intro Text',
-                            type: 'textarea',
-                            required: true,
-                            admin: {
-                                description: 'Short intro shown before the story sections begin.',
-                            },
-                        },
-                    ],
+                    name: 'title',
+                    label: 'Section Title',
+                    type: 'text',
                 },
                 {
-                    label: 'Media',
+                    name: 'text',
+                    label: 'Section Text',
+                    type: 'textarea',
+                },
+                {
+                    name: 'images',
+                    label: 'Section Images',
+                    type: 'array',
+                    required: true,
+                    minRows: 1,
                     fields: [
                         {
                             name: 'image',
-                            label: 'Cover Image',
+                            label: 'Image',
                             type: 'upload',
                             relationTo: 'media',
                             required: true,
-                            admin: {
-                                description: 'Main thumbnail used on the works listing.',
-                            },
                         },
-                        {
-                            name: 'sections',
-                            label: 'Story Sections',
-                            type: 'array',
-                            required: true,
-                            admin: {
-                                description: 'Reorder sections to shape the story. Keep each section image-first.',
-                            },
-                            fields: [
-                                {
-                                    name: 'title',
-                                    label: 'Section Title',
-                                    type: 'text',
-                                },
-                                {
-                                    name: 'text',
-                                    label: 'Section Text',
-                                    type: 'textarea',
-                                    admin: {
-                                        description: 'Optional short text between images.',
-                                    },
-                                },
-                                {
-                                    name: 'images',
-                                    label: 'Section Images',
-                                    type: 'array',
-                                    required: true,
-                                    minRows: 1,
-                                    admin: {
-                                        initCollapsed: true,
-                                    },
-                                    fields: [
-                                        {
-                                            name: 'image',
-                                            label: 'Image',
-                                            type: 'upload',
-                                            relationTo: 'media',
-                                            required: true,
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    label: 'Publish Settings',
-                    fields: [
-                        featuredField,
-                        sortOrderField,
-                        legacyNumericIdField,
                     ],
                 },
             ],
         },
+        featuredField,
+        sortOrderField,
+        legacyNumericIdField,
     ],
 }
 
