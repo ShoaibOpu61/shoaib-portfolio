@@ -2,9 +2,11 @@ import { getPayload } from 'payload'
 import config from '../payload.config'
 
 // Only return published documents — drafts are auto-saved in CMS but hidden from the portfolio
+// Only return published documents — drafts are auto-saved in CMS but hidden from the portfolio
 const defaultFindOptions = {
     depth: 2,
     sort: 'sortOrder',
+    limit: 100, // Ensure we don't hit the default limit of 10
     where: {
         _status: {
             equals: 'published',
@@ -50,7 +52,7 @@ export const getProjectById = async (id: string) => {
                     },
                 ],
             },
-        depth: 1,
+        depth: 2,
     })
     return docs[0]
 }
@@ -93,7 +95,7 @@ export const getCaseStudyById = async (id: string) => {
                     },
                 ],
             },
-        depth: 1,
+        depth: 2,
     })
     return docs[0]
 }
@@ -107,7 +109,7 @@ export const getPlaygroundEntries = async () => {
     return docs
 }
 
-export const getFeaturedProjects = async (limit = 5) => {
+export const getFeaturedProjects = async (limit = 100) => {
     const payload = await getPayload({ config })
 
     const { docs: featuredDocs } = await payload.find({
@@ -119,27 +121,9 @@ export const getFeaturedProjects = async (limit = 5) => {
             ],
         },
         limit,
-        depth: 1,
+        depth: 2,
         sort: 'sortOrder',
     })
 
-    if (featuredDocs.length < limit) {
-        const { docs: fallbackDocs } = await payload.find({
-            collection: 'projects',
-            where: {
-                and: [
-                    { _status: { equals: 'published' } },
-                    ...(featuredDocs.length > 0
-                        ? [{ id: { not_in: featuredDocs.map(d => d.id) } }]
-                        : []),
-                ],
-            },
-            limit: limit - featuredDocs.length,
-            depth: 1,
-            sort: 'sortOrder',
-        })
-        return [...featuredDocs, ...fallbackDocs]
-    }
-
-    return featuredDocs
+    return featuredDocs;
 }
