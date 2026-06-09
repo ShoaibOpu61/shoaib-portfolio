@@ -49,7 +49,7 @@ const CARD_ACCENTS = [
 ];
 
 function getMediaUrl(media?: MediaField) {
-    return getPreferredMediaUrl(media) || FALLBACK_IMAGE;
+    return getPreferredMediaUrl(media, 'tablet') || FALLBACK_IMAGE;
 }
 
 function getCaseStudyHref(item: CaseStudyCardItem) {
