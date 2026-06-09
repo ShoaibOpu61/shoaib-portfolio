@@ -25,8 +25,9 @@ export default buildConfig({
     },
     secret: process.env.PAYLOAD_SECRET || 'fallback-secret-for-dev-only',
     serverURL:
-        process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SERVER_URL ||
-        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : localServerURL),
+        process.env.NEXT_PUBLIC_SITE_URL || 
+        process.env.NEXT_PUBLIC_SERVER_URL ||
+        (process.env.NODE_ENV === 'production' ? 'https://shoaibopu.vercel.app' : localServerURL),
     editor: lexicalEditor({}),
     collections: [
         Projects,
