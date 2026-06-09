@@ -18,7 +18,15 @@ export const getProjects = async () => {
     const payload = await getPayload({ config })
     const { docs } = await payload.find({
         collection: 'projects',
-        ...defaultFindOptions,
+        where: {
+            and: [
+                { _status: { equals: 'published' } },
+                { featured: { equals: true } },
+            ],
+        },
+        depth: 2,
+        sort: 'sortOrder',
+        limit: 100,
     })
     return docs
 }

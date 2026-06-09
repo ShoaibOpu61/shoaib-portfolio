@@ -1,6 +1,6 @@
 import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { slateEditor } from '@payloadcms/richtext-slate'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
@@ -28,7 +28,7 @@ export default buildConfig({
         process.env.NEXT_PUBLIC_SITE_URL || 
         process.env.NEXT_PUBLIC_SERVER_URL ||
         (process.env.NODE_ENV === 'production' ? 'https://shoaibopu.vercel.app' : localServerURL),
-    editor: lexicalEditor({}),
+    editor: slateEditor({}),
     collections: [
         Projects,
         CaseStudies,
