@@ -64,7 +64,7 @@ export const legacyNumericIdField: NumberField = {
             return 'Legacy Route ID must be a valid number.'
         }
 
-        if (!collectionSlug || !req?.payload) {
+        if (!collectionSlug || !req?.payload || !req.payload.find) {
             return true
         }
 
