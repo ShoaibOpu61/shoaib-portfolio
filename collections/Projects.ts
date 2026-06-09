@@ -32,9 +32,6 @@ const Projects: CollectionConfig = {
             label: 'Project Title',
             type: 'text',
             required: true,
-            admin: {
-                position: 'sidebar',
-            }
         },
         slugField(),
         {
@@ -42,18 +39,12 @@ const Projects: CollectionConfig = {
             label: 'Category',
             type: 'text',
             required: true,
-            admin: {
-                position: 'sidebar',
-            }
         },
         {
             name: 'year',
             label: 'Year',
             type: 'text',
             required: true,
-            admin: {
-                position: 'sidebar',
-            }
         },
         {
             name: 'description',
@@ -101,7 +92,6 @@ const Projects: CollectionConfig = {
         },
         featuredField,
         sortOrderField,
-        legacyNumericIdField,
     ],
 }
 

@@ -33,9 +33,6 @@ const CaseStudies: CollectionConfig = {
             label: 'Case Study Title',
             type: 'text',
             required: true,
-            admin: {
-                position: 'sidebar',
-            }
         },
         slugField(),
         {
@@ -87,7 +84,6 @@ const CaseStudies: CollectionConfig = {
         },
         featuredField,
         sortOrderField,
-        legacyNumericIdField,
     ],
 }
 
