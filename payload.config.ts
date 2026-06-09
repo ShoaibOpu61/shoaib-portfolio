@@ -18,6 +18,17 @@ import Playground from './collections/Playground'
 const isProduction = process.env.NODE_ENV === 'production'
 const blobToken = process.env.BLOB_READ_WRITE_TOKEN
 const localServerURL = 'http://localhost:3000'
+const vercelProductionURL = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : undefined
+const vercelDeploymentURL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined
+const serverURL =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.NEXT_PUBLIC_SERVER_URL ||
+    process.env.PAYLOAD_PUBLIC_SERVER_URL ||
+    vercelProductionURL ||
+    vercelDeploymentURL ||
+    localServerURL
 
 export default buildConfig({
     admin: {
