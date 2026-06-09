@@ -102,3 +102,79 @@ export const legacyNumericIdField: NumberField = {
         description: 'Optional legacy ID to preserve older /works links.',
     },
 }
+
+export const statusField: Field = {
+    name: 'status',
+    label: 'Status',
+    type: 'select',
+    defaultValue: 'draft',
+    options: [
+        { label: 'Draft', value: 'draft' },
+        { label: 'Published', value: 'published' },
+    ],
+    admin: {
+        position: 'sidebar',
+        description: 'Draft items will be hidden from the frontend.',
+    },
+}
+
+export const showOnHomeField: Field = {
+    name: 'showOnHome',
+    label: 'Show on Home',
+    type: 'checkbox',
+    defaultValue: false,
+    admin: {
+        position: 'sidebar',
+        description: 'Display this item on the homepage.',
+    },
+}
+
+export const showOnAboutField: Field = {
+    name: 'showOnAbout',
+    label: 'Show on About',
+    type: 'checkbox',
+    defaultValue: false,
+    admin: {
+        position: 'sidebar',
+        description: 'Display this item on the about page.',
+    },
+}
+
+export const seoGroup: Field = {
+    name: 'seo',
+    label: 'SEO Settings',
+    type: 'group',
+    fields: [
+        {
+            name: 'metaTitle',
+            label: 'Meta Title',
+            type: 'text',
+        },
+        {
+            name: 'metaDescription',
+            label: 'Meta Description',
+            type: 'textarea',
+        },
+        {
+            name: 'ogImage',
+            label: 'Open Graph Image',
+            type: 'upload',
+            relationTo: 'media',
+        },
+    ],
+}
+
+export const subtitleField: Field = {
+    name: 'subtitle',
+    label: 'Subtitle',
+    type: 'text',
+}
+
+export const tagsField: Field = {
+    name: 'tags',
+    label: 'Tags',
+    type: 'text',
+    admin: {
+        description: 'Optional tags for the card (comma separated).',
+    },
+}

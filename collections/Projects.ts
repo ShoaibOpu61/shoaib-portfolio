@@ -1,13 +1,32 @@
 import type { CollectionConfig } from 'payload'
 
-import { featuredField, slugField, sortOrderField } from './shared'
+import {
+    featuredField,
+    slugField,
+    sortOrderField,
+    statusField,
+    showOnHomeField,
+    showOnAboutField,
+    seoGroup,
+    subtitleField,
+    tagsField,
+} from './shared'
+
+import {
+    TextBlock,
+    ImageBlock,
+    GalleryBlock,
+    SectionTitleBlock,
+    FeatureListBlock,
+    ExternalLinkBlock,
+} from './blocks'
 
 const Projects: CollectionConfig = {
     slug: 'projects',
     admin: {
         useAsTitle: 'title',
         group: 'Portfolio',
-        defaultColumns: ['title', 'category', 'featured', 'sortOrder', 'updatedAt'],
+        defaultColumns: ['title', 'category', 'status', 'featured', 'updatedAt'],
     },
     access: {
         read: () => true,
@@ -19,7 +38,6 @@ const Projects: CollectionConfig = {
         singular: 'Project',
         plural: 'Projects',
     },
-
     fields: [
         {
             type: 'tabs',
@@ -33,36 +51,34 @@ const Projects: CollectionConfig = {
                             type: 'text',
                             required: true,
                         },
-                        {
-                            name: 'slug',
-                            label: 'Slug',
-                            type: 'text',
-                            required: true,
-                            unique: true,
-                        },
-                        {
-                            name: 'category',
-                            label: 'Category',
-                            type: 'text',
-                            required: true,
-                        },
+                        slugField(),
                         {
                             name: 'year',
                             label: 'Year',
                             type: 'text',
-                            required: true,
+                            admin: {
+                                description: 'E.g., 2023 / 2024',
+                            },
                         },
                         {
-                            name: 'description',
-                            label: 'Description',
-                            type: 'textarea',
-                            required: true,
+                            name: 'client',
+                            label: 'Client',
+                            type: 'text',
                         },
                     ],
                 },
                 {
-                    label: 'Media',
+                    label: 'Card Display',
                     fields: [
+                        subtitleField,
+                        {
+                            name: 'description',
+                            label: 'Short Description (Legacy)',
+                            type: 'textarea',
+                            admin: {
+                                description: 'Fallback description if blocks are empty. Used as card summary.',
+                            },
+                        },
                         {
                             name: 'image',
                             label: 'Cover Image',
@@ -71,29 +87,64 @@ const Projects: CollectionConfig = {
                             required: true,
                         },
                         {
+                            name: 'category',
+                            label: 'Category',
+                            type: 'text',
+                        },
+                        tagsField,
+                    ],
+                },
+                {
+                    label: 'Content Details',
+                    fields: [
+                        {
                             name: 'heroImage',
-                            label: 'Hero Image',
+                            label: 'Legacy Hero Image',
                             type: 'upload',
                             relationTo: 'media',
-                            required: true,
+                            admin: {
+                                description: 'Fallback hero image. New projects should use Content Blocks instead.',
+                            },
+                        },
+                        {
+                            name: 'blocks',
+                            label: 'Content Blocks',
+                            type: 'blocks',
+                            blocks: [
+                                TextBlock,
+                                ImageBlock,
+                                GalleryBlock,
+                                SectionTitleBlock,
+                                FeatureListBlock,
+                                ExternalLinkBlock,
+                            ],
                         },
                     ],
                 },
                 {
-                    label: 'Project Details',
+                    label: 'Visibility',
                     fields: [
-                        {
-                            name: 'client',
-                            label: 'Client',
-                            type: 'text',
-                        },
+                        statusField,
+                        showOnHomeField,
+                        showOnAboutField,
+                        featuredField,
+                        sortOrderField,
+                    ],
+                },
+                {
+                    label: 'Links',
+                    fields: [
                         {
                             name: 'liveLink',
                             label: 'Live Link',
                             type: 'text',
                         },
-                        featuredField,
-                        sortOrderField,
+                    ],
+                },
+                {
+                    label: 'SEO',
+                    fields: [
+                        seoGroup,
                     ],
                 },
             ],

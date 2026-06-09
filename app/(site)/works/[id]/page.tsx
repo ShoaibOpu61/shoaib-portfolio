@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
+import BlocksRenderer from "@/components/BlocksRenderer";
 import { getProjectById, getCaseStudyById, getProjects, getCaseStudies } from "@/lib/api";
 import { getPreferredMediaUrl } from "@/lib/media";
 
@@ -44,12 +45,13 @@ type WorkDoc = {
     heroImage?: MediaField;
     images?: UploadedImage[] | null;
     sections?: CaseStudySection[] | null;
+    blocks?: unknown[] | null;
 };
 
 const FALLBACK_IMAGE = "/images/profile-photo.jpg";
 
 function getMediaUrl(media?: MediaField) {
-    return getPreferredMediaUrl(media, 'original') || FALLBACK_IMAGE;
+    return getPreferredMediaUrl(media, "original") || FALLBACK_IMAGE;
 }
 
 function getWorkHref(item: WorkDoc) {
@@ -66,16 +68,9 @@ function getListingImage(project: WorkDoc) {
 
 function getMediaDimensions(media?: MediaField) {
     if (media && typeof media === "object") {
-        return {
-            width: media.width || 1600,
-            height: media.height || 1000,
-        };
+        return { width: media.width || 1600, height: media.height || 1000 };
     }
-
-    return {
-        width: 1600,
-        height: 1000,
-    };
+    return { width: 1600, height: 1000 };
 }
 
 export default async function ProjectPage({
@@ -107,39 +102,59 @@ export default async function ProjectPage({
             <Navbar />
 
             <article className="min-h-screen">
+                {/* ─── CASE STUDY VIEW ─────────────────────────────── */}
                 {isCaseStudy ? (
-                    <div className="pt-32 pb-12 px-0 md:px-0">
+                    <div className="pt-32 pb-12">
                         <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-12">
-                            <Link href="/works" className="inline-flex items-center gap-2 text-secondary hover:text-white transition-colors uppercase tracking-widest text-sm">
+                            <Link
+                                href="/works"
+                                className="inline-flex items-center gap-2 text-secondary hover:text-white transition-colors uppercase tracking-widest text-sm"
+                            >
                                 <ArrowLeft className="w-4 h-4" /> Back to Works
                             </Link>
                         </div>
 
                         <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-16">
-                            <h1 className="type-hero text-5xl md:text-8xl uppercase leading-[0.85] text-white mb-6">{project.title}</h1>
+                            <h1 className="type-hero text-5xl md:text-8xl uppercase leading-[0.85] text-white mb-6">
+                                {project.title}
+                            </h1>
                             {project.description && (
-                                <p className="max-w-3xl text-secondary text-base md:text-lg leading-relaxed">{project.description}</p>
+                                <p className="max-w-3xl text-secondary text-base md:text-lg leading-relaxed">
+                                    {project.description}
+                                </p>
                             )}
                         </div>
 
-                        {project.sections?.length ? (
+                        {/* Flexible blocks (new) → sections (legacy) → images fallback */}
+                        {project.blocks?.length ? (
+                            <BlocksRenderer blocks={project.blocks as Record<string, unknown>[]} />
+                        ) : project.sections?.length ? (
                             <div className="space-y-20">
                                 {project.sections.map((section, sectionIndex) => (
-                                    <section key={`${project.id}-section-${sectionIndex}`} className="max-w-[1600px] mx-auto px-6 md:px-12">
+                                    <section
+                                        key={`${project.id}-section-${sectionIndex}`}
+                                        className="max-w-[1600px] mx-auto px-6 md:px-12"
+                                    >
                                         {(section.title || section.text) && (
                                             <div className="max-w-4xl mb-10">
                                                 {section.title && (
-                                                    <h2 className="type-section uppercase text-white mb-4">{section.title}</h2>
+                                                    <h2 className="type-section uppercase text-white mb-4">
+                                                        {section.title}
+                                                    </h2>
                                                 )}
                                                 {section.text && (
-                                                    <p className="text-secondary text-base md:text-lg leading-relaxed">{section.text}</p>
+                                                    <p className="text-secondary text-base md:text-lg leading-relaxed">
+                                                        {section.text}
+                                                    </p>
                                                 )}
                                             </div>
                                         )}
-
                                         <div className="space-y-6">
                                             {section.images?.map((imgObj, imageIndex) => (
-                                                <div key={`${project.id}-section-${sectionIndex}-image-${imageIndex}`} className="w-full relative bg-zinc-950 rounded-lg overflow-hidden">
+                                                <div
+                                                    key={`${project.id}-s${sectionIndex}-i${imageIndex}`}
+                                                    className="w-full relative bg-zinc-950 rounded-lg overflow-hidden"
+                                                >
                                                     <ImageWithSkeleton
                                                         src={getMediaUrl(imgObj.image)}
                                                         alt={`${project.title} section ${sectionIndex + 1} image ${imageIndex + 1}`}
@@ -172,103 +187,135 @@ export default async function ProjectPage({
                         )}
 
                         <div className="max-w-[1400px] mx-auto px-6 md:px-12 mt-24">
-                            <h3 className="type-case-title text-2xl uppercase text-white mb-6 text-center">End of Case Study</h3>
+                            <h3 className="type-case-title text-2xl uppercase text-white mb-6 text-center">
+                                End of Case Study
+                            </h3>
                             <div className="flex justify-center">
-                                <Link href="/works" className="px-8 py-3 border border-white/20 rounded-full text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+                                <Link
+                                    href="/works"
+                                    className="px-8 py-3 border border-white/20 rounded-full text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all"
+                                >
                                     View Other Works
                                 </Link>
                             </div>
                         </div>
                     </div>
+
                 ) : (
+                    /* ─── PROJECT VIEW ────────────────────────────────── */
                     <div className="pt-32 pb-12 px-6 md:px-12 max-w-[1400px] mx-auto">
-                        <Link href="/works" className="inline-flex items-center gap-2 text-secondary hover:text-white transition-colors uppercase tracking-widest text-sm mb-12">
+                        <Link
+                            href="/works"
+                            className="inline-flex items-center gap-2 text-secondary hover:text-white transition-colors uppercase tracking-widest text-sm mb-12"
+                        >
                             <ArrowLeft className="w-4 h-4" /> Back to Works
                         </Link>
 
-                        <div className="mb-16">
-                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
-                                <h1 className="type-hero text-5xl md:text-8xl uppercase leading-[0.85] text-white">
-                                    {project.title}
-                                </h1>
-                                <div className="flex flex-col items-end text-right">
-                                    {project.category && (
-                                        <span className="type-label text-sm text-secondary block mb-1">
-                                            {project.category}
-                                        </span>
-                                    )}
-                                    {project.year && (
-                                        <span className="type-label text-sm text-secondary/50 block">
-                                            Year: {project.year}
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="w-full h-[50vh] md:h-[70vh] bg-zinc-800 rounded-lg overflow-hidden relative">
-                                <ImageWithSkeleton
-                                    src={getHeroImage(project)}
-                                    alt={project.title}
-                                    fill
-                                    unoptimized={true}
-                                    className="object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24">
-                            <div className="md:col-span-4">
-                                <h3 className="type-label text-sm text-white mb-4">Overview</h3>
-                                {project.description && (
-                                    <p className="text-secondary text-sm md:text-base leading-relaxed mb-6">
-                                        {project.description}
-                                    </p>
+                        {/* Title + meta */}
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+                            <h1 className="type-hero text-5xl md:text-8xl uppercase leading-[0.85] text-white">
+                                {project.title}
+                            </h1>
+                            <div className="flex flex-col items-end text-right">
+                                {project.category && (
+                                    <span className="type-label text-sm text-secondary block mb-1">
+                                        {project.category}
+                                    </span>
                                 )}
-                                <div className="space-y-3 text-sm text-secondary">
-                                    {project.client && <p><span className="text-white">Client:</span> {project.client}</p>}
-                                    {project.liveLink && (
-                                        <p>
-                                            <span className="text-white">Live:</span>{" "}
-                                            <a href={project.liveLink} target="_blank" rel="noreferrer" className="hover:text-white underline underline-offset-4">
-                                                {project.liveLink}
-                                            </a>
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="md:col-span-8">
-                                <h3 className="type-label text-sm text-white mb-4">Project Showcase</h3>
-                                <p className="text-secondary text-sm md:text-base leading-relaxed">
-                                    This project page is intentionally light on text and focused on visuals, mockups, and key context.
-                                </p>
+                                {project.year && (
+                                    <span className="type-label text-sm text-secondary/50 block">
+                                        Year: {project.year}
+                                    </span>
+                                )}
                             </div>
                         </div>
 
-                        {!!project.images?.length && (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
-                                {project.images?.map((imgObj, i: number) => (
-                                    <div key={i} className="aspect-video bg-zinc-800 rounded-lg overflow-hidden relative group">
-                                        <ImageWithSkeleton
-                                            src={getMediaUrl(imgObj.image)}
-                                            alt={`${project.title} shot ${i + 1}`}
-                                            fill
-                                            unoptimized={true}
-                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                        />
-                                    </div>
-                                ))}
+                        {/* Flexible blocks (new) → legacy hero + images fallback */}
+                        {project.blocks?.length ? (
+                            <div className="mt-8 mb-24">
+                                <BlocksRenderer blocks={project.blocks as Record<string, unknown>[]} />
                             </div>
+                        ) : (
+                            <>
+                                {/* Hero image */}
+                                <div className="w-full h-[50vh] md:h-[70vh] bg-zinc-800 rounded-lg overflow-hidden relative mb-16">
+                                    <ImageWithSkeleton
+                                        src={getHeroImage(project)}
+                                        alt={project.title}
+                                        fill
+                                        unoptimized={true}
+                                        className="object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                                </div>
+
+                                {/* Overview grid */}
+                                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24">
+                                    <div className="md:col-span-4">
+                                        <h3 className="type-label text-sm text-white mb-4">Overview</h3>
+                                        {project.description && (
+                                            <p className="text-secondary text-sm md:text-base leading-relaxed mb-6">
+                                                {project.description}
+                                            </p>
+                                        )}
+                                        <div className="space-y-3 text-sm text-secondary">
+                                            {project.client && (
+                                                <p><span className="text-white">Client:</span> {project.client}</p>
+                                            )}
+                                            {project.liveLink && (
+                                                <p>
+                                                    <span className="text-white">Live:</span>{" "}
+                                                    <a
+                                                        href={project.liveLink}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        className="hover:text-white underline underline-offset-4"
+                                                    >
+                                                        {project.liveLink}
+                                                    </a>
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="md:col-span-8">
+                                        <h3 className="type-label text-sm text-white mb-4">Project Showcase</h3>
+                                        <p className="text-secondary text-sm md:text-base leading-relaxed">
+                                            This project page is intentionally light on text and focused on visuals, mockups, and key context.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Legacy image gallery */}
+                                {!!project.images?.length && (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
+                                        {project.images.map((imgObj, i: number) => (
+                                            <div
+                                                key={i}
+                                                className="aspect-video bg-zinc-800 rounded-lg overflow-hidden relative group"
+                                            >
+                                                <ImageWithSkeleton
+                                                    src={getMediaUrl(imgObj.image)}
+                                                    alt={`${project.title} shot ${i + 1}`}
+                                                    fill
+                                                    unoptimized={true}
+                                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
                 )}
 
+                {/* ─── YOU MIGHT ALSO LIKE ──────────────────────────── */}
                 <section className="border-t border-white/10 pt-24 px-6 md:px-12 max-w-[1400px] mx-auto pb-24">
                     <h2 className="type-section uppercase mb-12">You Might Also Like</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {otherProjects.map((p) => (
                             <Link key={p.id} href={getWorkHref(p)} className="group block">
-                                <div className="aspect-[4/3] w-full bg-zinc-900 mb-6 overflow-hidden relative rounded-sm px-0">
+                                <div className="aspect-[4/3] w-full bg-zinc-900 mb-6 overflow-hidden relative rounded-sm">
                                     <ImageWithSkeleton
                                         src={getListingImage(p)}
                                         alt={p.title}
@@ -299,4 +346,3 @@ export default async function ProjectPage({
         </main>
     );
 }
-

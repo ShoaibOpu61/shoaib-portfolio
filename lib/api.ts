@@ -1,8 +1,6 @@
 import { getPayload } from 'payload'
 import config from '../payload.config'
 
-// Only return published documents — drafts are auto-saved in CMS but hidden from the portfolio
-// Only return published documents — drafts are auto-saved in CMS but hidden from the portfolio
 const defaultFindOptions = {
     depth: 2,
     sort: 'sortOrder',
@@ -13,12 +11,8 @@ export const getProjects = async () => {
     const payload = await getPayload({ config })
     const { docs } = await payload.find({
         collection: 'projects',
-        where: {
-            featured: { equals: true },
-        },
-        depth: 2,
-        sort: 'sortOrder',
-        limit: 100,
+        where: { status: { equals: 'published' } },
+        ...defaultFindOptions,
     })
     return docs
 }
@@ -51,12 +45,8 @@ export const getCaseStudies = async () => {
     const payload = await getPayload({ config })
     const { docs } = await payload.find({
         collection: 'case-studies',
-        where: {
-            featured: { equals: true },
-        },
-        depth: 2,
-        sort: 'sortOrder',
-        limit: 100,
+        where: { status: { equals: 'published' } },
+        ...defaultFindOptions,
     })
     return docs
 }
@@ -89,26 +79,57 @@ export const getPlaygroundEntries = async () => {
     const payload = await getPayload({ config })
     const { docs } = await payload.find({
         collection: 'playground',
-        where: {
-            featured: { equals: true },
-        },
+        where: { status: { equals: 'published' } },
         ...defaultFindOptions,
     })
     return docs
 }
 
+export const getHomeItems = async (collection: 'projects' | 'case-studies' | 'playground' = 'projects', limit = 100) => {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+        collection,
+        where: {
+            and: [
+                { status: { equals: 'published' } },
+                { showOnHome: { equals: true } },
+            ],
+        },
+        ...defaultFindOptions,
+        limit,
+    })
+    return docs
+}
+
+export const getAboutItems = async (collection: 'projects' | 'case-studies' | 'playground' = 'projects', limit = 100) => {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+        collection,
+        where: {
+            and: [
+                { status: { equals: 'published' } },
+                { showOnAbout: { equals: true } },
+            ],
+        },
+        ...defaultFindOptions,
+        limit,
+    })
+    return docs
+}
+
+// Preserved for backward compatibility in case it's used elsewhere
 export const getFeaturedProjects = async (limit = 100) => {
     const payload = await getPayload({ config })
-
-    const { docs: featuredDocs } = await payload.find({
+    const { docs } = await payload.find({
         collection: 'projects',
         where: {
-            featured: { equals: true },
+            and: [
+                { status: { equals: 'published' } },
+                { featured: { equals: true } },
+            ],
         },
+        ...defaultFindOptions,
         limit,
-        depth: 2,
-        sort: 'sortOrder',
     })
-
-    return featuredDocs;
+    return docs
 }

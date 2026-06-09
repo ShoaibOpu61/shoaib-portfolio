@@ -1,13 +1,32 @@
 import type { CollectionConfig } from 'payload'
 
-import { featuredField, slugField, sortOrderField } from './shared'
+import {
+    featuredField,
+    slugField,
+    sortOrderField,
+    statusField,
+    showOnHomeField,
+    showOnAboutField,
+    seoGroup,
+    subtitleField,
+    tagsField,
+} from './shared'
+
+import {
+    TextBlock,
+    ImageBlock,
+    GalleryBlock,
+    SectionTitleBlock,
+    FeatureListBlock,
+    ExternalLinkBlock,
+} from './blocks'
 
 const Playground: CollectionConfig = {
     slug: 'playground',
     admin: {
         useAsTitle: 'title',
         group: 'Portfolio',
-        defaultColumns: ['title', 'category', 'featured', 'sortOrder', 'updatedAt'],
+        defaultColumns: ['title', 'category', 'status', 'featured', 'updatedAt'],
     },
     access: {
         read: () => true,
@@ -18,13 +37,6 @@ const Playground: CollectionConfig = {
     labels: {
         singular: 'Playground Piece',
         plural: 'Playground',
-    },
-    versions: {
-        drafts: {
-            autosave: {
-                interval: 2000,
-            },
-        },
     },
     fields: [
         {
@@ -41,6 +53,32 @@ const Playground: CollectionConfig = {
                         },
                         slugField(),
                         {
+                            name: 'year',
+                            label: 'Year',
+                            type: 'text',
+                        },
+                    ],
+                },
+                {
+                    label: 'Card Display',
+                    fields: [
+                        subtitleField,
+                        {
+                            name: 'caption',
+                            label: 'Caption / Short Description',
+                            type: 'textarea',
+                            admin: {
+                                description: 'Optional short note for the modal or card.',
+                            },
+                        },
+                        {
+                            name: 'image',
+                            label: 'Cover Image',
+                            type: 'upload',
+                            relationTo: 'media',
+                            required: true,
+                        },
+                        {
                             name: 'category',
                             label: 'Category / Tag',
                             type: 'text',
@@ -48,36 +86,51 @@ const Playground: CollectionConfig = {
                                 description: 'Optional lightweight tag like Logo, Poster, UI, or Flyer.',
                             },
                         },
+                        tagsField,
+                    ],
+                },
+                {
+                    label: 'Content Details',
+                    fields: [
                         {
-                            name: 'caption',
-                            label: 'Caption',
-                            type: 'textarea',
-                            admin: {
-                                description: 'Optional short note for the modal or card.',
-                            },
+                            name: 'blocks',
+                            label: 'Content Blocks',
+                            type: 'blocks',
+                            blocks: [
+                                TextBlock,
+                                ImageBlock,
+                                GalleryBlock,
+                                SectionTitleBlock,
+                                FeatureListBlock,
+                                ExternalLinkBlock,
+                            ],
                         },
                     ],
                 },
                 {
-                    label: 'Media',
+                    label: 'Visibility',
                     fields: [
-                        {
-                            name: 'image',
-                            label: 'Image',
-                            type: 'upload',
-                            relationTo: 'media',
-                            required: true,
-                            admin: {
-                                description: 'Single visual used for both the card and enlarged preview.',
-                            },
-                        },
-                    ],
-                },
-                {
-                    label: 'Publish Settings',
-                    fields: [
+                        statusField,
+                        showOnHomeField,
+                        showOnAboutField,
                         featuredField,
                         sortOrderField,
+                    ],
+                },
+                {
+                    label: 'Links',
+                    fields: [
+                        {
+                            name: 'liveLink',
+                            label: 'Live Link',
+                            type: 'text',
+                        },
+                    ],
+                },
+                {
+                    label: 'SEO',
+                    fields: [
+                        seoGroup,
                     ],
                 },
             ],

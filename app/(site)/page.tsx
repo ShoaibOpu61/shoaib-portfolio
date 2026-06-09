@@ -6,13 +6,13 @@ import BentoGrid from "@/components/BentoGrid";
 import Skills from "@/components/Skills";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-import { getFeaturedProjects } from "@/lib/api";
+import { getHomeItems } from "@/lib/api";
 
 // Revalidate occasionally, or depend on Payload hooks to revalidate
 export const revalidate = 60;
 
 export default async function Home() {
-  const featuredProjects = await getFeaturedProjects(5);
+  const featuredProjects = await getHomeItems('projects', 5);
 
   return (
     <main className="relative bg-[#050505] text-foreground overflow-hidden selection:bg-white selection:text-black">

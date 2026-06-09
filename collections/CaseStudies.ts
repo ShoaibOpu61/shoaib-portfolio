@@ -1,13 +1,32 @@
 import type { CollectionConfig } from 'payload'
 
-import { featuredField, slugField, sortOrderField } from './shared'
+import {
+    featuredField,
+    slugField,
+    sortOrderField,
+    statusField,
+    showOnHomeField,
+    showOnAboutField,
+    seoGroup,
+    subtitleField,
+    tagsField,
+} from './shared'
+
+import {
+    TextBlock,
+    ImageBlock,
+    GalleryBlock,
+    SectionTitleBlock,
+    FeatureListBlock,
+    ExternalLinkBlock,
+} from './blocks'
 
 const CaseStudies: CollectionConfig = {
     slug: 'case-studies',
     admin: {
         useAsTitle: 'title',
         group: 'Portfolio',
-        defaultColumns: ['title', 'featured', 'sortOrder', 'updatedAt'],
+        defaultColumns: ['title', 'status', 'featured', 'updatedAt'],
     },
     access: {
         read: () => true,
@@ -19,7 +38,6 @@ const CaseStudies: CollectionConfig = {
         singular: 'Case Study',
         plural: 'Case Studies',
     },
-
     fields: [
         {
             type: 'tabs',
@@ -33,24 +51,34 @@ const CaseStudies: CollectionConfig = {
                             type: 'text',
                             required: true,
                         },
+                        slugField(),
                         {
-                            name: 'slug',
-                            label: 'Slug',
+                            name: 'year',
+                            label: 'Year',
                             type: 'text',
-                            required: true,
-                            unique: true,
+                            admin: {
+                                description: 'E.g., 2023 / 2024',
+                            },
                         },
                         {
-                            name: 'description',
-                            label: 'Description',
-                            type: 'textarea',
-                            required: true,
+                            name: 'client',
+                            label: 'Client',
+                            type: 'text',
                         },
                     ],
                 },
                 {
-                    label: 'Media',
+                    label: 'Card Display',
                     fields: [
+                        subtitleField,
+                        {
+                            name: 'description',
+                            label: 'Short Description (Legacy)',
+                            type: 'textarea',
+                            admin: {
+                                description: 'Fallback description if blocks are empty. Used as card summary.',
+                            },
+                        },
                         {
                             name: 'image',
                             label: 'Cover Image',
@@ -58,13 +86,56 @@ const CaseStudies: CollectionConfig = {
                             relationTo: 'media',
                             required: true,
                         },
+                        {
+                            name: 'category',
+                            label: 'Category',
+                            type: 'text',
+                        },
+                        tagsField,
                     ],
                 },
                 {
-                    label: 'Publish Settings',
+                    label: 'Content Details',
                     fields: [
+                        {
+                            name: 'blocks',
+                            label: 'Content Blocks',
+                            type: 'blocks',
+                            blocks: [
+                                TextBlock,
+                                ImageBlock,
+                                GalleryBlock,
+                                SectionTitleBlock,
+                                FeatureListBlock,
+                                ExternalLinkBlock,
+                            ],
+                        },
+                    ],
+                },
+                {
+                    label: 'Visibility',
+                    fields: [
+                        statusField,
+                        showOnHomeField,
+                        showOnAboutField,
                         featuredField,
                         sortOrderField,
+                    ],
+                },
+                {
+                    label: 'Links',
+                    fields: [
+                        {
+                            name: 'liveLink',
+                            label: 'Live Link',
+                            type: 'text',
+                        },
+                    ],
+                },
+                {
+                    label: 'SEO',
+                    fields: [
+                        seoGroup,
                     ],
                 },
             ],
