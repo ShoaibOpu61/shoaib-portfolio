@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { featuredField, slugField, sortOrderField } from './shared.ts'
+import { featuredField, slugField, sortOrderField } from './shared'
 
 const Playground: CollectionConfig = {
     slug: 'playground',

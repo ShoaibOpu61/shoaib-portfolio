@@ -9,11 +9,11 @@ import sharp from 'sharp'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-import Users from './collections/Users.ts'
-import Media from './collections/Media.ts'
-import Projects from './collections/Projects.ts'
-import CaseStudies from './collections/CaseStudies.ts'
-import Playground from './collections/Playground.ts'
+import Users from './collections/Users'
+import Media from './collections/Media'
+import Projects from './collections/Projects'
+import CaseStudies from './collections/CaseStudies'
+import Playground from './collections/Playground'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const blobToken = process.env.BLOB_READ_WRITE_TOKEN

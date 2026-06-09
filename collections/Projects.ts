@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { featuredField, slugField, sortOrderField } from './shared.ts'
+import { featuredField, slugField, sortOrderField } from './shared'
 
 const Projects: CollectionConfig = {
     slug: 'projects',
@@ -39,7 +39,13 @@ const Projects: CollectionConfig = {
                             type: 'text',
                             required: true,
                         },
-                        slugField(),
+                        {
+                            name: 'slug',
+                            label: 'Slug',
+                            type: 'text',
+                            required: true,
+                            unique: true,
+                        },
                         {
                             name: 'category',
                             label: 'Category',
