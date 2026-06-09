@@ -18,23 +18,15 @@ const MEDIA_PUBLIC_PREFIX = "/media/";
 export function normalizeMediaUrl(url: string) {
     if (!url) return url;
 
-    // If it's a relative path starting with the API prefix, normalize it
-    if (url.startsWith(MEDIA_API_PREFIX)) {
-        return url.replace(MEDIA_API_PREFIX, MEDIA_PUBLIC_PREFIX);
+    // If it's an absolute URL (like Vercel Blob or a full API proxy URL), leave it as is.
+    // This ensures that Payload can handle the redirect to Blob storage correctly.
+    if (url.startsWith('http')) {
+        return url;
     }
 
-    // If it's an absolute URL, only modify it if it belongs to our own API
-    if (url.startsWith('http')) {
-        try {
-            const parsed = new URL(url);
-            if (parsed.pathname.startsWith(MEDIA_API_PREFIX)) {
-                return parsed.pathname.replace(MEDIA_API_PREFIX, MEDIA_PUBLIC_PREFIX);
-            }
-            // For Vercel Blob or other CDNs, return the URL as-is
-            return url;
-        } catch {
-            return url;
-        }
+    // Only normalize relative API paths to public media paths if they start with the prefix.
+    if (url.startsWith(MEDIA_API_PREFIX)) {
+        return url.replace(MEDIA_API_PREFIX, MEDIA_PUBLIC_PREFIX);
     }
 
     return url;
