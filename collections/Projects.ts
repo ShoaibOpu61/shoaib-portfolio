@@ -6,8 +6,6 @@ const Projects: CollectionConfig = {
     slug: 'projects',
     admin: {
         useAsTitle: 'title',
-        group: 'Portfolio',
-        defaultColumns: ['title', 'category', 'featured', 'sortOrder', 'updatedAt'],
     },
     access: {
         read: () => true,

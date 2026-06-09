@@ -69,7 +69,15 @@ export const getCaseStudies = async () => {
     const payload = await getPayload({ config })
     const { docs } = await payload.find({
         collection: 'case-studies',
-        ...defaultFindOptions,
+        where: {
+            and: [
+                { _status: { equals: 'published' } },
+                { featured: { equals: true } },
+            ],
+        },
+        depth: 2,
+        sort: 'sortOrder',
+        limit: 100,
     })
     return docs
 }
