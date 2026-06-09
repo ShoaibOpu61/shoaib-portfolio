@@ -6,6 +6,8 @@ const CaseStudies: CollectionConfig = {
     slug: 'case-studies',
     admin: {
         useAsTitle: 'title',
+        group: 'Portfolio',
+        defaultColumns: ['title', 'featured', 'sortOrder', 'updatedAt'],
     },
     access: {
         read: () => true,
@@ -17,37 +19,49 @@ const CaseStudies: CollectionConfig = {
         singular: 'Case Study',
         plural: 'Case Studies',
     },
-    versions: {
-        drafts: {
-            autosave: {
-                interval: 2000,
-            },
-        },
-    },
-
     fields: [
         {
-            name: 'title',
-            label: 'Case Study Title',
-            type: 'text',
-            required: true,
+            type: 'tabs',
+            tabs: [
+                {
+                    label: 'Basic Info',
+                    fields: [
+                        {
+                            name: 'title',
+                            label: 'Title',
+                            type: 'text',
+                            required: true,
+                        },
+                        slugField(),
+                        {
+                            name: 'description',
+                            label: 'Description',
+                            type: 'textarea',
+                            required: true,
+                        },
+                    ],
+                },
+                {
+                    label: 'Media',
+                    fields: [
+                        {
+                            name: 'image',
+                            label: 'Cover Image',
+                            type: 'upload',
+                            relationTo: 'media',
+                            required: true,
+                        },
+                    ],
+                },
+                {
+                    label: 'Publish Settings',
+                    fields: [
+                        featuredField,
+                        sortOrderField,
+                    ],
+                },
+            ],
         },
-        slugField(),
-        {
-            name: 'description',
-            label: 'Intro Text',
-            type: 'textarea',
-            required: true,
-        },
-        {
-            name: 'image',
-            label: 'Cover Image',
-            type: 'upload',
-            relationTo: 'media',
-            required: true,
-        },
-        featuredField,
-        sortOrderField,
     ],
 }
 
