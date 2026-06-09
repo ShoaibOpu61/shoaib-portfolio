@@ -89,6 +89,9 @@ export const getPlaygroundEntries = async () => {
     const payload = await getPayload({ config })
     const { docs } = await payload.find({
         collection: 'playground',
+        where: {
+            featured: { equals: true },
+        },
         ...defaultFindOptions,
     })
     return docs
