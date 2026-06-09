@@ -46,7 +46,13 @@ type Project = {
     id: string;
     title: string;
     description?: string | null;
-    image?: any;
+    image?: {
+        url?: string | null;
+        sizes?: {
+            tablet?: { url?: string | null } | null;
+            original?: { url?: string | null } | null;
+        } | null;
+    } | string | null;
     category?: string | null;
     year?: string | null;
 };
