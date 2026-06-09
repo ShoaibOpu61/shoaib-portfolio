@@ -1,6 +1,8 @@
 import { getCaseStudies, getPlaygroundEntries, getProjects } from "@/lib/api";
 import WorksClient from "./WorksClient";
 
+export const revalidate = 60;
+
 export default async function WorksPage() {
     const projectsDocs = await getProjects();
     const caseStudiesDocs = await getCaseStudies();

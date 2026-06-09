@@ -3,7 +3,7 @@ import config from '../payload.config'
 
 // Only return published documents — drafts are auto-saved in CMS but hidden from the portfolio
 const defaultFindOptions = {
-    depth: 1,
+    depth: 2,
     sort: 'sortOrder',
     where: {
         _status: {
