@@ -19,13 +19,7 @@ const Projects: CollectionConfig = {
         singular: 'Project',
         plural: 'Projects',
     },
-    versions: {
-        drafts: {
-            autosave: {
-                interval: 2000,
-            },
-        },
-    },
+
     fields: [
         {
             type: 'tabs',
