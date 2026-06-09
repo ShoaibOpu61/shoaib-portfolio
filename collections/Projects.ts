@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { featuredField, slugField, sortOrderField } from './shared'
 
 const Projects: CollectionConfig = {
-    slug: 'work-projects',
+    slug: 'projects',
     admin: {
         useAsTitle: 'title',
         group: 'Portfolio',
