@@ -48,40 +48,6 @@ const CaseStudies: CollectionConfig = {
             relationTo: 'media',
             required: true,
         },
-        {
-            name: 'sections',
-            label: 'Story Sections',
-            type: 'array',
-            required: true,
-            fields: [
-                {
-                    name: 'title',
-                    label: 'Section Title',
-                    type: 'text',
-                },
-                {
-                    name: 'text',
-                    label: 'Section Text',
-                    type: 'textarea',
-                },
-                {
-                    name: 'images',
-                    label: 'Section Images',
-                    type: 'array',
-                    required: true,
-                    minRows: 1,
-                    fields: [
-                        {
-                            name: 'image',
-                            label: 'Image',
-                            type: 'upload',
-                            relationTo: 'media',
-                            required: true,
-                        },
-                    ],
-                },
-            ],
-        },
         featuredField,
         sortOrderField,
     ],

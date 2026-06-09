@@ -67,20 +67,6 @@ const Projects: CollectionConfig = {
             required: true,
         },
         {
-            name: 'images',
-            label: 'Gallery Images',
-            type: 'array',
-            fields: [
-                {
-                    name: 'image',
-                    label: 'Gallery Image',
-                    type: 'upload',
-                    relationTo: 'media',
-                    required: true,
-                },
-            ],
-        },
-        {
             name: 'client',
             label: 'Client',
             type: 'text',

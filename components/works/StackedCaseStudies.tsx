@@ -128,7 +128,7 @@ function StackedCaseStudyCard({
                                 ))}
                             </div>
 
-                            <h3 className="type-case-title max-w-[10ch] text-4xl uppercase leading-[0.92] text-white md:text-5xl lg:text-6xl">
+                            <h3 className="type-case-title text-4xl uppercase leading-[0.92] text-white md:text-5xl lg:text-6xl line-clamp-2">
                                 {item.title}
                             </h3>
 
