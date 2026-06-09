@@ -6,12 +6,7 @@ import config from '../payload.config'
 const defaultFindOptions = {
     depth: 2,
     sort: 'sortOrder',
-    limit: 100, // Ensure we don't hit the default limit of 10
-    where: {
-        _status: {
-            equals: 'published',
-        },
-    },
+    limit: 100,
 }
 
 export const getProjects = async () => {
@@ -19,10 +14,7 @@ export const getProjects = async () => {
     const { docs } = await payload.find({
         collection: 'projects',
         where: {
-            and: [
-                { _status: { equals: 'published' } },
-                { featured: { equals: true } },
-            ],
+            featured: { equals: true },
         },
         depth: 2,
         sort: 'sortOrder',
@@ -38,26 +30,16 @@ export const getProjectById = async (id: string) => {
         collection: 'projects',
         where: !isNaN(numericId)
             ? {
-                and: [
-                    { _status: { equals: 'published' } },
-                    {
-                        or: [
-                            { numericId: { equals: numericId } },
-                            { slug: { equals: id } },
-                            { id: { equals: id } },
-                        ],
-                    },
+                or: [
+                    { numericId: { equals: numericId } },
+                    { slug: { equals: id } },
+                    { id: { equals: id } },
                 ],
             }
             : {
-                and: [
-                    { _status: { equals: 'published' } },
-                    {
-                        or: [
-                            { slug: { equals: id } },
-                            { id: { equals: id } },
-                        ],
-                    },
+                or: [
+                    { slug: { equals: id } },
+                    { id: { equals: id } },
                 ],
             },
         depth: 2,
@@ -70,10 +52,7 @@ export const getCaseStudies = async () => {
     const { docs } = await payload.find({
         collection: 'case-studies',
         where: {
-            and: [
-                { _status: { equals: 'published' } },
-                { featured: { equals: true } },
-            ],
+            featured: { equals: true },
         },
         depth: 2,
         sort: 'sortOrder',
@@ -89,26 +68,16 @@ export const getCaseStudyById = async (id: string) => {
         collection: 'case-studies',
         where: !isNaN(numericId)
             ? {
-                and: [
-                    { _status: { equals: 'published' } },
-                    {
-                        or: [
-                            { numericId: { equals: numericId } },
-                            { slug: { equals: id } },
-                            { id: { equals: id } },
-                        ],
-                    },
+                or: [
+                    { numericId: { equals: numericId } },
+                    { slug: { equals: id } },
+                    { id: { equals: id } },
                 ],
             }
             : {
-                and: [
-                    { _status: { equals: 'published' } },
-                    {
-                        or: [
-                            { slug: { equals: id } },
-                            { id: { equals: id } },
-                        ],
-                    },
+                or: [
+                    { slug: { equals: id } },
+                    { id: { equals: id } },
                 ],
             },
         depth: 2,
@@ -131,10 +100,7 @@ export const getFeaturedProjects = async (limit = 100) => {
     const { docs: featuredDocs } = await payload.find({
         collection: 'projects',
         where: {
-            and: [
-                { _status: { equals: 'published' } },
-                { featured: { equals: true } },
-            ],
+            featured: { equals: true },
         },
         limit,
         depth: 2,
