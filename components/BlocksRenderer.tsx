@@ -1,6 +1,7 @@
 import React from "react"
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton"
 import { getPreferredMediaUrl } from "@/lib/media"
+import RichText, { type RichTextContent } from "@/components/RichText"
 
 // Blocks come from Payload as plain objects — we cast per-block-type at render time.
 // Using Record<string, unknown> satisfies @typescript-eslint/no-explicit-any.
@@ -36,15 +37,13 @@ export default function BlocksRenderer({ blocks }: { blocks?: Block[] | null }) 
 
                 switch (block.blockType) {
                     case "text": {
-                        const content = block.content as Record<string, unknown> | undefined
+                        const content = block.content as RichTextContent | undefined
                         if (!content) return null
-                        const html = typeof content.html === "string" ? content.html : JSON.stringify(content)
                         return (
                             <div key={key} className="max-w-[1400px] mx-auto px-6 md:px-12">
-                                <div
-                                    className="prose prose-invert max-w-4xl prose-p:text-secondary prose-p:text-base md:prose-p:text-lg"
-                                    dangerouslySetInnerHTML={{ __html: html }}
-                                />
+                                <div className="max-w-4xl">
+                                    <RichText content={content} />
+                                </div>
                             </div>
                         )
                     }

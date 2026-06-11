@@ -7,6 +7,7 @@ import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import BlocksRenderer from "@/components/BlocksRenderer";
 import { getProjectById, getCaseStudyById, getProjects, getCaseStudies } from "@/lib/api";
 import { getPreferredMediaUrl } from "@/lib/media";
+import RichText, { type RichTextContent } from "@/components/RichText";
 
 type MediaField = string | {
     url?: string | null;
@@ -71,6 +72,19 @@ function getMediaDimensions(media?: MediaField) {
         return { width: media.width || 1600, height: media.height || 1000 };
     }
     return { width: 1600, height: 1000 };
+}
+
+function renderImage(media: MediaField | undefined, alt: string, className = "block h-auto w-full") {
+    return (
+        <ImageWithSkeleton
+            src={getMediaUrl(media)}
+            alt={alt}
+            width={getMediaDimensions(media).width}
+            height={getMediaDimensions(media).height}
+            unoptimized={true}
+            className={className}
+        />
+    );
 }
 
 export default async function ProjectPage({
@@ -173,14 +187,7 @@ export default async function ProjectPage({
                             <div className="w-full flex flex-col items-center">
                                 {project.images?.map((imgObj, i: number) => (
                                     <div key={i} className="w-full max-w-[1920px] relative">
-                                        <ImageWithSkeleton
-                                            src={getMediaUrl(imgObj.image)}
-                                            alt={`${project.title} visual ${i + 1}`}
-                                            width={getMediaDimensions(imgObj.image).width}
-                                            height={getMediaDimensions(imgObj.image).height}
-                                            unoptimized={true}
-                                            className="block h-auto w-full"
-                                        />
+                                        {renderImage(imgObj.image, `${project.title} visual ${i + 1}`)}
                                     </div>
                                 ))}
                             </div>
@@ -309,32 +316,50 @@ export default async function ProjectPage({
                     </div>
                 )}
 
-                {/* ─── YOU MIGHT ALSO LIKE ──────────────────────────── */}
+                {/* ─── YOU MIGHT ALSO LIKE — Premium card design matching Works page ─── */}
                 <section className="border-t border-white/10 pt-24 px-6 md:px-12 max-w-[1400px] mx-auto pb-24">
                     <h2 className="type-section uppercase mb-12">You Might Also Like</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {otherProjects.map((p) => (
                             <Link key={p.id} href={getWorkHref(p)} className="group block">
-                                <div className="aspect-[4/3] w-full bg-zinc-900 mb-6 overflow-hidden relative rounded-sm">
-                                    <ImageWithSkeleton
-                                        src={getListingImage(p)}
-                                        alt={p.title}
-                                        fill
-                                        unoptimized={true}
-                                        className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-500"
-                                    />
-                                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500" />
-                                </div>
-                                <div className="flex justify-between items-start border-t border-white/20 pt-4">
-                                    <div>
-                                        <span className="type-label block text-sm text-secondary mb-2">
-                                            {p.category || (isCaseStudy ? "Case Study" : "Project")}
-                                        </span>
-                                        <h3 className="type-case-title text-2xl md:text-3xl uppercase group-hover:text-primary transition-colors">
+                                <div className="relative h-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] p-3 shadow-[0_18px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 group-hover:border-cyan-300/30 group-hover:bg-white/[0.055] group-hover:shadow-[0_26px_90px_rgba(34,211,238,0.08)] group-hover:-translate-y-2">
+                                    {/* Hover gradient glow */}
+                                    <div className="pointer-events-none absolute inset-0 rounded-3xl bg-[radial-gradient(circle_at_top_right,rgba(139,92,246,0.12),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(34,211,238,0.08),transparent_42%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                                    {/* Image */}
+                                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-zinc-950">
+                                        <ImageWithSkeleton
+                                            src={getListingImage(p)}
+                                            alt={p.title}
+                                            fill
+                                            unoptimized={true}
+                                            className="object-cover opacity-88 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent transition-opacity duration-500 group-hover:opacity-70" />
+                                        {/* Arrow button */}
+                                        <div className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white/75 shadow-[0_12px_30px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all duration-300 group-hover:border-cyan-300/50 group-hover:bg-cyan-300/10 group-hover:text-cyan-100 group-hover:shadow-[0_0_30px_rgba(34,211,238,0.18)]">
+                                            <ArrowUpRight className="h-4 w-4" />
+                                        </div>
+                                    </div>
+
+                                    {/* Card body */}
+                                    <div className="relative z-10 flex flex-col px-2 pb-2 pt-4">
+                                        <div className="mb-3 flex flex-wrap gap-2">
+                                            {p.category && (
+                                                <span className="type-label rounded-full border border-white/10 bg-white/[0.045] px-3 py-1 text-[9px] text-white/62">
+                                                    {p.category}
+                                                </span>
+                                            )}
+                                            {p.year && (
+                                                <span className="type-label rounded-full border border-cyan-200/15 bg-cyan-300/[0.045] px-3 py-1 text-[9px] text-cyan-100/68">
+                                                    {p.year}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <h3 className="type-case-title text-xl md:text-2xl uppercase leading-tight text-white transition-colors duration-300 group-hover:text-cyan-50">
                                             {p.title}
                                         </h3>
                                     </div>
-                                    <ArrowUpRight className="w-6 h-6 text-secondary group-hover:text-white transition-colors" />
                                 </div>
                             </Link>
                         ))}
