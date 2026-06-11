@@ -20,6 +20,7 @@ export default function Navbar() {
     const pathname = usePathname();
     const [isScrolled, setIsScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     // Scroll background style
     useEffect(() => {
@@ -64,24 +65,42 @@ export default function Navbar() {
 
                 <div className="flex items-center gap-8">
                     {/* Desktop nav */}
-                    <ul className="hidden md:flex gap-8 items-center">
-                        {navLinks.map((link) => {
+                    <ul 
+                        className="hidden md:flex gap-2 items-center"
+                        onMouseLeave={() => setHoveredIndex(null)}
+                    >
+                        {navLinks.map((link, index) => {
                             const isActive = pathname === link.href;
                             return (
-                                <li key={link.name} className="relative">
+                                <li 
+                                    key={link.name} 
+                                    className="relative px-4 py-2"
+                                    onMouseEnter={() => setHoveredIndex(index)}
+                                >
                                     <Link
                                         href={link.href}
                                         className={clsx(
-                                            "type-nav text-sm transition-colors relative z-10",
-                                            isActive ? "text-white" : "text-secondary hover:text-white"
+                                            "type-nav text-sm transition-colors duration-300 relative z-10",
+                                            isActive || hoveredIndex === index ? "text-white" : "text-secondary"
                                         )}
                                     >
                                         {link.name}
                                     </Link>
+                                    
+                                    {/* Hover background pill */}
+                                    {hoveredIndex === index && (
+                                        <motion.div
+                                            layoutId="navbar-hover"
+                                            className="absolute inset-0 rounded-full bg-white/10"
+                                            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                                        />
+                                    )}
+
+                                    {/* Active indicator (glowing dot) */}
                                     {isActive && (
                                         <motion.div
                                             layoutId="navbar-active"
-                                            className="absolute -bottom-1 left-0 right-0 h-[2px] bg-primary"
+                                            className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]"
                                             transition={{ type: "spring", stiffness: 350, damping: 30 }}
                                         />
                                     )}

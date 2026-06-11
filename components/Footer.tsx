@@ -46,31 +46,23 @@ export default function Footer() {
                 <div className="type-label w-full flex flex-col md:flex-row justify-between items-center text-xs text-secondary/40 gap-6 z-10 relative">
                     <span>© 2026 Shoaib. All rights reserved.</span>
                     <div className="flex gap-8 items-center font-medium">
-                        <a
-                            href="/designer_shoaib_resume.pdf"
-                            download="designer_shoaib_resume.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-white transition-colors duration-300"
-                        >
-                            Resume
-                        </a>
-                        <Link
-                            href="https://www.linkedin.com/in/shoaib-opu-a8aaa0184/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-white transition-colors duration-300"
-                        >
-                            LinkedIn
-                        </Link>
-                        <Link
-                            href="https://dribbble.com/ShoaibOpu"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-white transition-colors duration-300"
-                        >
-                            Dribbble
-                        </Link>
+                        {[
+                            { name: "Resume", href: "/designer_shoaib_resume.pdf", download: "designer_shoaib_resume.pdf" },
+                            { name: "LinkedIn", href: "https://www.linkedin.com/in/shoaib-opu-a8aaa0184/" },
+                            { name: "Dribbble", href: "https://dribbble.com/ShoaibOpu" },
+                        ].map((link) => (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                download={link.download}
+                                className="group relative text-secondary hover:text-white transition-colors duration-300 pb-1"
+                            >
+                                {link.name}
+                                <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-cyan-400 transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_8px_rgba(34,211,238,0.8)] rounded-full"></span>
+                            </a>
+                        ))}
                     </div>
                 </div>
             </div>
