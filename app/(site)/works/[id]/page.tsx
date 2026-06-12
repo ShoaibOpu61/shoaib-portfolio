@@ -7,8 +7,6 @@ import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import BlocksRenderer from "@/components/BlocksRenderer";
 import { getProjectById, getCaseStudyById, getProjects, getCaseStudies } from "@/lib/api";
 import { getPreferredMediaUrl } from "@/lib/media";
-import RichText, { type RichTextContent } from "@/components/RichText";
-
 type MediaField = string | {
     url?: string | null;
     thumbnailURL?: string | null;
@@ -74,18 +72,6 @@ function getMediaDimensions(media?: MediaField) {
     return { width: 1600, height: 1000 };
 }
 
-function renderImage(media: MediaField | undefined, alt: string, className = "block h-auto w-full") {
-    return (
-        <ImageWithSkeleton
-            src={getMediaUrl(media)}
-            alt={alt}
-            width={getMediaDimensions(media).width}
-            height={getMediaDimensions(media).height}
-            unoptimized={true}
-            className={className}
-        />
-    );
-}
 
 export default async function ProjectPage({
     params,
