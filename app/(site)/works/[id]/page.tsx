@@ -130,7 +130,7 @@ export default async function ProjectPage({
                 <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-24">
                     <div className="flex flex-col md:flex-row md:items-start justify-between gap-12">
                         <div className="flex-1 max-w-3xl">
-                            <h1 className="type-hero text-5xl md:text-7xl lg:text-8xl uppercase leading-[0.85] text-white mb-6">
+                            <h1 className="type-hero text-5xl md:text-7xl lg:text-8xl uppercase leading-[0.85] text-white mb-6 line-clamp-3 text-balance">
                                 {project.title}
                             </h1>
                             {project.description && (
@@ -232,13 +232,6 @@ export default async function ProjectPage({
                             </div>
                         </div>
                     ) : null}
-                </div>
-
-                {/* End of Case Study Indicator */}
-                <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-32 border-t border-white/10 pt-24">
-                    <h3 className="type-case-title text-xl md:text-2xl uppercase text-white mb-8 text-center opacity-60 tracking-widest">
-                        End of Case Study
-                    </h3>
                 </div>
 
                 {/* 4. Other Works */}
