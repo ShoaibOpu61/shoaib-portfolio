@@ -95,7 +95,7 @@ const MarqueeItem = ({ item, onClick, index }: { item: PlaygroundCard, onClick: 
         <motion.div 
             whileHover={{ scale: 1.02, zIndex: 10 }}
             onClick={onClick}
-            className="flex-shrink-0 w-[280px] md:w-[380px] aspect-[4/5] relative group rounded-2xl overflow-hidden border border-white/5 bg-zinc-900 cursor-pointer shadow-2xl mx-4 md:mx-5"
+            className="flex-shrink-0 w-[300px] md:w-[420px] aspect-square relative group rounded-2xl overflow-hidden border border-white/5 bg-zinc-900 cursor-pointer shadow-2xl mx-4 md:mx-5"
             style={{ y: yOffset }}
         >
             <ImageWithSkeleton 
