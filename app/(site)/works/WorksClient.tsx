@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, useMotionValue, AnimatePresence, useTransform, useSpring, useReducedMotion } from "framer-motion";
+import { motion, useMotionValue, AnimatePresence, useTransform, useSpring, useReducedMotion, useAnimationFrame } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import Image from "next/image";
@@ -95,7 +95,7 @@ const MarqueeItem = ({ item, onClick, index }: { item: PlaygroundCard, onClick: 
         <motion.div 
             whileHover={{ scale: 1.02, zIndex: 10 }}
             onClick={onClick}
-            className="flex-shrink-0 w-[240px] md:w-[300px] aspect-[3/4] relative group rounded-2xl overflow-hidden border border-white/5 bg-zinc-900 cursor-pointer shadow-2xl mx-4 md:mx-5"
+            className="flex-shrink-0 w-[280px] md:w-[380px] aspect-[4/5] relative group rounded-2xl overflow-hidden border border-white/5 bg-zinc-900 cursor-pointer shadow-2xl mx-4 md:mx-5"
             style={{ y: yOffset }}
         >
             <ImageWithSkeleton 
@@ -153,6 +153,48 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
     const doubledPlayground = initialPlayground.length > 0 
         ? [...initialPlayground, ...initialPlayground, ...initialPlayground, ...initialPlayground] 
         : [];
+
+    const marqueeX = useMotionValue(0);
+    const [isHovered, setIsHovered] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
+    const marqueeRef = useRef<HTMLDivElement>(null);
+    const [marqueeWidth, setMarqueeWidth] = useState(0);
+
+    useEffect(() => {
+        const updateWidth = () => {
+            if (marqueeRef.current) {
+                setMarqueeWidth(marqueeRef.current.scrollWidth);
+            }
+        };
+        
+        updateWidth();
+        window.addEventListener('resize', updateWidth);
+        const timeout = setTimeout(updateWidth, 100);
+        
+        return () => {
+            window.removeEventListener('resize', updateWidth);
+            clearTimeout(timeout);
+        };
+    }, [doubledPlayground]);
+
+    useAnimationFrame((t, delta) => {
+        if (marqueeWidth === 0 || initialPlayground.length === 0) return;
+        
+        const setWidth = marqueeWidth / 4;
+        let currentX = marqueeX.get();
+
+        if (!isHovered && !isDragging) {
+            currentX -= 1 * (delta / 16); 
+        }
+
+        if (currentX <= -setWidth) {
+            currentX += setWidth;
+        } else if (currentX > 0) {
+            currentX -= setWidth;
+        }
+        
+        marqueeX.set(currentX);
+    });
 
     return (
         <main className="bg-[#050505] text-foreground selection:bg-white selection:text-black min-h-screen">
@@ -319,14 +361,15 @@ export default function WorksClient({ initialProjects, initialCaseStudies, initi
                 {doubledPlayground.length > 0 && (
                     <div className="flex relative overflow-visible py-16">
                         <motion.div 
-                            className="flex whitespace-nowrap"
-                            animate={{ x: [0, "-33.33%"] }}
-                            transition={{ 
-                                duration: 50, 
-                                repeat: Infinity, 
-                                ease: "linear",
-                                repeatType: "loop"
-                            }}
+                            ref={marqueeRef}
+                            className="flex whitespace-nowrap cursor-grab active:cursor-grabbing w-max"
+                            style={{ x: marqueeX }}
+                            drag="x"
+                            dragConstraints={{ left: -10000, right: 10000 }}
+                            onHoverStart={() => setIsHovered(true)}
+                            onHoverEnd={() => setIsHovered(false)}
+                            onDragStart={() => setIsDragging(true)}
+                            onDragEnd={() => setIsDragging(false)}
                         >
                             {doubledPlayground.map((item, i) => (
                                 <MarqueeItem 
